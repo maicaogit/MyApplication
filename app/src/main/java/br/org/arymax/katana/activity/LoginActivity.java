@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 else
                 {
-                    //Comunica com servidor
+                    //Comunica com servidor!!
                 }
                 break;
 
