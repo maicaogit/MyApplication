@@ -1,4 +1,4 @@
-package br.org.arymax.katana.activity;
+package br.org.arymax.katana.utility;
 
 import static java.lang.System.out;
 

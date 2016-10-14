@@ -19,13 +19,12 @@
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:theme="@style/AppTheme.Dark"></activity>
-
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".activity.UserActivity"
             android:label="@string/title_activity_user"
-            android:theme="@style/AppTheme.Dark"></activity>
-
+            android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".fragment.PerfilFragment"></activity>
     </application>
 
 </manifest>
