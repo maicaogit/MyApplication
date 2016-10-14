@@ -47,7 +47,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 out.println(prontuario);
                 String dvUsuario = mEditTextUser.getText().toString().substring(6);
                 if(!Validacao.isProntuarioValido(dvUsuario, prontuario)) {
-                    Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    //Comunica com servidor
                 }
                 break;
 
