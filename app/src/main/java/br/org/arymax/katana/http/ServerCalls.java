@@ -23,7 +23,7 @@ public class ServerCalls {
         /**
          * URL do server
          */
-        protected static final String URL = "";
+        protected static final String URL = "http://pdscidadeajuda.ddns.net:8080/ServidorConecta/";
 
         //POST
             /**
@@ -44,6 +44,13 @@ public class ServerCalls {
              * Path de cadastro de resposta
              */
             protected static final String REGISTER_ANSWER_PATH = "/resposta/cadastro";
+        //
+        //GET
+            /**
+             *
+             */
+            protected static final String GET_USER_PATH = "";
+        //
 
 
 
@@ -152,6 +159,7 @@ public class ServerCalls {
         URL url;
         try {
             url = new URL(host + "funcoes" + path);
+            Log.d(TAG, "URL: " + url);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setRequestProperty("Content-type", contentType);
             httpCon.setRequestProperty("Accept", accept);

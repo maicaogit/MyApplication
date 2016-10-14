@@ -4,12 +4,15 @@ package br.org.arymax.katana.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.http.RegisterTask;
+import br.org.arymax.katana.model.Usuario;
+import br.org.arymax.katana.utility.XMLParser;
 
 /**
  * Criado por Marco em 12/10/2016.
@@ -20,6 +23,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText mEditTextPront;
     private EditText mEditTextEmail;
     private EditText mEditTextPassword;
+
+    private static final String TAG = "RegisterActivity.java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -45,9 +50,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String email = mEditTextEmail.getText().toString();
                     String pront = mEditTextPront.getText().toString();
                     String password = mEditTextPassword.getText().toString();
-                    String[] params = {email, pront, password};
                     RegisterTask task = new RegisterTask(this);
-                    task.beginTask(params);
+                    Usuario user = new Usuario("Maicão", pront, email, password);
+                    String xml = XMLParser.objectToXML(user, Usuario.class);
+                    Log.d(TAG, "XML do usuário: " + xml);
+                    task.execute(xml);
                 } else {
                     String errorMessage = getResources().getString(R.string.preencher_campos);
                     if(mEditTextEmail.getText().toString().equals("")){
