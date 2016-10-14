@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.utility.Validacao;
+import br.org.arymax.katana.http.UserLoginTask;
 
 import static java.lang.System.out;
 
@@ -24,7 +25,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //MAICUDO
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -44,17 +44,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int id = view.getId();
         switch (id){
             case R.id.btn_login:
+                String senha = mEditTextPassword.getText().toString();
                 String prontuario = mEditTextUser.getText().toString().substring(0,6);
+                String pront = mEditTextUser.getText().toString();
                 out.println(prontuario);
                 String dvUsuario = mEditTextUser.getText().toString().substring(6);
-                String errorMessage = "Prontuário Inválido!";
-                if(!Validacao.isProntuarioValido(dvUsuario, prontuario))
-                {
-                    mEditTextUser.setError(errorMessage);
-                }
-                else
-                {
-                    //Comunica com servidor!!!!!!
+                if(!Validacao.isProntuarioValido(dvUsuario, prontuario)) {
+                    Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
+                } else {
+                    UserLoginTask task = new UserLoginTask(this);
+                    task.execute(pront, senha);
                 }
                 break;
 

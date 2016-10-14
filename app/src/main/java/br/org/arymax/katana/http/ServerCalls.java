@@ -50,7 +50,7 @@ public class ServerCalls {
             /**
              *
              */
-            protected static final String GET_USER_PATH = "";
+            protected static final String GET_USER_PATH = "/usuario/login/";
         //
 
 
@@ -197,7 +197,7 @@ public class ServerCalls {
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setRequestProperty("Accept", accept);
             httpCon.setRequestMethod(method);
-            httpCon.setDoOutput(true);
+            httpCon.setDoOutput(false);
             try (InputStreamReader in = new InputStreamReader(httpCon.getInputStream(), StandardCharsets.UTF_8)) {
                 br = new BufferedReader(in);
                 while ((tmp = br.readLine()) != null) {
