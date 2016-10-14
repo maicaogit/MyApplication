@@ -12,7 +12,7 @@ import br.org.arymax.katana.activity.UserActivity;
 /**
  * Criado por Marco em 12/10/2016.
  */
-public class RegisterTask extends AsyncTask<String, Void, Void> {
+public class RegisterTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
     private ProgressDialog mProgress;
@@ -31,16 +31,26 @@ public class RegisterTask extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
-        int cont = 0;
-        do{
-            cont++;
-        } while (cont < 5 * 10 * 10 * 10 * 10 * 10);
-        return null;
+    protected String doInBackground(String... params) {
+        String userXML = params[0];
+        String result = "";
+        try {
+             result = ServerCalls.callSet(
+                    ServerCalls.URL,
+                    userXML,
+                    ServerCalls.REGISTER_USER_PATH,
+                    ServerCalls.POST,
+                    ServerCalls.APP_XML,
+                    ServerCalls.TEXT_XML
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String result) {
         mProgress.dismiss();
         mContext.startActivity(new Intent(mContext, UserActivity.class));
         ((AppCompatActivity) mContext).finish();

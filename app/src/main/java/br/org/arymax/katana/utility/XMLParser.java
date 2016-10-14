@@ -2,6 +2,8 @@ package br.org.arymax.katana.utility;
 
 import com.thoughtworks.xstream.XStream;
 
+import br.org.arymax.katana.model.Usuario;
+
 
 /**
  * Criado por Marco em 13/08/2016.
@@ -14,6 +16,7 @@ import com.thoughtworks.xstream.XStream;
  */
 public class XMLParser {
 
+    private static XStream stream;
 
     /**
      * Desserializa um XML em um objeto
@@ -23,9 +26,12 @@ public class XMLParser {
      * @return Objeto da classe type
      */
     public static <T> T XMLToObject(String XML, Class<T> type){
+        stream = getStream();
         T obj = null;
-        XStream stream = new XStream();
-
+        if(type == Usuario.class){
+            stream.processAnnotations(Usuario.class);
+            obj = (T) stream.fromXML(XML);
+        }
         return obj;
     }
 
@@ -37,9 +43,20 @@ public class XMLParser {
      * @return XML serializado
      */
     public static String objectToXML(Object obj, Class type){
+        stream = getStream();
         String XML = "";
-
+        if(type == Usuario.class){
+            stream.processAnnotations(Usuario.class);
+            XML = stream.toXML(obj);
+        }
         return XML;
+    }
+
+    private static XStream getStream(){
+        if(stream == null)
+            return new XStream();
+        else
+            return stream;
     }
 
 }

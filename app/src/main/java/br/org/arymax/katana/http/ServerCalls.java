@@ -18,20 +18,101 @@ import java.nio.charset.StandardCharsets;
  */
 public class ServerCalls {
 
-    protected static final String URL = "";
+
+    //Paths de rest
+        /**
+         * URL do server
+         */
+        protected static final String URL = "";
+
+        //POST
+            /**
+             * Path de cadastro de usuário
+             */
+            protected static final String REGISTER_USER_PATH = "/usuario/cadastro";
+
+
+
+            /**
+             * Path de cadastro de pergunta
+             */
+            protected static final String REGISTER_QUESTION_PATH = "/pergunta/cadastro";
+
+
+
+            /**
+             * Path de cadastro de resposta
+             */
+            protected static final String REGISTER_ANSWER_PATH = "/resposta/cadastro";
+
+
+
+    //METHODS
+        /**
+         * Constante para o método de comunicação HTTP POST
+         */
+        protected static final String POST = "POST";
+
+
+
+        /**
+         * Constante para o método de comunicação HTTP GET
+         */
+        protected static final String GET = "GET";
+
+
+
+    //CONTENT-TYPE
+        /**
+         * Constante para o content-type APP/XML
+         */
+        protected static final String APP_XML = "APPLICATION/XML";
+
+
+
+        /**
+         * Constante para o content-type TEXT/PLAIN;
+         */
+        protected static final String TEXT_PLAIN = "TEXT/PLAIN";
+
+
+
+        /**
+         * Constante para o content-type TEXT/XML
+         */
+        protected static final String TEXT_XML = "TEXT/XML";
+
+
     private static final String TAG = "ServerCalls.java";
 
+    /**
+     * Enum para status de chamadas do servidor
+     */
     public enum Status{
-
+        /**
+         * Tipo de enumeração que indica sucesso
+         */
         OK,
 
+        /**
+         * Tipo de enumeração que indica que a operação da foi realizada
+         */
         EXISTE,
 
+        /**
+         * Tipo de enumeração que indica erro
+         */
         ERRO;
 
 
+        /**
+         * Converte uma string em um Status
+         *
+         * @param status string a ser convertida
+         * @return string convertida em status
+         */
         public static Status fromString(String status){
-            Status stats = null;
+            Status stats;
             switch (status){
                 case "OK":
                     stats = OK;
@@ -44,10 +125,12 @@ public class ServerCalls {
                 case "ERRO":
                     stats = ERRO;
                     break;
+
+                default:
+                    stats = null;
             }
             return stats;
         }
-
     }
 
     /**
