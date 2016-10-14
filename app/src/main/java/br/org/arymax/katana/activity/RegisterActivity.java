@@ -14,6 +14,8 @@ import br.org.arymax.katana.http.RegisterTask;
 import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.XMLParser;
 
+import static java.lang.System.out;
+
 /**
  * Criado por Marco em 12/10/2016.
  */
@@ -47,15 +49,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         int id = view.getId();
         switch (id){
             case R.id.btn_cadastrar:
-                if(areFieldsFilled()){
-                    String email = mEditTextEmail.getText().toString();
-                    String pront = mEditTextPront.getText().toString();
-                    String password = mEditTextPassword.getText().toString();
-                    RegisterTask task = new RegisterTask(this);
-                    Usuario user = new Usuario("Maicão", pront, email, password);
-                    String xml = XMLParser.objectToXML(user, Usuario.class);
-                    Log.d(TAG, "XML do usuário: " + xml);
-                    task.execute(xml);
+                if(areFieldsFilled())
+                {
+                    String prontuario = mEditTextPront.getText().toString().substring(0,6);
+                    String dvUsuario = mEditTextPront.getText().toString().substring(6);
+                    String errorMessage = "Prontuário Inválido!";
+                    if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario))
+                    {
+                        mEditTextPront.setError(errorMessage);
+                    }
+                    else
+                    {
+                        String email = mEditTextEmail.getText().toString();
+                        String pront = mEditTextPront.getText().toString();
+                        String password = mEditTextPassword.getText().toString();
+                        RegisterTask task = new RegisterTask(this);
+                        Usuario user = new Usuario("Maicão", pront, email, password);
+                        String xml = XMLParser.objectToXML(user, Usuario.class);
+                        Log.d(TAG, "XML do usuário: " + xml);
+                        task.execute(xml);
+                    }
                 } else {
                     String errorMessage = getResources().getString(R.string.preencher_campos);
                     if(mEditTextEmail.getText().toString().equals("")){
