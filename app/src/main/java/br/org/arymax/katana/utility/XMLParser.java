@@ -19,6 +19,7 @@ public class XMLParser {
     private static XStream stream;
 
     /**
+     *
      * Desserializa um XML em um objeto
      *
      * @param XML O XML a ser deserializado

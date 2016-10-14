@@ -32,6 +32,7 @@ public class Resposta {
      * @param pkUsuario Número de indeitificação do usuário.
      * @param melhorResposta Melhor resposta.
      */
+
     public Resposta(long pkResposta, String resposta, Date data, long pkUsuario, boolean melhorResposta) {
         this.pkResposta = pkResposta;
         this.resposta = resposta;

@@ -29,6 +29,7 @@ public class Pergunta {
     }
 
     /**
+     *
      * Construtor Pergunta.
      *
      * @param pkPergunta Número de identificação da pergunta.

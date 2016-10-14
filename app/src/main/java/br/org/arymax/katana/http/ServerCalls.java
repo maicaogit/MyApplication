@@ -25,6 +25,7 @@ public class ServerCalls {
          */
         protected static final String URL = "http://pdscidadeajuda.ddns.net:8080/ServidorConecta/";
 
+
         //POST
             /**
              * Path de cadastro de usuário

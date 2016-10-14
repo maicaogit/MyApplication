@@ -25,6 +25,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute(){
+
         String message = mContext.getResources().getString(R.string.loading);
         mProgress = new ProgressDialog(mContext);
         mProgress.setMessage(message);

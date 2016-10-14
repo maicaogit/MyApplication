@@ -24,6 +24,7 @@ public class Usuario {
      * @param email E-mail do usuário.
      * @param senha Senha do usuário.
      */
+
     public Usuario(String nome, String prontuario, String email, String senha) {
         this.nome = nome;
         this.prontuario = prontuario;

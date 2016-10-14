@@ -18,6 +18,7 @@ public class Validacao {
         num.toLowerCase();
         out.println("Agora num: "+num);
         //variáveis de instancia
+
         int soma = 0;
         int resto = 0;
         String dv;
