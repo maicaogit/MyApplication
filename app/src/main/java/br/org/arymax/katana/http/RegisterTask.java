@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.UserActivity;
@@ -16,6 +17,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
     private ProgressDialog mProgress;
+    private static final String TAG = "RegisterTask.java";
 
     public RegisterTask(Context context){
         mContext = context;
@@ -26,7 +28,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
         String message = mContext.getResources().getString(R.string.loading);
         mProgress = new ProgressDialog(mContext);
         mProgress.setMessage(message);
-        mProgress.setCancelable(true);
+        mProgress.setCancelable(false);
         mProgress.show();
     }
 
@@ -40,11 +42,11 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
                     userXML,
                     ServerCalls.REGISTER_USER_PATH,
                     ServerCalls.POST,
-                    ServerCalls.APP_XML,
-                    ServerCalls.TEXT_XML
+                    ServerCalls.TEXT_XML,
+                    ServerCalls.TEXT_PLAIN
             );
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Exceção lançada", e);
         }
         return result;
     }
@@ -54,9 +56,5 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
         mProgress.dismiss();
         mContext.startActivity(new Intent(mContext, UserActivity.class));
         ((AppCompatActivity) mContext).finish();
-    }
-
-    public void beginTask(String[] params){
-        this.execute(params);
     }
 }

@@ -36,7 +36,7 @@ public class UserActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, 0, 0);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -82,17 +82,17 @@ public class UserActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_make_question) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_my_answers) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_my_questions) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_my_profile) {
+
+        } else if (id == R.id.nav_settings) {
 
         }
 

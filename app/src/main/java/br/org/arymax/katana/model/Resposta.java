@@ -19,6 +19,8 @@ public class Resposta {
     private Date data;
     @XStreamImplicit(itemFieldName = "usuario")
     private Usuario user;
+    @XStreamImplicit(itemFieldName = "pergunta")
+    private Pergunta pergunta;
     private boolean melhorResposta;
 
     /**
