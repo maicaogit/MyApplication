@@ -37,7 +37,7 @@ public class ServerCalls {
             /**
              * Path de cadastro de pergunta
              */
-            protected static final String REGISTER_QUESTION_PATH = "/pergunta/cadastro";
+            protected static final String REGISTER_QUESTION_PATH = "/perguntas/cadastro";
 
 
 
@@ -48,10 +48,20 @@ public class ServerCalls {
         //
         //GET
             /**
-             *
+             * Path para o login de usuário
              */
             protected static final String GET_USER_PATH = "/usuario/login/";
-        //
+
+            /**
+             * Path para retornar a lista de perguntas
+             */
+            protected static final String GET_ALL_QUESTIONS_PATH = "/perguntas/todasperguntas/";
+
+            /**
+             * Path para retornar as respostas de uma pergunta
+             */
+            protected static final String GET_ANSWERS = "";
+    //
 
 
 

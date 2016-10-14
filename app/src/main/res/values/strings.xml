@@ -32,6 +32,14 @@
 
     <!--Fim das Strings de Activities-->
 
+    <!--Strings de Fragments-->
+        <!--MakeQuestionFragment-->
+            <string name="sending_question">Enviando pergunta...</string>
+            <string name="snackbar_message_ok">Pergunta enviada com sucesso</string>
+            <string name="snackbar_message_error">Erro ao enviar pergunta</string>
+        <!--Fim MakeQuestionFragment-->
+    <!--Fim das Strings de Fragments-->
+
     <!--Dialogs-->
     <string name="loading">Carregando...</string>
     <string name="title_activity_user">UserActivity</string>

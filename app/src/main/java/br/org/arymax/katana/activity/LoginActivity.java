@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.http.UserLoginTask;
+import br.org.arymax.katana.utility.Validacao;
 
 import static java.lang.System.out;
 

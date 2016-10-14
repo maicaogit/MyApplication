@@ -12,6 +12,7 @@ import android.widget.EditText;
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.http.RegisterTask;
 import br.org.arymax.katana.model.Usuario;
+import br.org.arymax.katana.utility.Validacao;
 import br.org.arymax.katana.utility.XMLParser;
 
 import static java.lang.System.out;
