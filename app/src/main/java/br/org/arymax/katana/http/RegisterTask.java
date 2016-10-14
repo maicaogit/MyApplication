@@ -53,8 +53,13 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        mProgress.dismiss();
-        mContext.startActivity(new Intent(mContext, UserActivity.class));
-        ((AppCompatActivity) mContext).finish();
+        ServerCalls.Status status = ServerCalls.Status.fromString(result);
+        if(status == ServerCalls.Status.OK){
+            mProgress.dismiss();
+            mContext.startActivity(new Intent(mContext, UserActivity.class));
+            ((AppCompatActivity) mContext).finish();
+        } else {
+            mProgress.dismiss();
+        }
     }
 }
