@@ -3,6 +3,9 @@ package br.org.arymax.katana.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -57,19 +60,13 @@ public class UserActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -80,21 +77,54 @@ public class UserActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //Botão início
         if (id == R.id.nav_home) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(0, new Fragment());
+            ft.commit();
+        } else
 
-        } else if (id == R.id.nav_make_question) {
+            //Botão Fazer Pergunta
+            if (id == R.id.nav_make_question) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(0, new Fragment());
+            ft.commit();
+        } else
 
-        } else if (id == R.id.nav_my_answers) {
+            //Botão Minhas Respostas
+            if (id == R.id.nav_my_answers) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(0, new Fragment());
+            ft.commit();
+        } else
 
-        } else if (id == R.id.nav_my_questions) {
+            //Botão Minhas perguntas
+            if (id == R.id.nav_my_questions) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(0, new Fragment());
+            ft.commit();
+        } else
 
-        } else if (id == R.id.nav_my_profile) {
+            //Botão Meu Perfil
+            if (id == R.id.nav_my_profile) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(0, new Fragment());
+            ft.commit();
+        } else
 
-        } else if (id == R.id.nav_settings) {
-
+            //Botão Configurações
+            if (id == R.id.nav_settings) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.content_user_activity, new Fragment());
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
