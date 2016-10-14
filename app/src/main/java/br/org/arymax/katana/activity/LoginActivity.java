@@ -46,12 +46,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String prontuario = mEditTextUser.getText().toString().substring(0,6);
                 out.println(prontuario);
                 String dvUsuario = mEditTextUser.getText().toString().substring(6);
-                if(!Validacao.isProntuarioValido(dvUsuario, prontuario)) {
-
+                String errorMessage = "Prontuário Inválido!";
+                if(!Validacao.isProntuarioValido(dvUsuario, prontuario))
+                {
+                    mEditTextUser.setError(errorMessage);
                 }
                 else
                 {
-                    //Comunica com servidor!!!
+                    //Comunica com servidor!!!!
                 }
                 break;
 
