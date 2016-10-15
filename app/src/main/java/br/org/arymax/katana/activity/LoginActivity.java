@@ -48,11 +48,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String senha = mEditTextPassword.getText().toString();
                 String prontuario = mEditTextUser.getText().toString().substring(0,6);
                 String pront = mEditTextUser.getText().toString();
-                out.println(prontuario);
                 String dvUsuario = mEditTextUser.getText().toString().substring(6);
                 if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario)) {
                     Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
                 } else {
+
                     UserLoginTask task = new UserLoginTask(this);
                     task.execute(pront, senha);
                 }
