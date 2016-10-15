@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText mEditTextPront;
     private EditText mEditTextEmail;
     private EditText mEditTextPassword;
+    private EditText mEditTextName;
 
     private static final String TAG = "RegisterActivity.java";
 
@@ -39,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mEditTextEmail = (EditText) findViewById(R.id.edit_text_email);
         mEditTextPront = (EditText) findViewById(R.id.edit_text_prontuario);
         mEditTextPassword = (EditText) findViewById(R.id.edit_text_password);
+        mEditTextName = (EditText) findViewById(R.id.edit_text_nome);
 
         mEditTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
@@ -54,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 {
                     String prontuario = mEditTextPront.getText().toString().substring(0,6);
                     String dvUsuario = mEditTextPront.getText().toString().substring(6);
-                    String errorMessage = "Prontuário Inválido!";
+                    String errorMessage = getResources().getString(R.string.campo_invalido);
                     if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario))
                     {
                         mEditTextPront.setError(errorMessage);
@@ -64,8 +66,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         String email = mEditTextEmail.getText().toString();
                         String pront = mEditTextPront.getText().toString();
                         String password = mEditTextPassword.getText().toString();
+                        String nome = mEditTextName.getText().toString();
                         RegisterTask task = new RegisterTask(this);
-                        Usuario user = new Usuario("Maicão", pront, email, password);
+                        Usuario user = new Usuario(nome, pront, email, password);
                         String xml = XMLParser.objectToXML(user, Usuario.class);
                         Log.d(TAG, "XML do usuário: " + xml);
                         task.execute(xml);
@@ -80,6 +83,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                     if(mEditTextPassword.getText().toString().equals("")){
                         mEditTextPassword.setError(errorMessage);
+                    }
+                    if(mEditTextName.getText().toString().equals("")){
+                        mEditTextName.setError(errorMessage);
                     }
                 }
                 break;

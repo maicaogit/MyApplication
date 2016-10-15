@@ -4,6 +4,7 @@
 
     <!--Strings de Activities-->
 
+    <string name="nome_hint">Nome</string>
     <string name="prontuario_hint">Prontuário</string>
     <string name="senha_hint">Senha</string>
     <string name="preencher_campos">Este campo deve ser preenchido!</string>
@@ -16,8 +17,9 @@
 
     <!--RegisterActivity-->
     <string name="email_hint">Email</string>
-    <string name="nome_hint">Nome</string>
     <string name="cadastrar_btn_text">Cadastrar</string>
+    <string name="cadastro_realizado">Cadastro realizado com sucesso!</string>
+    <string name="positive_button">Ir para tela de login</string>
     <!--Fim RegisterActivity-->
 
     <!--UserActivity-->

@@ -170,6 +170,23 @@ public class ServerCalls {
             }
             return stats;
         }
+
+        /**
+         * Converte um Status em String
+         *
+         * @param status Status a ser convertido
+         * @return Status convertido em String
+         */
+        public static String valueOf(Status status){
+            if(status == OK){
+                return "OK";
+            } else if(status == EXISTE){
+                return "EXISTE";
+            } else if(status == ERRO){
+                return "ERRO";
+            } else
+                return null;
+        }
     }
 
     /**

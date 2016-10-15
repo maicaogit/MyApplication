@@ -30,6 +30,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <EditText
+                    android:hint="@string/nome_hint"
+                    android:textColorHint="@color/colorTextIcons"
+                    android:id="@+id/edit_text_nome"
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextIcons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"/>
+
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
