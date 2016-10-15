@@ -11,6 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorTextIcons"
     tools:context="br.org.arymax.katana.activity.UserActivity"
-    tools:showIn="@layout/app_bar_user">
+    tools:showIn="@layout/app_bar_user"
+    android:id="@+id/content_user">
 
 </RelativeLayout>

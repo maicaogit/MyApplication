@@ -3,6 +3,8 @@ package br.org.arymax.katana.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.fragment.MakeQuestionFragment;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +91,14 @@ public class UserActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_make_question) {
-
-        } else if (id == R.id.nav_my_answers) {
+        } else if (id == R.id.nav_make_question)
+        {
+            MakeQuestionFragment mkq = new MakeQuestionFragment();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_user, mkq);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_my_answers) {
 
         } else if (id == R.id.nav_my_questions) {
 
