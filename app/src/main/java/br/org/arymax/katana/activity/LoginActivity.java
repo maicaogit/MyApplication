@@ -1,6 +1,7 @@
 package br.org.arymax.katana.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.http.UserLoginTask;
+import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.Validacao;
 
 import static java.lang.System.out;
@@ -27,6 +29,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);
+        boolean logado = preferences.getBoolean("logado", false);
+        if(logado){
+            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+            startActivity(intent);
+            finish();
+        }
         setContentView(R.layout.activity_login);
 
         mButtonLogin = (Button) findViewById(R.id.btn_login);
@@ -46,15 +56,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (id){
             case R.id.btn_login:
                 String senha = mEditTextPassword.getText().toString();
-                String prontuario = mEditTextUser.getText().toString().substring(0,6);
                 String pront = mEditTextUser.getText().toString();
-                String dvUsuario = mEditTextUser.getText().toString().substring(6);
-                if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario)) {
-                    Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
+                if(senha.equals("") || pront.equals("")){
+                    String errorMessage = getResources().getString(R.string.preencher_campos);
+                    if(senha.equals("")){
+                        mEditTextPassword.setError(errorMessage);
+                    }
+                    if(pront.equals("")){
+                        mEditTextUser.setError(errorMessage);
+                    }
+                } else if(pront.length() < 7){
+                    String invalidPront = getResources().getString(R.string.campo_invalido);
+                    mEditTextUser.setError(invalidPront);
                 } else {
-
-                    UserLoginTask task = new UserLoginTask(this);
-                    task.execute(pront, senha);
+                    String prontuario = mEditTextUser.getText().toString().substring(0,6);
+                    out.println(prontuario);
+                    String dvUsuario = mEditTextUser.getText().toString().substring(6);
+                    if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario)) {
+                        Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
+                    } else {
+                        UserLoginTask task = new UserLoginTask(this);
+                        task.execute(pront, senha);
+                    }
                 }
                 break;
 
