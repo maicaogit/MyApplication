@@ -91,6 +91,7 @@ public class MakeQuestionFragment extends Fragment {
     }
 
 
+
     private boolean areFieldsFilled(){
         String title = mQuestionTitle.getText().toString();
         String content = mQuestionContent.getText().toString();
