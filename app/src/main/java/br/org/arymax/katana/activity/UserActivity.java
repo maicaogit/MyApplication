@@ -1,5 +1,6 @@
 package br.org.arymax.katana.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,9 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
+import br.org.arymax.katana.utility.Constants;
+
+import static java.lang.System.out;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +54,7 @@ public class UserActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -89,9 +95,12 @@ public class UserActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_home)
+        {
 
-        } else if (id == R.id.nav_make_question)
+        }
+
+        else if (id == R.id.nav_make_question)
         {
             MakeQuestionFragment mkq = new MakeQuestionFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -115,7 +124,8 @@ public class UserActivity extends AppCompatActivity
 
         }
 
-        else if (id == R.id.nav_settings) {
+        else if (id == R.id.nav_settings)
+        {
 
         }
 
