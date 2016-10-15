@@ -40,7 +40,7 @@ public class QuestionPostTask extends AsyncTask<String, Void, String> {
         String result = "";
         try {
             result = ServerCalls.callSet(
-                    ServerCalls.URL,
+                    ServerCalls.SERVER_URL,
                     xmlQuestion,
                     ServerCalls.REGISTER_QUESTION_PATH,
                     ServerCalls.POST,

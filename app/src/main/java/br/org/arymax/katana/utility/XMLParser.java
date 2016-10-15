@@ -29,10 +29,8 @@ public class XMLParser {
     public static <T> T XMLToObject(String XML, Class<T> type){
         stream = getStream();
         T obj = null;
-        if(type == Usuario.class){
-            stream.processAnnotations(Usuario.class);
-            obj = (T) stream.fromXML(XML);
-        }
+        stream.processAnnotations(type);
+        obj = (T) stream.fromXML(XML);
         return obj;
     }
 
@@ -46,14 +44,17 @@ public class XMLParser {
     public static String objectToXML(Object obj, Class type){
         stream = getStream();
         String XML = "";
-        if(type == Usuario.class){
-            stream.processAnnotations(Usuario.class);
-            XML = stream.toXML(obj);
-        }
+        stream.processAnnotations(type);
+        XML = stream.toXML(obj);
         return XML;
     }
 
-    private static XStream getStream(){
+    /**
+     * Retorna a stream atual
+     *
+     * @return objeto da classe {@link}XStream.java
+     */
+    public static XStream getStream(){
         if(stream == null)
             return new XStream();
         else

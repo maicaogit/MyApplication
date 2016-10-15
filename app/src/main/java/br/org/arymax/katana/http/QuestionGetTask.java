@@ -25,7 +25,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
         String xmlQuestion = "";
         try{
             xmlQuestion = ServerCalls.callGet(
-                    ServerCalls.URL + "funcoes" + ServerCalls.GET_ALL_QUESTIONS_PATH + "/" + ordenacao,
+                    ServerCalls.SERVER_URL + "funcoes" + ServerCalls.GET_ALL_QUESTIONS_PATH + "/" + ordenacao,
                     ServerCalls.GET,
                     ServerCalls.APP_XML
             );

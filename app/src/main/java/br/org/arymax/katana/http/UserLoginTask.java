@@ -39,7 +39,7 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
         String userXml = "";
         try {
             userXml = ServerCalls.callGet(
-                    ServerCalls.URL + "funcoes" + ServerCalls.GET_USER_PATH  + pront + "/" + senha ,
+                    ServerCalls.SERVER_URL + "funcoes" + ServerCalls.GET_USER_PATH  + pront + "/" + senha ,
                     ServerCalls.GET,
                     ServerCalls.APP_XML
             );

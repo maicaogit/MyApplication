@@ -39,7 +39,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
         String result = "";
         try {
              result = ServerCalls.callSet(
-                    ServerCalls.URL,
+                    ServerCalls.SERVER_URL,
                     userXML,
                     ServerCalls.REGISTER_USER_PATH,
                     ServerCalls.POST,

@@ -23,7 +23,7 @@ public class ServerCalls {
         /**
          * URL do server
          */
-        protected static final String URL = "http://pdscidadeajuda.ddns.net:8080/ServidorConecta/";
+        protected static final String SERVER_URL = "http://pdscidadeajuda.ddns.net:8080/ServidorConecta/";
 
 
         //POST
@@ -37,7 +37,7 @@ public class ServerCalls {
             /**
              * Path de cadastro de pergunta
              */
-            protected static final String REGISTER_QUESTION_PATH = "/perguntas/cadastro";
+            protected static final String REGISTER_QUESTION_PATH = "/pergunta/cadastro";
 
 
 
@@ -45,28 +45,44 @@ public class ServerCalls {
              * Path de cadastro de resposta
              */
             protected static final String REGISTER_ANSWER_PATH = "/resposta/cadastro";
-        //
+
         //GET
             /**
              * Path para o login de usuário
              */
             protected static final String GET_USER_PATH = "/usuario/login/";
 
+
+
             /**
              * Path para retornar a lista de perguntas
              */
-            protected static final String GET_ALL_QUESTIONS_PATH = "/perguntas/todasperguntas/";
+            protected static final String GET_ALL_QUESTIONS_PATH = "/pergunta/todasperguntas/";
+
+
+
+            /**
+             * Path para retornar uma pergunta
+             */
+            protected static final String GET_QUESTION_PATH = "/pergunta/abrir/";
+
+
 
             /**
              * Path para retornar as respostas de uma pergunta
              */
-            protected static final String GET_ANSWERS = "";
-    //
+            protected static final String GET_ANSWERS_PATH = "/resposta/todasRespostas/";
+
+        //DELETE
+            /**
+             *
+             */
+
 
 
 
     //METHODS
-        /**
+    /**
          * Constante para o método de comunicação HTTP POST
          */
         protected static final String POST = "POST";
@@ -79,9 +95,14 @@ public class ServerCalls {
         protected static final String GET = "GET";
 
 
+        /**
+         * Constante para o método de comunicação HTTP DELETE
+         */
+        protected static final String DELETE = "DELETE";
+
 
     //CONTENT-TYPE
-        /**
+    /**
          * Constante para o content-type APP/XML
          */
         protected static final String APP_XML = "APPLICATION/XML";
