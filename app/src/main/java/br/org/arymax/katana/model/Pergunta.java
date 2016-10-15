@@ -1,11 +1,8 @@
 package br.org.arymax.katana.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.Date;
-
-import br.org.arymax.katana.model.Usuario;
 
 /**
  *
@@ -16,11 +13,10 @@ public class Pergunta {
 
     private long pkPergunta;
     private String titulo;
-    private String pergunta;
+    private String texto;
     private boolean anonimo;
     private Date data;
-    @XStreamImplicit(itemFieldName = "usuario")
-    private Usuario user;
+    private Usuario usuario;
 
     /**
      * Construtor Pergunta.
@@ -29,23 +25,38 @@ public class Pergunta {
     }
 
     /**
+     * Construtor Pergunta.
+     *
+     * @param titulo Título da pergunta.
+     * @param texto Pergunta.
+     * @param anonimo Se a pessoa quer manter o anonimato ou não.
+     * @param pkUsuario Número de identificação do usuário.
+     */
+    public Pergunta(String titulo, String texto, boolean anonimo, long pkUsuario){
+        this.titulo = titulo;
+        this.texto = texto;
+        this.anonimo = anonimo;
+        this.usuario = new Usuario(pkUsuario);
+    }
+
+    /**
      *
      * Construtor Pergunta.
      *
      * @param pkPergunta Número de identificação da pergunta.
      * @param titulo Titulo da pergunta.
-     * @param pergunta Pergunta.
+     * @param texto Pergunta.
      * @param anonimo Se a pessoa quer manter o anonimato ou não.
      * @param data Data em que foi feita a pergunta.
      * @param pkUsuario Número de identificação do usuário.
      */
-    public Pergunta(long pkPergunta, String titulo, String pergunta, boolean anonimo, Date data, long pkUsuario) {
+    public Pergunta(long pkPergunta, String titulo, String texto, boolean anonimo, Date data, long pkUsuario) {
         this.pkPergunta = pkPergunta;
         this.titulo = titulo;
-        this.pergunta = pergunta;
+        this.texto = texto;
         this.anonimo = anonimo;
         this.data = (Date) data.clone();
-        this.user = new Usuario(pkUsuario);
+        this.usuario = new Usuario(pkUsuario);
     }
 
     /**
@@ -53,14 +64,14 @@ public class Pergunta {
      *
      * @param pkPergunta Número de identificação da pergunta.
      * @param titulo Titulo da pergunta.
-     * @param pergunta Pergunta.
+     * @param texto Pergunta.
      * @param pkUsuario Número de identificação do usuário.
      */
-    public Pergunta(long pkPergunta, String titulo, String pergunta, long pkUsuario) {
+    public Pergunta(long pkPergunta, String titulo, String texto, long pkUsuario) {
         this.pkPergunta = pkPergunta;
         this.titulo = titulo;
-        this.pergunta = pergunta;
-        this.user = new Usuario(pkUsuario);
+        this.texto = texto;
+        this.usuario = new Usuario(pkUsuario);
     }
 
     /**
@@ -86,17 +97,17 @@ public class Pergunta {
      *
      * @return pergunta.
      */
-    public String getPergunta() {
-        return pergunta;
+    public String getTexto() {
+        return texto;
     }
 
     /**
      * Setter pergunta.
      *
-     * @param pergunta Pergunta.
+     * @param texto Pergunta.
      */
-    public void setPergunta(String pergunta) {
-        this.pergunta = pergunta;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
     /**
@@ -122,17 +133,17 @@ public class Pergunta {
      *
      * @return user.
      */
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     /**
      * Setter user.
      *
-     * @param user Objeto do usuário.
+     * @param usuario Objeto do usuário.
      */
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getTitulo() {

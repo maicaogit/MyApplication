@@ -55,13 +55,16 @@ public class QuestionPostTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result){
-        mProgress.dismiss();
         ServerCalls.Status status = ServerCalls.Status.fromString(result);
         if(status == ServerCalls.Status.OK){
-            Snackbar.make(mRootView, R.string.snackbar_message_ok, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRootView, R.string.snackbar_message_ok, Snackbar.LENGTH_LONG).show();
+            mProgress.dismiss();
         } else {
-            Snackbar.make(mRootView, R.string.snackbar_message_error, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRootView, R.string.snackbar_message_error, Snackbar.LENGTH_LONG).show();
+            mProgress.dismiss();
         }
     }
+
+
 
 }

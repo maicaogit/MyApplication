@@ -1,11 +1,10 @@
 package br.org.arymax.katana.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,12 +16,14 @@ import android.view.MenuItem;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
+import br.org.arymax.katana.utility.Constants;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
+    public static Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +32,6 @@ public class UserActivity extends AppCompatActivity
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,8 +55,10 @@ public class UserActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.user, menu);
+        mMenu = menu;
+        getMenuInflater().inflate(R.menu.user, mMenu);
+        MenuItem send = mMenu.findItem(R.id.action_enviar);
+        send.setVisible(false);
         return true;
     }
 
@@ -80,7 +74,7 @@ public class UserActivity extends AppCompatActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -93,6 +87,10 @@ public class UserActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_make_question)
         {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(false);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(true);
             MakeQuestionFragment mkq = new MakeQuestionFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.content_user, mkq);
@@ -117,6 +115,17 @@ public class UserActivity extends AppCompatActivity
 
         else if (id == R.id.nav_settings) {
 
+        } else if(id == R.id.nav_logout){
+            SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("logado", false);
+            editor.putLong("pk", -1);
+            editor.putString("zze", "");
+            editor.putString("prontuario", "");
+            Intent intent = new Intent(UserActivity.this ,LoginActivity.class);
+            startActivity(intent);
+            finish();
+            editor.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
