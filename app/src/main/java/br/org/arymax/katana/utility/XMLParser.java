@@ -19,8 +19,7 @@ public class XMLParser {
     private static XStream stream;
 
     /**
-     *
-     * Desserializa um XML em um objeto
+     * Deserializa um XML em um objeto
      *
      * @param XML O XML a ser deserializado
      * @param type Tipo da classe em que o XML será deserializado
