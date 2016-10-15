@@ -38,6 +38,8 @@
             <string name="sending_question">Enviando pergunta...</string>
             <string name="snackbar_message_ok">Pergunta enviada com sucesso</string>
             <string name="snackbar_message_error">Erro ao enviar pergunta</string>
+            <string name="title_hint">Título</string>
+            <string name="string_pergunta">Pergunta</string>
         <!--Fim MakeQuestionFragment-->
     <!--Fim das Strings de Fragments-->
 

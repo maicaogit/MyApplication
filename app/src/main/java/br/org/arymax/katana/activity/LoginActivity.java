@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String invalidPront = getResources().getString(R.string.campo_invalido);
                     mEditTextUser.setError(invalidPront);
                 } else {
-                    String prontuario = mEditTextUser.getText().toString().substring(0,6);
+                    String prontuario = mEditTextUser.getText().toString().substring(0, 6);
                     out.println(prontuario);
                     String dvUsuario = mEditTextUser.getText().toString().substring(6);
-                    if(!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario)) {
-                        Toast.makeText(this, "Prontuário Invalido", Toast.LENGTH_SHORT).show();
+                    if (!Validacao.isProntuarioValido(dvUsuario.toLowerCase(), prontuario)) {
+                        Toast.makeText(this, "Prontuário Inválido", Toast.LENGTH_SHORT).show();
                     } else {
                         UserLoginTask task = new UserLoginTask(this);
                         task.execute(pront, senha);
