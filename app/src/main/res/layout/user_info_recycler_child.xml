@@ -26,7 +26,9 @@
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:rippleColor="@color/colorPrimaryLight"
             android:src="@drawable/ic_add_a_photo"
+            app:backgroundTint="@color/colorPrimary"
             android:id="@+id/change_photo"
             android:layout_gravity="end|bottom"
             android:layout_margin="8dp" />

@@ -187,6 +187,11 @@ public class ServerCalls {
             } else
                 return null;
         }
+
+        @Override
+        public String toString() {
+            return super.toString();
+        }
     }
 
     /**
@@ -242,6 +247,7 @@ public class ServerCalls {
         BufferedReader br = null;
         try {
             url = new URL(host);
+            Log.d(TAG, "URL: " + url);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setRequestProperty("Accept", accept);
             httpCon.setRequestMethod(method);
