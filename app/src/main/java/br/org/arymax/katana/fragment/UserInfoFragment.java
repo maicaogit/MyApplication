@@ -31,7 +31,7 @@ public class UserInfoFragment extends Fragment {
     {
         View v = inflater.inflate(R.layout.fragment_user_info, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.user_ReyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mRecyclerView.setAdapter(new UserInfoRecycleViewAdapter());
         return v;

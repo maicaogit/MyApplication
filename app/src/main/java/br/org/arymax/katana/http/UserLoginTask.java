@@ -67,6 +67,7 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
             editor.putLong("pk", usuario.getPkUsuario());
             editor.putString("zze", zze);
             editor.putString("nome", usuario.getNome());
+            editor.putString("email", usuario.getEmail());
             editor.commit();
             mProgress.dismiss();
             Intent intent = new Intent(mContext, UserActivity.class);
