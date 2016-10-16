@@ -22,10 +22,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
 import br.org.arymax.katana.fragment.UserInfoFragment;
+import br.org.arymax.katana.http.QuestionGetTask;
 import br.org.arymax.katana.utility.Constants;
+
+import static java.lang.System.out;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,7 +41,8 @@ public class UserActivity extends AppCompatActivity
     private NavigationView mNavigation;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_user);
@@ -60,6 +66,21 @@ public class UserActivity extends AppCompatActivity
         View headerView = mNavigation.getHeaderView(0);
         ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
         ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
+
+        QuestionGetTask qgt = new QuestionGetTask();
+        try
+        {
+            String xmlQuestion = qgt.execute("data").get();
+            out.println(xmlQuestion);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ExecutionException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 

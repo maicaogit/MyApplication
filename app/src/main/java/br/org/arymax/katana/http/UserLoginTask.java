@@ -14,6 +14,8 @@ import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
 
+import static java.lang.System.out;
+
 /**
  * Criado por Marco em 14/10/2016.
  */

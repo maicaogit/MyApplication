@@ -10,12 +10,14 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     private static final String TAG = "QuestionGetTask.java";
 
-    public QuestionGetTask(){
+    public QuestionGetTask()
+    {
 
     }
 
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute()
+    {
 
     }
 
@@ -36,7 +38,8 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String result)
+    {
 
     }
 
