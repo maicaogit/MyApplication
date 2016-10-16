@@ -35,6 +35,7 @@ public class UserActivity extends AppCompatActivity
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.action_home);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -98,8 +99,10 @@ public class UserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            getSupportActionBar().setTitle(R.string.action_home);
 
         } else if (id == R.id.nav_make_question) {
+            getSupportActionBar().setTitle(R.string.action_make_question);
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(false);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
@@ -110,15 +113,16 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
         else if (id == R.id.nav_my_answers) {
+            getSupportActionBar().setTitle(R.string.action_my_answers);
         }
 
 
         else if (id == R.id.nav_my_questions) {
-
+            getSupportActionBar().setTitle(R.string.action_my_questions);
         }
 
         else if (id == R.id.nav_my_profile) {
-
+            getSupportActionBar().setTitle(R.string.action_my_profile);
         }
 
         else if (id == R.id.nav_settings) {

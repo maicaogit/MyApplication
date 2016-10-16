@@ -9,6 +9,10 @@
             android:id="@+id/nav_make_question"
             android:title="@string/action_make_question" />
 
+        <item
+            android:id="@+id/nav_my_profile"
+            android:title="@string/action_my_profile" />
+
         <item android:title="@string/answer_group_title">
             <menu>
                 <group android:checkableBehavior="single">
@@ -30,9 +34,6 @@
 
                 <group android:checkableBehavior="single">
 
-                    <item
-                        android:id="@+id/nav_my_profile"
-                        android:title="@string/action_my_profile" />
                     <item
                         android:id="@+id/nav_settings"
                         android:title="@string/action_settings" />
