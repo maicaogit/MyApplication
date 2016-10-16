@@ -1,10 +1,12 @@
 package br.org.arymax.katana.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,12 +32,13 @@ import br.org.arymax.katana.utility.Constants;
 public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRecycleViewAdapter.ViewHolder>{
 
     private Context context;
-    private int lastButtonClicked = -1;
+
+    public UserInfoRecycleViewAdapter(Context context){
+        this.context = context;
+    }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        this.context = parent.getContext();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.user_info_recycler_child, parent, false));
     }
 
@@ -47,12 +51,6 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
         switch (position) {
             case 0:
                 holder.label.setText("Nome");
-                /*holder.editInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "MUDOU A SENHA VIADO", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
                 holder.editInfoToolbar.setSubtitle((preferences.getString("nome", "")));
                 holder.editInfoToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -73,25 +71,18 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
                 holder.editInfoToolbar.setSubtitle((preferences.getString("prontuario", "")));
                 MenuItem item = holder.editInfoToolbar.getMenu().getItem(0);
                 item.setVisible(false);
-                //holder.editInfo.setVisibility(View.GONE);
                 break;
 
             case 2:
                 layout.removeView(holder.profileImageLayout);
                 holder.label.setText("Email");
-                /*holder.editInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "MUDOU A SENHA VIADO", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
                 holder.editInfoToolbar.setSubtitle(preferences.getString("email", "N/A"));
                 holder.editInfoToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-                                Toast.makeText(context, "MUDOU O EMAIL VIADO", Toast.LENGTH_SHORT).show();
+
                                 break;
                         }
                         return false;
@@ -108,7 +99,6 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-                                Toast.makeText(context, "MUDOU A SENHA VIADO", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return false;
@@ -128,10 +118,8 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView label;
-        private TextView cont;
         private FrameLayout profileImageLayout;
         private LinearLayout layout;
-        private ImageView editInfo;
         private Toolbar editInfoToolbar;
         private FloatingActionButton fabChangePhoto;
         private View rootView;
@@ -141,10 +129,8 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
 
             rootView = itemView;
             label = (TextView) rootView.findViewById(R.id.label);
-            //cont =  (TextView) rootView.findViewById(R.id.txtCont);
             profileImageLayout = (FrameLayout) rootView.findViewById(R.id.profile_layout);
             layout = (LinearLayout) rootView.findViewById(R.id.ll_user_info);
-            //editInfo = (ImageView) rootView.findViewById(R.id.btnEditar);
             editInfoToolbar = (Toolbar) rootView.findViewById(R.id.toolbar_holder);
             fabChangePhoto = (FloatingActionButton) rootView.findViewById(R.id.change_photo);
 

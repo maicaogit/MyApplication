@@ -35,6 +35,13 @@ public class ServerCalls {
 
 
             /**
+             * Path para mudar a senha do usuário
+             */
+            protected static final String CHANGE_PASSWORD_PATH = "/usuario/mudarSenha/";
+
+
+
+            /**
              * Path de cadastro de pergunta
              */
             protected static final String REGISTER_QUESTION_PATH = "/pergunta/cadastro";
@@ -104,6 +111,12 @@ public class ServerCalls {
          * Constante para o método de comunicação HTTP DELETE
          */
         protected static final String DELETE = "DELETE";
+
+
+        /**
+         * Constante para o método de comunicação HTTP PUT
+         */
+        protected static final String PUT = "PUT";
 
 
     //CONTENT-TYPE
