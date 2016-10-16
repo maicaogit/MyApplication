@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
+import br.org.arymax.katana.fragment.MyQuestionsFragment;
 import br.org.arymax.katana.fragment.UserInfoFragment;
 import br.org.arymax.katana.http.QuestionGetTask;
 import br.org.arymax.katana.utility.Constants;
@@ -175,12 +176,15 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        else if (id == R.id.nav_my_answers) {
+        else if (id == R.id.nav_my_answers)
+        {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_answers);
+
+
         }
 
 
@@ -191,6 +195,16 @@ public class UserActivity extends AppCompatActivity
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_questions);
+
+
+            Fragment mqFragment = fragmentManager.findFragmentByTag(MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if(mqFragment == null){
+                fragmentTransaction.add(R.id.content_user, new MyQuestionsFragment(), MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
+            } else {
+                fragmentTransaction.replace(R.id.content_user, mqFragment, MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
+            }
+            fragmentTransaction.commit();
         }
 
         else if (id == R.id.nav_settings) {
