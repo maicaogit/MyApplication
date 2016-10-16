@@ -6,34 +6,10 @@
     android:background="@color/cardViewBackground"
     tools:context="br.org.arymax.katana.fragment.UserInfoFragment">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_ReyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/navheader"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/user_ReyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="371dp"
-                android:layout_weight="1">
-
-
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
 </LinearLayout>

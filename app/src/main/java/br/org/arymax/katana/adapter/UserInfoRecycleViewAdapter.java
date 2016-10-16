@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.utility.Constants;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by douglas on 15/10/16.
@@ -30,13 +32,32 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
+        LinearLayout layout = holder.layout;
 
         switch (position)
         {
-            case 0: holder.label.setText("Nome"); holder.cont.setText(preferences.getString("nome", ""));break;
-            case 1: holder.label.setText("Prontuario");holder.cont.setText(preferences.getString("prontuario", "")); break;
-            case 2: holder.label.setText("Email");holder.cont.setText("Email"); break;
-            case 3: holder.label.setText("Senha");holder.cont.setText(preferences.getString("zze", "")); break;
+            case 0:
+                holder.label.setText("Nome");
+                holder.cont.setText(preferences.getString("nome", ""));
+                break;
+
+            case 1:
+                layout.removeView(holder.profileImage);
+                holder.label.setText("Prontuario");
+                holder.cont.setText(preferences.getString("prontuario", ""));
+                break;
+
+            case 2:
+                layout.removeView(holder.profileImage);
+                holder.label.setText("Email");
+                holder.cont.setText("Email");
+                break;
+
+            case 3:
+                layout.removeView(holder.profileImage);
+                holder.label.setText("Senha");
+                holder.cont.setText(preferences.getString("zze", ""));
+                break;
         }
     }
 
@@ -51,12 +72,16 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
 
         TextView label;
         TextView cont;
+        CircleImageView profileImage;
+        LinearLayout layout;
         public ViewHolder(View itemView)
         {
             super(itemView);
 
             label = (TextView) itemView.findViewById(R.id.label);
             cont =  (TextView) itemView.findViewById(R.id.txtCont);
+            profileImage = (CircleImageView) itemView.findViewById(R.id.circle_image_view_profile);
+            layout = (LinearLayout) itemView.findViewById(R.id.ll_user_info);
 
         }
     }
