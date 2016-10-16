@@ -45,6 +45,8 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
         return 4;
     }
 
+    //ViewHolder
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView label;
