@@ -68,6 +68,7 @@ public class UserActivity extends AppCompatActivity
         ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
         ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
 
+
     }
 
     @Override
@@ -122,7 +123,8 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user, home);
             fragmentTransaction.commit();
 
-        } else if (id == R.id.nav_make_question) {
+        } else if (id == R.id.nav_make_question)
+        {
             getSupportActionBar().setTitle(R.string.action_make_question);
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(false);
@@ -132,7 +134,10 @@ public class UserActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.content_user, mkq);
             fragmentTransaction.commit();
-        } else if (id == R.id.nav_my_profile) {
+        }
+
+        else if (id == R.id.nav_my_profile)
+        {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
@@ -143,6 +148,7 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user, usi);
             fragmentTransaction.commit();
         }
+
         else if (id == R.id.nav_my_answers) {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
@@ -152,7 +158,8 @@ public class UserActivity extends AppCompatActivity
         }
 
 
-        else if (id == R.id.nav_my_questions) {
+        else if (id == R.id.nav_my_questions)
+        {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);

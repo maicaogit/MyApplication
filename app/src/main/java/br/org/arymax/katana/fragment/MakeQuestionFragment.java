@@ -25,6 +25,8 @@ import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
 
+import static java.lang.System.out;
+
 
 public class MakeQuestionFragment extends Fragment {
 
@@ -74,6 +76,7 @@ public class MakeQuestionFragment extends Fragment {
                     long pk = preferences.getLong("pk", -1);
                     String title = mQuestionTitle.getText().toString();
                     String content = mQuestionContent.getText().toString();
+                    out.print(""+anonymousMode);
                     Pergunta pergunta = new Pergunta(title, content, anonymousMode, pk);
                     String XML = XMLParser.objectToXML(pergunta, Pergunta.class);
                     Log.d(TAG, "XML da pergunta: " + XML);

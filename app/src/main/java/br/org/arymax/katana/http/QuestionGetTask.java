@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -25,12 +26,14 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
     private Context mContext;
     private ProgressDialog mProgress;
     private HomeFragment mCallerFragment;
+    private View rootView;
 
     private static final String TAG = "QuestionGetTask.java";
 
-    public QuestionGetTask(Context context, HomeFragment callerFragment) {
+    public QuestionGetTask(View rootView, Context context, HomeFragment callerFragment) {
         mContext = context;
         mCallerFragment = callerFragment;
+        this.rootView = rootView;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
                 listPergunta.add(listPerguntas.getPerguntas().get(i));
             }
             mCallerFragment.setPerguntasList(listPergunta);
+            mCallerFragment.setRecyclerView(rootView);
             mProgress.dismiss();
         }
     }
