@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
                 layout.removeView(holder.profileImage);
                 holder.label.setText("Prontuario");
                 holder.cont.setText(preferences.getString("prontuario", ""));
+                holder.btn.setVisibility(View.GONE);
                 break;
 
             case 2:
@@ -74,6 +76,7 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
         TextView cont;
         CircleImageView profileImage;
         LinearLayout layout;
+        Button btn;
         public ViewHolder(View itemView)
         {
             super(itemView);
@@ -82,6 +85,7 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
             cont =  (TextView) itemView.findViewById(R.id.txtCont);
             profileImage = (CircleImageView) itemView.findViewById(R.id.circle_image_view_profile);
             layout = (LinearLayout) itemView.findViewById(R.id.ll_user_info);
+            btn = (Button) itemView.findViewById(R.id.btnEditar);
 
         }
     }
