@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
@@ -24,6 +26,7 @@ public class UserActivity extends AppCompatActivity
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     public static Menu mMenu;
+    private NavigationView mNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +42,18 @@ public class UserActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);
+        String prontuario = preferences.getString("prontuario", "");
+        String nome = preferences.getString("nome", "");
+
+        mNavigation = (NavigationView) findViewById(R.id.nav_view);
+        mNavigation.setNavigationItemSelectedListener(this);
+
+        View headerView = mNavigation.getHeaderView(0);
+        ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
+        ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
+
+        //headerView.setBackgroundResource(R.drawable.navheader);
     }
 
     @Override
@@ -80,14 +93,13 @@ public class UserActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        mNavigation.setCheckedItem(item.getItemId());
 
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
 
-        } else if (id == R.id.nav_make_question)
-        {
+        } else if (id == R.id.nav_make_question) {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(false);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
@@ -97,20 +109,15 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user, mkq);
             fragmentTransaction.commit();
         }
-        else if (id == R.id.nav_my_answers)
-        {
-
+        else if (id == R.id.nav_my_answers) {
         }
 
 
-        else if (id == R.id.nav_my_questions)
-
-        {
+        else if (id == R.id.nav_my_questions) {
 
         }
 
-        else if (id == R.id.nav_my_profile)
-        {
+        else if (id == R.id.nav_my_profile) {
 
         }
 

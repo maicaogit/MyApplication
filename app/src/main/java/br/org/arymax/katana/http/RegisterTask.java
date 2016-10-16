@@ -73,6 +73,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
                     .setPositiveButton(R.string.positive_button, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            goToLoginActivityDialog.dismiss();
                             Intent intent = new Intent(mContext, LoginActivity.class);
                             mContext.startActivity(intent);
                             ((AppCompatActivity) mContext).finish();
