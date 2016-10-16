@@ -25,6 +25,7 @@ import android.widget.TextView;
 import java.util.concurrent.ExecutionException;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
 import br.org.arymax.katana.fragment.UserInfoFragment;
 import br.org.arymax.katana.http.QuestionGetTask;
@@ -66,21 +67,6 @@ public class UserActivity extends AppCompatActivity
         View headerView = mNavigation.getHeaderView(0);
         ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
         ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
-
-        QuestionGetTask qgt = new QuestionGetTask();
-        try
-        {
-            String xmlQuestion = qgt.execute("data").get();
-            out.println(xmlQuestion);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        }
 
     }
 
@@ -131,6 +117,10 @@ public class UserActivity extends AppCompatActivity
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_home);
+            HomeFragment home = new HomeFragment();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_user, home);
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_make_question) {
             getSupportActionBar().setTitle(R.string.action_make_question);

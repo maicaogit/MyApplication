@@ -48,7 +48,7 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
             userXml = ServerCalls.callGet(
                     ServerCalls.SERVER_URL + "funcoes" + ServerCalls.GET_USER_PATH  + pront + "/" + zze ,
                     ServerCalls.GET,
-                    ServerCalls.APP_XML
+                    ServerCalls.TEXT_XML
             );
         } catch (Exception e) {
             Log.e(TAG, "Exceção lançada: ", e);

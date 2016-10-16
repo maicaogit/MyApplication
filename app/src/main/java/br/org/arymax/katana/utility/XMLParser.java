@@ -2,6 +2,10 @@ package br.org.arymax.katana.utility;
 
 import com.thoughtworks.xstream.XStream;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.Usuario;
 
 

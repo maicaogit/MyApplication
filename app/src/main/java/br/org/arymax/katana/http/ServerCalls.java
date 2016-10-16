@@ -57,7 +57,7 @@ public class ServerCalls {
             /**
              * Path para retornar a lista de perguntas
              */
-            protected static final String GET_ALL_QUESTIONS_PATH = "/pergunta/todasperguntas";
+            protected static final String GET_ALL_QUESTIONS_PATH = "/pergunta/todasPerguntas/";
 
 
         /**
