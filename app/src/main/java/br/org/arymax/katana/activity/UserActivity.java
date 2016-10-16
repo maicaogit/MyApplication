@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
+import br.org.arymax.katana.fragment.UserInfoFragment;
 import br.org.arymax.katana.utility.Constants;
 
 public class UserActivity extends AppCompatActivity
@@ -117,13 +118,19 @@ public class UserActivity extends AppCompatActivity
 
         }
 
-        else if (id == R.id.nav_my_profile) {
-
+        else if (id == R.id.nav_my_profile)
+        {
+            UserInfoFragment usi = new UserInfoFragment();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_user, usi);
+            fragmentTransaction.commit();
         }
 
         else if (id == R.id.nav_settings) {
 
-        } else if(id == R.id.nav_logout){
+        }
+
+        else if(id == R.id.nav_logout){
             SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("logado", false);

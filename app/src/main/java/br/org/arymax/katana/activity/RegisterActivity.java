@@ -1,6 +1,7 @@
 package br.org.arymax.katana.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
@@ -108,4 +109,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return true;
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
