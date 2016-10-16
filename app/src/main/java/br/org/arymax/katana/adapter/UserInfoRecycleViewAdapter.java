@@ -18,8 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by douglas on 15/10/16.
  */
 
-public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRecycleViewAdapter.ViewHolder>
-{
+public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRecycleViewAdapter.ViewHolder> {
     public Context context;
 
     @Override
@@ -35,8 +34,7 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
         LinearLayout layout = holder.layout;
 
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 holder.label.setText("Nome");
                 holder.cont.setText(preferences.getString("nome", ""));
@@ -56,6 +54,10 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
                 break;
 
             case 3:
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 16, 0, 32);
+                layout.setLayoutParams(params);
                 layout.removeView(holder.profileImage);
                 holder.label.setText("Senha");
                 holder.cont.setText(preferences.getString("zze", ""));
@@ -77,8 +79,7 @@ public class UserInfoRecycleViewAdapter extends RecyclerView.Adapter<UserInfoRec
         CircleImageView profileImage;
         LinearLayout layout;
         Button btn;
-        public ViewHolder(View itemView)
-        {
+        public ViewHolder(View itemView) {
             super(itemView);
 
             label = (TextView) itemView.findViewById(R.id.label);

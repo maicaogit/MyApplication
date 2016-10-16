@@ -105,6 +105,10 @@ public class UserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(true);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_home);
 
         } else if (id == R.id.nav_make_question) {
@@ -118,6 +122,10 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user, mkq);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_my_profile) {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(true);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_profile);
             UserInfoFragment usi = new UserInfoFragment();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -125,15 +133,27 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
         else if (id == R.id.nav_my_answers) {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(true);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_answers);
         }
 
 
         else if (id == R.id.nav_my_questions) {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(true);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_questions);
         }
 
         else if (id == R.id.nav_settings) {
+            MenuItem settings = mMenu.findItem(R.id.action_settings);
+            settings.setVisible(true);
+            MenuItem send = mMenu.findItem(R.id.action_enviar);
+            send.setVisible(false);
 
         } else if(id == R.id.nav_logout){
             SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);
