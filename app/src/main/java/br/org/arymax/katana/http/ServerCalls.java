@@ -60,11 +60,16 @@ public class ServerCalls {
             protected static final String GET_ALL_QUESTIONS_PATH = "/pergunta/todasperguntas/";
 
 
+        /**
+         * Path para retornar as perguntas de um usuário
+         */
+            protected static final String GET_USER_QUESTIONS_PATH = "/pergunta/minhasPerguntas/";
 
-            /**
-             * Path para retornar uma pergunta
-             */
-            protected static final String GET_QUESTION_PATH = "/pergunta/abrir/";
+
+        /**
+         * Path para retornar uma pergunta
+                 */
+                protected static final String GET_QUESTION_PATH = "/pergunta/abrir/";
 
 
 
