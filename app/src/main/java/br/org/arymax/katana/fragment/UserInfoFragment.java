@@ -13,6 +13,7 @@ import br.org.arymax.katana.adapter.UserInfoRecycleViewAdapter;
 
 public class UserInfoFragment extends Fragment {
 
+    public static final String USER_INFO_FRAGMENT_TAG = "usiFragment";
     private RecyclerView mRecyclerView;
 
     public UserInfoFragment(){

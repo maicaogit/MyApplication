@@ -9,6 +9,7 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
@@ -68,7 +69,14 @@ public class UserActivity extends AppCompatActivity
         ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
         ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
 
-
+        Fragment home = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT_TAG);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if(home == null){
+            fragmentTransaction.add(R.id.content_user, new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
+        } else {
+            fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
+        }
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -118,9 +126,15 @@ public class UserActivity extends AppCompatActivity
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_home);
-            HomeFragment home = new HomeFragment();
+
+
+            Fragment home = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.content_user, home);
+            if(home == null){
+                fragmentTransaction.add(R.id.content_user, new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
+            } else {
+                fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
+            }
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_make_question)
@@ -130,9 +144,15 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(false);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(true);
-            MakeQuestionFragment mkq = new MakeQuestionFragment();
+
+
+            Fragment mqFragment = fragmentManager.findFragmentByTag(MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.content_user, mkq);
+            if(mqFragment == null){
+                fragmentTransaction.add(R.id.content_user, new MakeQuestionFragment(), MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
+            } else {
+                fragmentTransaction.replace(R.id.content_user, mqFragment, MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
+            }
             fragmentTransaction.commit();
         }
 
@@ -143,9 +163,15 @@ public class UserActivity extends AppCompatActivity
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_profile);
-            UserInfoFragment usi = new UserInfoFragment();
+
+
+            Fragment usiFragment = fragmentManager.findFragmentByTag(UserInfoFragment.USER_INFO_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.content_user, usi);
+            if(usiFragment == null){
+                fragmentTransaction.add(R.id.content_user, new UserInfoFragment(), UserInfoFragment.USER_INFO_FRAGMENT_TAG);
+            } else {
+                fragmentTransaction.replace(R.id.content_user, usiFragment, UserInfoFragment.USER_INFO_FRAGMENT_TAG);
+            }
             fragmentTransaction.commit();
         }
 

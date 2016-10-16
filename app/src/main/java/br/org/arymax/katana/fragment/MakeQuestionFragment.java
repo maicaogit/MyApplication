@@ -37,6 +37,7 @@ public class MakeQuestionFragment extends Fragment {
     private boolean anonymousMode = false;
 
     private static final String TAG = "MakeQuestionFragment";
+    public static final String MAKE_QUESTION_FRAGMENT_TAG = "mkqFragment";
 
     public MakeQuestionFragment(){
         // Required empty public constructor

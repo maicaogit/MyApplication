@@ -3,9 +3,9 @@ package br.org.arymax.katana.http;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -16,7 +16,6 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.Pergunta;
-import br.org.arymax.katana.utility.XMLParser;
 
 /**
  * Criado por Marco em 14/10/2016.
@@ -24,24 +23,22 @@ import br.org.arymax.katana.utility.XMLParser;
 public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
-    private ProgressDialog mProgress;
+    private ProgressBar mProgress;
     private HomeFragment mCallerFragment;
     private View rootView;
 
     private static final String TAG = "QuestionGetTask.java";
 
-    public QuestionGetTask(View rootView, Context context, HomeFragment callerFragment) {
+    public QuestionGetTask(View rootView, Context context, HomeFragment callerFragment, ProgressBar p) {
         mContext = context;
         mCallerFragment = callerFragment;
         this.rootView = rootView;
+        mProgress = p;
     }
 
     @Override
     protected void onPreExecute() {
-        mProgress = new ProgressDialog(mContext);
-        mProgress.setMessage(mContext.getResources().getString(R.string.loading));
-        mProgress.setCancelable(false);
-        mProgress.show();
+        mProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -63,6 +60,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(TAG, "onPostExecute");
         if(!result.equals("")){
             List<Pergunta> listPergunta = new ArrayList<>();
             Log.d(TAG, "XML da lista: " + result);
@@ -74,8 +72,8 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
                 listPergunta.add(listPerguntas.getPerguntas().get(i));
             }
             mCallerFragment.setPerguntasList(listPergunta);
-            mCallerFragment.setRecyclerView(rootView);
-            mProgress.dismiss();
+            mCallerFragment.setViews(rootView);
+            mProgress.setVisibility(View.GONE);
         }
     }
 
