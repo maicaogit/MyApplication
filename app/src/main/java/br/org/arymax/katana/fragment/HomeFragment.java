@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,12 +20,13 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.adapter.UserInfoRecycleViewAdapter;
 import br.org.arymax.katana.http.QuestionGetTask;
+import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
 
 /**
  * Criado por Marco em 16/10/2016.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewOnItemClickListener {
 
     private View rootView;
     private RecyclerView mRecyclerView;
@@ -57,7 +59,7 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-    private void callTask() {
+    public void callTask() {
         QuestionGetTask task = new QuestionGetTask(rootView, getActivity(), this, mProgress);
         task.execute("data");
     }
@@ -74,7 +76,9 @@ public class HomeFragment extends Fragment {
         mFabReorganizeList.setVisibility(View.GONE);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new QuestionsRecyclerViewAdapter(mPerguntasList));
+        QuestionsRecyclerViewAdapter adapter = new QuestionsRecyclerViewAdapter(mPerguntasList);
+        adapter.setListener(this);
+        mRecyclerView.setAdapter(adapter);
 
         mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_home_fragment);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -90,6 +94,12 @@ public class HomeFragment extends Fragment {
         });
 
         mFabReorganizeList.show();
+        mFabReorganizeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "VOCÊ CLICOU NA BOLINHA AMARELA", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -100,7 +110,10 @@ public class HomeFragment extends Fragment {
                     mFabReorganizeList.show();
             }
         });
-
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
+    }
 }

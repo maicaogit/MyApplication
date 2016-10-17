@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
 
 /**
@@ -19,23 +20,21 @@ import br.org.arymax.katana.model.Pergunta;
 
 public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<QuestionsRecyclerViewAdapter.ViewHolder> {
 
-    public List<Pergunta> mPerguntasList;
+    private List<Pergunta> mPerguntasList;
+    private RecyclerViewOnItemClickListener listener;
 
-    public QuestionsRecyclerViewAdapter(List<Pergunta> mPerguntasList)
-    {
+    public QuestionsRecyclerViewAdapter(List<Pergunta> mPerguntasList) {
         this.mPerguntasList = mPerguntasList;
     }
     private Context context;
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         return new QuestionsRecyclerViewAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.questions_recycler_child, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.txtTitulo.setText(mPerguntasList.get(position).getTitulo());
         holder.txtPergunta.setText(mPerguntasList.get(position).getTexto());
 
@@ -46,8 +45,11 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         return mPerguntasList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public void setListener(RecyclerViewOnItemClickListener l){
+        listener = l;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtTitulo;
         TextView txtPergunta;
@@ -58,6 +60,15 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
             txtTitulo = (TextView) itemView.findViewById(R.id.txtTitulo);
             txtPergunta = (TextView) itemView.findViewById(R.id.txtPergunta);
             avatar = (ImageView) itemView.findViewById(R.id.imageView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(listener != null){
+                listener.onItemClick(v, getPosition());
+            }
         }
     }
 }

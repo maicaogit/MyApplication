@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -62,9 +63,11 @@ public class QuestionPostTask extends AsyncTask<String, Void, String> {
         if(status == ServerCalls.Status.OK){
             AppCompatActivity activity = (AppCompatActivity) mContext;
             EditText text = (EditText) activity.findViewById(R.id.edit_text_titulo);
-            EditText text1 = (EditText)  activity.findViewById(R.id.text_pergunta);
+            EditText text1 = (EditText) activity.findViewById(R.id.text_pergunta);
+            SwitchCompat switchCompat = (SwitchCompat) activity.findViewById(R.id.modo_anonimo);
             text.setText("");
             text1.setText("");
+            switchCompat.setChecked(false);
             Snackbar.make(mRootView, R.string.snackbar_message_ok, Snackbar.LENGTH_LONG).show();
             mProgress.dismiss();
         } else {

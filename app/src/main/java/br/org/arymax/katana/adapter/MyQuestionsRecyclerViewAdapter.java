@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.MyQuestionsFragment;
+import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
 
 /**
@@ -22,6 +23,7 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
 
     public List<Pergunta> mPerguntasList;
     private Context context;
+    private RecyclerViewOnItemClickListener listener;
 
     public MyQuestionsRecyclerViewAdapter(List<Pergunta> mPerguntasList) {
         this.mPerguntasList = mPerguntasList;
@@ -47,7 +49,11 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
         return mPerguntasList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public void setListener(RecyclerViewOnItemClickListener l){
+        listener = l;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
 
         TextView txtTitulo;
@@ -59,6 +65,14 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
             txtTitulo = (TextView) itemView.findViewById(R.id.txtTitulo);
             txtPergunta = (TextView) itemView.findViewById(R.id.txtPergunta);
             avatar = (ImageView) itemView.findViewById(R.id.imageView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(listener != null){
+                listener.onItemClick(v, getPosition());
+            }
         }
     }
 }

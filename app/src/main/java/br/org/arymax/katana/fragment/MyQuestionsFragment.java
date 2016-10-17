@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,17 +20,20 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.adapter.MyQuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.MyQuestionsGetTask;
+import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.utility.Constants;
 
 
-public class MyQuestionsFragment extends Fragment {
+public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemClickListener {
 
 
     private View rootView;
     private RecyclerView mRecyclerView;
     private List<Pergunta> mPerguntasList;
     private Context context;
+    private SwipeRefreshLayout mSwipe;
+    private ProgressBar mProgress;
 
     public static final String My_QUESTIONS_FRAGMENT_TAG = "mqFragment";
     public static final String TAG = "mqFragment";
@@ -45,33 +51,49 @@ public class MyQuestionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState){
         context = container.getContext();
         rootView = inflater.inflate(R.layout.fragment_my_questions, container, false);
+        mProgress = (ProgressBar) rootView.findViewById(R.id.fragment_my_questions_progress_bar);
+        mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.my_questions_swipe_refresh);
 
         callTask();
         return rootView;
     }
 
-    private void callTask()
-    {
+    public void callTask() {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES,0);
         long id = preferences.getLong("pk", 0);
-        MyQuestionsGetTask task = new MyQuestionsGetTask(rootView, getActivity(), this);
+        MyQuestionsGetTask task = new MyQuestionsGetTask(rootView, getActivity(), this, mProgress);
         task.execute(id);
     }
 
-    public void setPerguntasList(List perguntasList)
-    {
+    public void setPerguntasList(List perguntasList) {
         mPerguntasList = perguntasList;
         Log.d(TAG, "Primeiro item da lista: " + mPerguntasList.get(0).getTitulo());
     }
 
-    public void setRecyclerView(View rootView)
-    {
+    public void setRecyclerView(View rootView) {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.questions_ReyclerView);
+
+        mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new MyQuestionsRecyclerViewAdapter(mPerguntasList));
+        MyQuestionsRecyclerViewAdapter adapter = new MyQuestionsRecyclerViewAdapter(mPerguntasList);
+        adapter.setListener(this);
+        mRecyclerView.setAdapter(adapter);
+
+        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mRecyclerView.setVisibility(View.GONE);
+                callTask();
+                mSwipe.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
     }
 }

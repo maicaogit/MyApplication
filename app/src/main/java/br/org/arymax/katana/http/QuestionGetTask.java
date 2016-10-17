@@ -3,9 +3,11 @@ package br.org.arymax.katana.http;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -26,6 +28,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
     private ProgressBar mProgress;
     private HomeFragment mCallerFragment;
     private View rootView;
+    private String ordenacao = "";
 
     private static final String TAG = "QuestionGetTask.java";
 
@@ -43,7 +46,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params){
-        String ordenacao = params[0];
+        ordenacao = params[0];
         String xmlQuestion = "";
         try{
             xmlQuestion = ServerCalls.callGet(
@@ -53,6 +56,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
             );
         } catch (Exception e){
             Log.e(TAG, "Exceção lançada: ", e);
+            this.cancel(true);
         }
         Log.d(TAG, "XML: " + xmlQuestion);
         return xmlQuestion;
@@ -77,4 +81,19 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
         }
     }
 
+    @Override
+    protected void onCancelled() {
+        Snackbar snackbar = Snackbar.make(rootView, "Ocorreu um erro ao atualizar as perguntas", Snackbar.LENGTH_INDEFINITE)
+
+                .setAction("Tentar novamente", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       mCallerFragment.callTask();
+                    }
+                });
+        View view = snackbar.getView();
+        TextView message = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        message.setMaxLines(1);
+        snackbar.show();
+    }
 }

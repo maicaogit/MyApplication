@@ -3,10 +3,14 @@ package br.org.arymax.katana.http;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.extended.ISO8601DateConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,25 +29,22 @@ import br.org.arymax.katana.model.Resposta;
 public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
 
     private Context mContext;
-    private ProgressDialog mProgress;
+    private ProgressBar mProgress;
     private MyQuestionsFragment mCallerFragment;
     private View rootView;
 
     private static final String TAG = "MyQuestionsTask.java";
 
-    public MyQuestionsGetTask(View rootView, Context context, MyQuestionsFragment callerFragment)
-    {
+    public MyQuestionsGetTask(View rootView, Context context, MyQuestionsFragment callerFragment, ProgressBar p) {
         mContext = context;
         this.rootView = rootView;
         mCallerFragment = callerFragment;
+        mProgress = p;
     }
 
     @Override
     protected void onPreExecute() {
-        mProgress = new ProgressDialog(mContext);
-        mProgress.setMessage(mContext.getResources().getString(R.string.loading));
-        mProgress.setCancelable(false);
-        mProgress.show();
+        mProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -63,18 +64,12 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
     }
 
     @Override
-    protected void onCancelled()
-    {
-        mProgress.dismiss();
-    }
-
-    @Override
-    protected void onPostExecute(String result)
-    {
+    protected void onPostExecute(String result) {
         if(!result.equals("")){
             List<Pergunta> listPergunta = new ArrayList<>();
             Log.d(TAG, "XML da lista: " + result);
             XStream stream = new XStream();
+            stream.registerConverter(new ISO8601DateConverter());
             stream.processAnnotations(ArrayPerguntas.class);
             stream.processAnnotations(Pergunta.class);
             ArrayPerguntas listPerguntas = (ArrayPerguntas) stream.fromXML(result);
@@ -83,8 +78,24 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
             }
             mCallerFragment.setPerguntasList(listPergunta);
             mCallerFragment.setRecyclerView(rootView);
-            mProgress.dismiss();
+            mProgress.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onCancelled() {
+        Snackbar snackbar = Snackbar.make(rootView, "Ocorreu um erro ao atualizar as perguntas", Snackbar.LENGTH_INDEFINITE)
+
+                .setAction("Tentar novamente", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCallerFragment.callTask();
+                    }
+                });
+        View view = snackbar.getView();
+        TextView message = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        message.setMaxLines(1);
+        snackbar.show();
     }
 }
 

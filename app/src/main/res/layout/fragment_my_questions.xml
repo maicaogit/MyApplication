@@ -5,9 +5,24 @@
     tools:context="br.org.arymax.katana.fragment.MyQuestionsFragment"
     android:background="@android:color/white">
 
-    <android.support.v7.widget.RecyclerView
-    android:id="@+id/questions_ReyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/my_questions_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/questions_ReyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="visible"
+        android:id="@+id/fragment_my_questions_progress_bar"
+        android:layout_gravity="center" />
 
 </FrameLayout>
