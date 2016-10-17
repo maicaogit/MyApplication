@@ -139,7 +139,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
         alert.show();
 
     }
-    //ViewHolder
+    //ViewHolder23
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
