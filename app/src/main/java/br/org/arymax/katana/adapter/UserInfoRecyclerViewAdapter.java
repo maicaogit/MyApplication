@@ -1,16 +1,19 @@
 package br.org.arymax.katana.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +40,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(final ViewHolder holder, int position)
     {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
         LinearLayout layout = holder.layout;
@@ -51,7 +54,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-                                Toast.makeText(context, "MUDOU O NOME VIADO", Toast.LENGTH_SHORT).show();
+                                   setAlertDialog(holder);
                                 break;
                         }
                         return false;
@@ -91,7 +94,8 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                 holder.editInfoToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId())
+                        {
                             case R.id.action_edit:
                                 break;
                         }
@@ -107,6 +111,34 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
         return 4;
     }
 
+
+    public void setAlertDialog(final ViewHolder holder)
+    {
+        View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
+        final EditText txtEdt = (EditText) v.findViewById(R.id.txtEdit);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setMessage("Editar")
+                .setView(v)
+                .setPositiveButton("Alterar", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        //Ele chamara uma AsyncTask no futuro, mas por enquanto só altera o SharedPreference (Ou o label caso n de certo)
+
+                        String dadoAlt = txtEdt.getText().toString();
+                        holder.editInfoToolbar.setSubtitle(dadoAlt);
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .setCancelable(true);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
     //ViewHolder
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

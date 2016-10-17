@@ -25,7 +25,7 @@
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.QuestionActivity"></activity>
+        <activity android:name=".activity.QuestionActivity" />
     </application>
 
 </manifest>
