@@ -60,9 +60,11 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.d(TAG, "XML do usuário: " + result);
         if(result.equals("")){
             View rootView = ((AppCompatActivity) mContext).findViewById(R.id.activity_login_root);
             Snackbar.make(rootView, R.string.login_fail, Snackbar.LENGTH_LONG).show();
+            mProgress.dismiss();
         } else {
             Usuario usuario = XMLParser.XMLToObject(result, Usuario.class);
             SharedPreferences preferences = mContext.getSharedPreferences(Constants.PREFERENCES, 0);
