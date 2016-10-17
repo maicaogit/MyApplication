@@ -26,6 +26,13 @@
             android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.Dark" />
+        <receiver android:name=".broadcastreceiver.NotificationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PERGUNTA_RESPONDIDA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
