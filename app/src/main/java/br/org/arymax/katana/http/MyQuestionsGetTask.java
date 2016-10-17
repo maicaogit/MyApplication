@@ -1,6 +1,5 @@
 package br.org.arymax.katana.http;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
@@ -16,12 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.fragment.MyQuestionsFragment;
 import br.org.arymax.katana.model.ArrayPerguntas;
-import br.org.arymax.katana.model.ArrayRespostas;
 import br.org.arymax.katana.model.Pergunta;
-import br.org.arymax.katana.model.Resposta;
 
 /**
  * Criado por Marco em 16/10/2016.
@@ -73,12 +69,18 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
             stream.processAnnotations(ArrayPerguntas.class);
             stream.processAnnotations(Pergunta.class);
             ArrayPerguntas listPerguntas = (ArrayPerguntas) stream.fromXML(result);
-            for(int i = 0; i < listPerguntas.getPerguntas().size(); i++){
-                listPergunta.add(listPerguntas.getPerguntas().get(i));
+            if(listPerguntas.getPerguntas() != null){
+                for(int i = 0; i < listPerguntas.getPerguntas().size(); i++){
+                    listPergunta.add(listPerguntas.getPerguntas().get(i));
+                }
+                mCallerFragment.setPerguntasList(listPergunta);
+                mCallerFragment.setViews(rootView);
+                mProgress.setVisibility(View.GONE);
+            } else {
+                mProgress.setVisibility(View.GONE);
+                ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
+                ((TextView) rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
             }
-            mCallerFragment.setPerguntasList(listPergunta);
-            mCallerFragment.setRecyclerView(rootView);
-            mProgress.setVisibility(View.GONE);
         }
     }
 

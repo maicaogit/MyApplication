@@ -37,6 +37,8 @@
 
     <!--Strings de Fragments-->
 
+    <string name="questions_error">Erro ao procurar perguntas</string>
+    <string name="no_questions">Nenhuma pergunta encontrada</string>
     <string name="make_question_title">Fazer pergunta</string>
     <string name="my_profile_title">Meu perfil</string>
     <string name="home_title">Início</string>
@@ -48,6 +50,10 @@
     <string name="title_hint">Título</string>
     <string name="string_pergunta">Pergunta</string>
     <!--Fim MakeQuestionFragment-->
+
+    <!--MyQuestionsFragment-->
+
+    <!--MyQuestionsFragment-->
 
     <!--Fim das Strings de Fragments-->
 

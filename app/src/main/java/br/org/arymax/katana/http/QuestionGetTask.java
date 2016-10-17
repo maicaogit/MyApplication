@@ -72,12 +72,19 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
             stream.processAnnotations(ArrayPerguntas.class);
             stream.processAnnotations(Pergunta.class);
             ArrayPerguntas listPerguntas = (ArrayPerguntas) stream.fromXML(result);
-            for(int i = 0; i < listPerguntas.getPerguntas().size(); i++){
-                listPergunta.add(listPerguntas.getPerguntas().get(i));
+            if(listPerguntas.getPerguntas() != null){
+                for(int i = 0; i < listPerguntas.getPerguntas().size(); i++){
+                    listPergunta.add(listPerguntas.getPerguntas().get(i));
+                }
+                mCallerFragment.setPerguntasList(listPergunta);
+                mCallerFragment.setViews(rootView);
+                mProgress.setVisibility(View.GONE);
+            } else {
+                mProgress.setVisibility(View.GONE);
+                ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
+                ((TextView) rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
+
             }
-            mCallerFragment.setPerguntasList(listPergunta);
-            mCallerFragment.setViews(rootView);
-            mProgress.setVisibility(View.GONE);
         }
     }
 

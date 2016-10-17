@@ -12,13 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.adapter.MyQuestionsRecyclerViewAdapter;
-import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.MyQuestionsGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
@@ -34,6 +34,7 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
     private Context context;
     private SwipeRefreshLayout mSwipe;
     private ProgressBar mProgress;
+    private TextView mErrorMessageTextView;
 
     public static final String My_QUESTIONS_FRAGMENT_TAG = "mqFragment";
     public static final String TAG = "mqFragment";
@@ -73,8 +74,9 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
         Log.d(TAG, "Primeiro item da lista: " + mPerguntasList.get(0).getTitulo());
     }
 
-    public void setRecyclerView(View rootView) {
+    public void setViews(View rootView) {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.questions_ReyclerView);
+        mErrorMessageTextView = (TextView) rootView.findViewById(R.id.erro_text_view);
 
         mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -85,9 +87,19 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mErrorMessageTextView.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 callTask();
                 mSwipe.setRefreshing(false);
+            }
+        });
+
+        mErrorMessageTextView.setClickable(true);
+        mErrorMessageTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mErrorMessageTextView.setVisibility(View.GONE);
+                callTask();
             }
         });
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     private FloatingActionButton mFabReorganizeList;
     private ProgressBar mProgress;
     private SwipeRefreshLayout mSwipe;
+    private TextView mErrorMessageTextView;
 
     public static final String HOME_FRAGMENT_TAG = "homeFragment";
 
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.questions_ReyclerView);
         mFabReorganizeList = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista);
         mFabReorganizeList.setVisibility(View.GONE);
+        mErrorMessageTextView = (TextView) rootView.findViewById(R.id.erro_text_view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         QuestionsRecyclerViewAdapter adapter = new QuestionsRecyclerViewAdapter(mPerguntasList);
@@ -86,6 +89,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 callTask();
