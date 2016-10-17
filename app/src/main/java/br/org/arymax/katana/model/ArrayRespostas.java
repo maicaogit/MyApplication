@@ -13,16 +13,15 @@ import java.util.List;
 @XStreamAlias("respostas")
 public class ArrayRespostas {
 
-    @XStreamImplicit(itemFieldName = "pergunta")
+    @XStreamImplicit(itemFieldName = "resposta")
     private List<Resposta> respostas = new ArrayList<>();
 
-    public ArrayRespostas()
-    {
+    public ArrayRespostas(){
 
     }
 
     /**
-     * Retorna a lista de perguntas
+     * Retorna a lista de respostas
      *
      * @return
      */

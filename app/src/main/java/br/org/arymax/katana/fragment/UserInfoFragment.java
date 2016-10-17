@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.adapter.UserInfoRecycleViewAdapter;
+import br.org.arymax.katana.adapter.UserInfoRecyclerViewAdapter;
 
 public class UserInfoFragment extends Fragment {
 
@@ -33,7 +33,7 @@ public class UserInfoFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.user_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mRecyclerView.setAdapter(new UserInfoRecycleViewAdapter(getActivity()));
+        mRecyclerView.setAdapter(new UserInfoRecyclerViewAdapter(getActivity()));
         return v;
     }
 }

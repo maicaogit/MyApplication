@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
-import br.org.arymax.katana.adapter.UserInfoRecycleViewAdapter;
 import br.org.arymax.katana.http.QuestionGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;

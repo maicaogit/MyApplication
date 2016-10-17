@@ -5,8 +5,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.Date;
 
-import br.org.arymax.katana.model.Usuario;
-
 /**
  *
  * @author Lorhan Sohaky
@@ -18,7 +16,16 @@ public class Resposta {
     private String resposta;
     private Date data;
     @XStreamImplicit(itemFieldName = "usuario")
-    private Usuario user;
+    private Usuario usuario;
+
+    public Pergunta getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
+    }
+
     @XStreamImplicit(itemFieldName = "pergunta")
     private Pergunta pergunta;
     private boolean melhorResposta;
@@ -37,7 +44,7 @@ public class Resposta {
         this.pkResposta = pkResposta;
         this.resposta = resposta;
         this.data = (Date) data.clone();
-        this.user = new Usuario(pkUsuario);
+        this.usuario = new Usuario(pkUsuario);
         this.melhorResposta = melhorResposta;
     }
 
@@ -51,8 +58,8 @@ public class Resposta {
     public Resposta(long pkResposta, String resposta, String nome) {
         this.pkResposta = pkResposta;
         this.resposta = resposta;
-        this.user = new Usuario(nome);
-        this.user.setNome(nome);
+        this.usuario = new Usuario(nome);
+        this.usuario.setNome(nome);
     }
 
     /**
@@ -138,16 +145,16 @@ public class Resposta {
      *
      * @return user.
      */
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     /**
      * Setter usuário.
      *
-     * @param user Objeto usuário.
+     * @param usuario Objeto usuário.
      */
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

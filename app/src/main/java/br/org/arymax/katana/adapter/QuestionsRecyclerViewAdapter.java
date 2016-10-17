@@ -49,7 +49,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         listener = l;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtTitulo;
         TextView txtPergunta;

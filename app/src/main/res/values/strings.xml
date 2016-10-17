@@ -1,6 +1,7 @@
 <resources>
     <!--Nome do app-->
     <string name="app_name">Conecta</string>
+    <string name="try_again">Tentar novamente</string>
 
     <!--Strings de Activities-->
 
@@ -13,6 +14,7 @@
     <!--LoginActivity-->
     <string name="login_btn_text">Login</string>
     <string name="cadastro_text">Ainda não possui cadastro?</string>
+    <string name="login_fail">Não foi possível fazer login</string>
     <!--Fim LoginActivity-->
 
     <!--RegisterActivity-->
@@ -20,6 +22,7 @@
     <string name="cadastrar_btn_text">Cadastrar</string>
     <string name="cadastro_realizado">Cadastro realizado com sucesso!</string>
     <string name="positive_button">Ir para tela de login</string>
+    <string name="register_fail">Não foi possível efetuar o cadastro</string>
     <!--Fim RegisterActivity-->
 
     <!--UserActivity-->

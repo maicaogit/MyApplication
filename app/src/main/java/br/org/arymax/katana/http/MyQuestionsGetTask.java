@@ -86,9 +86,9 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
 
     @Override
     protected void onCancelled() {
-        Snackbar snackbar = Snackbar.make(rootView, "Ocorreu um erro ao atualizar as perguntas", Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(rootView, R.string.questions_error, Snackbar.LENGTH_INDEFINITE)
 
-                .setAction("Tentar novamente", new View.OnClickListener() {
+                .setAction(R.string.try_again, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mCallerFragment.callTask();

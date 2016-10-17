@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.UserActivity;
@@ -59,7 +61,8 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if(result.equals("")){
-           mProgress.dismiss();
+            View rootView = ((AppCompatActivity) mContext).findViewById(R.id.activity_login_root);
+            Snackbar.make(rootView, R.string.login_fail, Snackbar.LENGTH_LONG).show();
         } else {
             Usuario usuario = XMLParser.XMLToObject(result, Usuario.class);
             SharedPreferences preferences = mContext.getSharedPreferences(Constants.PREFERENCES, 0);

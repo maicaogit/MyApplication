@@ -30,15 +30,13 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
     }
 
     @Override
-    public MyQuestionsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public MyQuestionsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
         return new MyQuestionsRecyclerViewAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_questions_recycler_child, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MyQuestionsRecyclerViewAdapter.ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(MyQuestionsRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.txtTitulo.setText(mPerguntasList.get(position).getTitulo());
         holder.txtPergunta.setText(mPerguntasList.get(position).getTexto());
     }
@@ -53,14 +51,12 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
         listener = l;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtTitulo;
         TextView txtPergunta;
         ImageView avatar;
-        public ViewHolder(View itemView)
-        {
+        public ViewHolder(View itemView) {
             super(itemView);
             txtTitulo = (TextView) itemView.findViewById(R.id.txtTitulo);
             txtPergunta = (TextView) itemView.findViewById(R.id.txtPergunta);

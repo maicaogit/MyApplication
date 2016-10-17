@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialog;
@@ -86,6 +87,8 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
             goToLoginActivityDialog.show();
         } else {
             mProgress.dismiss();
+            View rootView = ((AppCompatActivity) mContext).findViewById(R.id.activity_register_root);
+            Snackbar.make(rootView, R.string.register_fail, Snackbar.LENGTH_LONG).show();
         }
     }
 }
