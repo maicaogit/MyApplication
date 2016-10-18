@@ -127,8 +127,6 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     {
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
         final EditText txtEdt = (EditText) v.findViewById(R.id.txtEdit);
-        final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
-        final SharedPreferences.Editor editor = sp.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         builder.setMessage("Editar Informações")
@@ -143,22 +141,14 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         String dadoAlt = txtEdt.getText().toString();
                         switch (code)
                         {
-                            case 1: editor.putString("nome", dadoAlt);
+                            case 1:
+                                callTask(dadoAlt, 1);
                                 break;
-                            case 2: editor.putString("email", dadoAlt);
+                            case 2:
+                                callTask(dadoAlt, 2);
                                 break;
 
                         }
-                        String email = sp.getString("email", "");
-                        String pront = sp.getString("prontuario", "");
-                        String nome = sp.getString("nome", "");
-                        long pk = sp.getLong("pk", 0);
-                        ChangeUserInfoTask task = new ChangeUserInfoTask(context);
-                        Usuario user = new Usuario(pk, nome, pront, email);
-                        String xml = XMLParser.objectToXML(user, Usuario.class);
-                        Log.i(TAG, "XML do usuário: " + xml);
-                        task.execute(xml);
-                        holder.editInfoToolbar.setSubtitle(dadoAlt);
                     }
                 })
                 .setNegativeButton("Cancelar", null)
@@ -167,6 +157,31 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
         AlertDialog alert = builder.create();
         alert.show();
 
+        /*
+
+        */
+
+    }
+
+
+    public void callTask(String dadoAlt, int code)
+    {
+        final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
+        String email = sp.getString("email", "");
+        String pront = sp.getString("prontuario", "");
+        String nome = sp.getString("nome", "");
+        long pk = sp.getLong("pk", 0);
+        ChangeUserInfoTask task = new ChangeUserInfoTask(context, code);
+        Usuario user = new Usuario(pk, nome, pront, email);
+        String xml = XMLParser.objectToXML(user, Usuario.class);
+        Log.i(TAG, "XML do usuário: " + xml);
+        task.execute(xml);
+
+        /*ISSO N DA CERTO CARA, ARRANJA UM IF, SWTICH OU QUALQUER OUTRA BIROSCA PRA RESOLVER ISSO.
+
+        holder.editInfoToolbar.setSubtitle(dadoAlt);
+
+        */
     }
 
 
