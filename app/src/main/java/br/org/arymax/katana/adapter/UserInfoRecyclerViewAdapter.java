@@ -76,10 +76,11 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                 holder.editInfoToolbar.setSubtitle(preferences.getString("email", "N/A"));
                 holder.editInfoToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
-                    public boolean onMenuItemClick(MenuItem item) {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-
+                                setAlertDialog(holder);
                                 break;
                         }
                         return false;
@@ -97,6 +98,8 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         switch (item.getItemId())
                         {
                             case R.id.action_edit:
+
+                                setAlertDialog(holder);
                                 break;
                         }
                         return false;
@@ -121,7 +124,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setMessage("Editar")
+        builder.setMessage("Editar Dado")
                 .setView(v)
                 .setPositiveButton("Alterar", new DialogInterface.OnClickListener()
                 {

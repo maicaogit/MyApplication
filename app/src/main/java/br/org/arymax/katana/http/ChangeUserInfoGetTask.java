@@ -17,12 +17,12 @@ public class ChangeUserInfoGetTask extends AsyncTask<String, Void, String> {
 
     private static final String TAG = "ChangeUserInfoGetTask";
 
-    public ChangeUserInfoGetTask(Context context){
+    public ChangeUserInfoGetTask(Context context) {
         mContext = context;
     }
 
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute() {
         mProgress = new ProgressDialog(mContext);
         mProgress.setMessage(mContext.getResources().getString(R.string.loading));
         mProgress.setCancelable(false);
@@ -30,25 +30,30 @@ public class ChangeUserInfoGetTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... params){
+    protected String doInBackground(String... params) {
+
+        /*MUDA
+            MUDA PELO AMOR DE DEUS
+         */
         String id = params[0];
-        String newInfo = params[1];
+        String newPassword = params[1];
         String result = "";
         try {
             result = ServerCalls.callGet(
-                    ServerCalls.SERVER_URL + "funcoes" + ServerCalls.CHANGE_USER_INFO_PATH + id + "/" + newPassword,
+                    ServerCalls.SERVER_URL + "funcoes" + ServerCalls.CHANGE_PASSWORD_PATH + id + "/" + newPassword,
                     ServerCalls.GET,
                     ServerCalls.TEXT_PLAIN
             );
-        } catch (Exception e){
+        } catch (Exception e) {
             this.cancel(true);
         }
         return result;
     }
 
     @Override
-    protected void onPostExecute(String result){
-        if(ServerCalls.Status.fromString(result) == ServerCalls.Status.OK){
+    protected void onPostExecute(String result) {
+        if (ServerCalls.Status.fromString(result) == ServerCalls.Status.OK) {
             mProgress.dismiss();
         }
     }
+}
