@@ -34,6 +34,13 @@ public class ServerCalls {
 
 
 
+
+            /**
+             * Path para mudar as informações do usuário
+             */
+            protected static final String CHANGE_USER_INFO_PATH = "/usuario/mudarDados/";
+
+
             /**
              * Path para mudar a senha do usuário
              */

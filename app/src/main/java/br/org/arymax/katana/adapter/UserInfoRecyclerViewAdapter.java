@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.http.ChangeUserInfoTask;
+import br.org.arymax.katana.http.RegisterTask;
+import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.Constants;
+import br.org.arymax.katana.utility.XMLParser;
 
 /**
  * Created by douglas on 15/10/16.
@@ -29,6 +34,7 @@ import br.org.arymax.katana.utility.Constants;
 public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRecyclerViewAdapter.ViewHolder>{
 
     private Context context;
+    public static final String TAG = "Script";
 
     public UserInfoRecyclerViewAdapter(Context context){
         this.context = context;
@@ -54,7 +60,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-                                   setAlertDialog(holder);
+                                   setAlertDialog(holder, 1);
                                 break;
                         }
                         return false;
@@ -80,7 +86,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                     {
                         switch (item.getItemId()){
                             case R.id.action_edit:
-                                setAlertDialog(holder);
+                                setAlertDialog(holder, 2);
                                 break;
                         }
                         return false;
@@ -99,7 +105,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         {
                             case R.id.action_edit:
 
-                                setAlertDialog(holder);
+                                //setAlertDialog(holder, 3);
                                 break;
                         }
                         return false;
@@ -117,14 +123,15 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
 
 
 
-    public void setAlertDialog(final ViewHolder holder)
+    public void setAlertDialog(final ViewHolder holder, final int code)
     {
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
         final EditText txtEdt = (EditText) v.findViewById(R.id.txtEdit);
-
+        final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
+        final SharedPreferences.Editor editor = sp.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setMessage("Editar Dado")
+        builder.setMessage("Editar Informações")
                 .setView(v)
                 .setPositiveButton("Alterar", new DialogInterface.OnClickListener()
                 {
@@ -134,6 +141,23 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         //Ele chamara uma AsyncTask no futuro, mas por enquanto só altera o SharedPreference (Ou o label caso n de certo)
 
                         String dadoAlt = txtEdt.getText().toString();
+                        switch (code)
+                        {
+                            case 1: editor.putString("nome", dadoAlt);
+                                break;
+                            case 2: editor.putString("email", dadoAlt);
+                                break;
+
+                        }
+                        String email = sp.getString("email", "");
+                        String pront = sp.getString("prontuario", "");
+                        String nome = sp.getString("nome", "");
+                        long pk = sp.getLong("pk", 0);
+                        ChangeUserInfoTask task = new ChangeUserInfoTask(context);
+                        Usuario user = new Usuario(pk, nome, pront, email);
+                        String xml = XMLParser.objectToXML(user, Usuario.class);
+                        Log.i(TAG, "XML do usuário: " + xml);
+                        task.execute(xml);
                         holder.editInfoToolbar.setSubtitle(dadoAlt);
                     }
                 })
