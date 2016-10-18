@@ -36,4 +36,5 @@ public class UserInfoFragment extends Fragment {
         mRecyclerView.setAdapter(new UserInfoRecyclerViewAdapter(getActivity()));
         return v;
     }
+
 }

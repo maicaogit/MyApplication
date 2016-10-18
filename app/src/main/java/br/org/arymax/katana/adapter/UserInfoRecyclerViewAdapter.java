@@ -166,10 +166,16 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
 
     public void callTask(String dadoAlt, int code)
     {
+        String email = null;
+        String nome = null;
         final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
-        String email = sp.getString("email", "");
+        switch (code)
+        {
+            case 1: nome = dadoAlt; email = sp.getString("email", ""); break;
+            case 2: email = dadoAlt; nome = sp.getString("nome", ""); break;
+        }
+
         String pront = sp.getString("prontuario", "");
-        String nome = sp.getString("nome", "");
         long pk = sp.getLong("pk", 0);
         ChangeUserInfoTask task = new ChangeUserInfoTask(context, code);
         Usuario user = new Usuario(pk, nome, pront, email);
