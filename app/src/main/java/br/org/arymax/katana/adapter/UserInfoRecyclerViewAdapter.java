@@ -112,6 +112,8 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     }
 
 
+
+
     public void setAlertDialog(final ViewHolder holder)
     {
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
@@ -139,7 +141,11 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
         alert.show();
 
     }
-    //ViewHolder23
+
+
+
+
+    //ViewHolder
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
