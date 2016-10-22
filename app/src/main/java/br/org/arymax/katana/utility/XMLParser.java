@@ -1,12 +1,16 @@
 package br.org.arymax.katana.utility;
 
+import android.support.annotation.ArrayRes;
+import android.util.Log;
+
 import com.thoughtworks.xstream.XStream;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.org.arymax.katana.model.ArrayPerguntas;
-import br.org.arymax.katana.model.Usuario;
+import br.org.arymax.katana.model.ArrayRespostas;
+import br.org.arymax.katana.model.Pergunta;
 
 
 /**
@@ -63,5 +67,26 @@ public class XMLParser {
         else
             return stream;
     }
+
+    public static <T, A> List XMLtoListObject(String XML, Class<A> arrayClass, Class<T> listObjectClass){
+        stream = getStream();
+        List<T> objectList = new ArrayList<>();
+        stream.processAnnotations(arrayClass);
+        stream.processAnnotations(listObjectClass);
+        if(arrayClass == ArrayPerguntas.class){
+            ArrayPerguntas perguntas = (ArrayPerguntas) stream.fromXML(XML);
+            for(int i=0; i< perguntas.getPerguntas().size(); i++){
+                objectList.add((T) perguntas.getPerguntas().get(i));
+            }
+        } else if(arrayClass == ArrayRespostas.class){
+            ArrayRespostas respostas = (ArrayRespostas) stream.fromXML(XML);
+            for(int i=0; i< respostas.getRespostas().size(); i++){
+                objectList.add((T) respostas.getRespostas().get(i));
+            }
+        }
+        return objectList;
+    }
+
+
 
 }

@@ -18,6 +18,7 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.Pergunta;
+import br.org.arymax.katana.utility.XMLParser;
 
 /**
  * Criado por Marco em 14/10/2016.
@@ -66,24 +67,15 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         Log.d(TAG, "onPostExecute");
         if(!result.equals("")){
-            List<Pergunta> listPergunta = new ArrayList<>();
-            Log.d(TAG, "XML da lista: " + result);
-            XStream stream = new XStream();
-            stream.processAnnotations(ArrayPerguntas.class);
-            stream.processAnnotations(Pergunta.class);
-            ArrayPerguntas listPerguntas = (ArrayPerguntas) stream.fromXML(result);
-            if(listPerguntas.getPerguntas() != null){
-                for(int i = 0; i < listPerguntas.getPerguntas().size(); i++){
-                    listPergunta.add(listPerguntas.getPerguntas().get(i));
-                }
-                mCallerFragment.setPerguntasList(listPergunta);
+            List<Pergunta> listPerguntas = XMLParser.XMLtoListObject(result, ArrayPerguntas.class, Pergunta.class);
+            if(listPerguntas != null){
+                mCallerFragment.setPerguntasList(listPerguntas);
                 mCallerFragment.setViews(rootView);
                 mProgress.setVisibility(View.GONE);
             } else {
                 mProgress.setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
                 ((TextView) rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
-
             }
         }
     }
