@@ -74,10 +74,11 @@ public class Usuario {
      * @param nome
      * @param prontuario
      */
-    public Usuario(long pkUsuario, String nome, String prontuario) {
+    public Usuario(long pkUsuario, String nome, String prontuario, String email) {
         this.pkUsuario = pkUsuario;
         this.nome = nome;
         this.prontuario = prontuario;
+        this.email = email;
     }
 
     /**

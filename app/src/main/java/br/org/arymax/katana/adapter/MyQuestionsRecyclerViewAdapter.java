@@ -56,7 +56,8 @@ public class MyQuestionsRecyclerViewAdapter extends RecyclerView.Adapter<MyQuest
         TextView txtTitulo;
         TextView txtPergunta;
         ImageView avatar;
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView)
+        {
             super(itemView);
             txtTitulo = (TextView) itemView.findViewById(R.id.txtTitulo);
             txtPergunta = (TextView) itemView.findViewById(R.id.txtPergunta);
