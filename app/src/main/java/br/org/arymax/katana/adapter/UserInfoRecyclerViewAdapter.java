@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -26,6 +29,7 @@ import br.org.arymax.katana.http.RegisterTask;
 import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
+import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by douglas on 15/10/16.
@@ -127,20 +131,21 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     {
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
         final EditText txtEdt = (EditText) v.findViewById(R.id.txtEdit);
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final MaterialDialog mMaterialDialog = new MaterialDialog(context);
+        SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
 
-        builder.setMessage("Editar Informações")
+        txtEdt.setText(preferences.getString("nome", ""));
+        mMaterialDialog
                 .setView(v)
-                .setPositiveButton("Alterar", new DialogInterface.OnClickListener()
-                {
+                .setCanceledOnTouchOutside(true)
+                .setPositiveButton("Alterar", new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        //Ele chamara uma AsyncTask no futuro, mas por enquanto só altera o SharedPreference (Ou o label caso n de certo)
+                    public void onClick(View v) {
+                        //Ele chamara uma AsyncTask no futuro, mas por enquanto só altera
+                        //o SharedPreference (Ou o label caso n de certo)
 
                         String dadoAlt = txtEdt.getText().toString();
-                        switch (code)
-                        {
+                        switch (code) {
                             case 1:
                                 callTask(dadoAlt, 1);
                                 break;
@@ -151,26 +156,30 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         }
                     }
                 })
-                .setNegativeButton("Cancelar", null)
-                .setCancelable(true);
-
-        AlertDialog alert = builder.create();
-        alert.show();
-
-        /*
-
-        */
-
+                .setNegativeButton("Cancelar", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
+        mMaterialDialog.show();
+        txtEdt.post(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            }
+        });
+        txtEdt.selectAll();
+        txtEdt.requestFocus();
     }
 
 
-    public void callTask(String dadoAlt, int code)
-    {
+    public void callTask(String dadoAlt, int code) {
         String email = null;
         String nome = null;
         final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
-        switch (code)
-        {
+        switch (code) {
             case 1: nome = dadoAlt; email = sp.getString("email", ""); break;
             case 2: email = dadoAlt; nome = sp.getString("nome", ""); break;
         }

@@ -1,6 +1,5 @@
 package br.org.arymax.katana.http;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
@@ -9,9 +8,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.thoughtworks.xstream.XStream;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import br.org.arymax.katana.R;
@@ -67,7 +63,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         Log.d(TAG, "onPostExecute");
         if(!result.equals("")){
-            List<Pergunta> listPerguntas = XMLParser.XMLtoListObject(result, ArrayPerguntas.class, Pergunta.class);
+            List<Pergunta> listPerguntas = XMLParser.xmlToListObject(result, ArrayPerguntas.class, Pergunta.class);
             if(listPerguntas != null){
                 mCallerFragment.setPerguntasList(listPerguntas);
                 mCallerFragment.setViews(rootView);

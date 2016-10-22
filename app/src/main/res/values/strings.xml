@@ -54,6 +54,8 @@
     <string name="string_pergunta">Pergunta</string>
     <!--Fim MakeQuestionFragment-->
 
+    <!--UserInfoFragment--><!--Fim UserInfoFragment-->
+
     <!--MyQuestionsFragment-->
 
     <!--MyQuestionsFragment-->
@@ -62,6 +64,7 @@
 
     <!--Dialogs-->
     <string name="loading">Carregando...</string>
+    <string name="title_change_info">Alterar informação</string>
     <string name="title_activity_user">UserActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -1,8 +1,5 @@
 package br.org.arymax.katana.utility;
 
-import android.support.annotation.ArrayRes;
-import android.util.Log;
-
 import com.thoughtworks.xstream.XStream;
 
 import java.util.ArrayList;
@@ -10,12 +7,7 @@ import java.util.List;
 
 import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.ArrayRespostas;
-import br.org.arymax.katana.model.Pergunta;
 
-
-/**
- * Criado por Marco em 13/08/2016.
- */
 
 /**
  * Classe para serialização e deserialização de XML
@@ -68,7 +60,15 @@ public class XMLParser {
             return stream;
     }
 
-    public static <T, A> List XMLtoListObject(String XML, Class<A> arrayClass, Class<T> listObjectClass){
+    /**
+     * Converte um XML em uma lista de objetos;
+     *
+     * @param XML XML a ser convertido
+     * @param arrayClass classe do array
+     * @param listObjectClass classe do objeto da lista
+     * @return lista de objetos
+     */
+    public static <T, A> List xmlToListObject(String XML, Class<A> arrayClass, Class<T> listObjectClass){
         stream = getStream();
         List<T> objectList = new ArrayList<>();
         stream.processAnnotations(arrayClass);
@@ -86,7 +86,4 @@ public class XMLParser {
         }
         return objectList;
     }
-
-
-
 }

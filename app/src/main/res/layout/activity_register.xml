@@ -34,6 +34,7 @@
                 <EditText
                     android:hint="@string/nome_hint"
                     android:textColorHint="@color/colorTextIcons"
+                    android:inputType="textCapWords"
                     android:id="@+id/edit_text_nome"
                     android:singleLine="true"
                     android:textColor="@color/colorTextIcons"

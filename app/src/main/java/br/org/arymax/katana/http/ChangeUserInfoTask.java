@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.rey.material.app.SimpleDialog;
+//import com.rey.material.app.SimpleDialog;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.model.Usuario;
@@ -37,7 +37,6 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute(){
-
         String message = mContext.getResources().getString(R.string.loading);
         mProgress = new ProgressDialog(mContext);
         mProgress.setMessage(message);
@@ -68,21 +67,17 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if (ServerCalls.Status.fromString(result) == ServerCalls.Status.OK)
-        {
+        if (ServerCalls.Status.fromString(result) == ServerCalls.Status.OK) {
             SharedPreferences sp = mContext.getSharedPreferences(Constants.PREFERENCES, 0);
             SharedPreferences.Editor editor = sp.edit();
 
-            switch (code)
-            {
+            switch (code) {
                 case 1: editor.putString("nome", ""); break;
                 case 2: editor.putString("email", ""); break;
             }
 
             editor.commit();
-
             mProgress.dismiss();
-
         }
     }
 }

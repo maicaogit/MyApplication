@@ -2,13 +2,10 @@ package br.org.arymax.katana.http;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -16,8 +13,7 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.LoginActivity;
 import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.XMLParser;
-
-import com.rey.material.app.SimpleDialog;
+import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Criado por Marco em 12/10/2016.
@@ -28,8 +24,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
     private ProgressDialog mProgress;
     private static final String TAG = "RegisterTask.java";
     private Usuario usuario;
-    private SimpleDialog goToLoginActivityDialog;
-    private ServerCalls.Status status;
+    private MaterialDialog mMaterialDialog;
 
 
     public RegisterTask(Context context){
@@ -68,23 +63,22 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        ServerCalls.Status status = this.status.fromString(result);
+        ServerCalls.Status status = ServerCalls.Status.fromString(result);
         if(status == ServerCalls.Status.OK){
             mProgress.dismiss();
-            goToLoginActivityDialog = new SimpleDialog(mContext);
-            goToLoginActivityDialog.message(R.string.cadastro_realizado);
-            goToLoginActivityDialog.positiveAction(R.string.positive_button);
-            goToLoginActivityDialog.positiveActionClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToLoginActivityDialog.dismiss();
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    mContext.startActivity(intent);
-                    ((AppCompatActivity) mContext).finish();
-                }
-            });
-            goToLoginActivityDialog.cancelable(false);
-            goToLoginActivityDialog.show();
+            mMaterialDialog = new MaterialDialog(mContext)
+                    .setMessage(R.string.cadastro_realizado)
+                    .setPositiveButton(R.string.positive_button, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMaterialDialog.dismiss();
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                            ((AppCompatActivity) mContext).finish();
+                        }
+                    })
+                    .setCanceledOnTouchOutside(false);
+            mMaterialDialog.show();
         } else {
             mProgress.dismiss();
             View rootView = ((AppCompatActivity) mContext).findViewById(R.id.activity_register_root);
