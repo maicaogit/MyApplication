@@ -67,7 +67,7 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         @Override
         public void onClick(View v) {
             if(listener != null){
-                listener.onItemClick(v, getPosition());
+                listener.onItemClick(v, getLayoutPosition());
             }
         }
     }
