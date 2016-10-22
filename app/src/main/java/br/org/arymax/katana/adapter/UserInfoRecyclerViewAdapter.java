@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -50,8 +51,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
         LinearLayout layout = holder.layout;
 
@@ -127,14 +127,13 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
 
 
 
-    public void setAlertDialog(final ViewHolder holder, final int code)
-    {
+    public void setAlertDialog(final ViewHolder holder, final int code) {
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_edit_user_info, null);
         final EditText txtEdt = (EditText) v.findViewById(R.id.txtEdit);
         final MaterialDialog mMaterialDialog = new MaterialDialog(context);
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES, 0);
 
-        txtEdt.setText(preferences.getString("nome", ""));
+        txtEdt.setText(holder.editInfoToolbar.getSubtitle());
         mMaterialDialog
                 .setView(v)
                 .setCanceledOnTouchOutside(true)
@@ -147,13 +146,16 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
                         String dadoAlt = txtEdt.getText().toString();
                         switch (code) {
                             case 1:
-                                callTask(dadoAlt, 1);
+                                callTask(dadoAlt, 1, holder);
+                                txtEdt.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
                                 break;
                             case 2:
-                                callTask(dadoAlt, 2);
+                                txtEdt.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                                callTask(dadoAlt, 2, holder);
                                 break;
 
                         }
+                        mMaterialDialog.dismiss();
                     }
                 })
                 .setNegativeButton("Cancelar", new View.OnClickListener() {
@@ -175,13 +177,20 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     }
 
 
-    public void callTask(String dadoAlt, int code) {
+    public void callTask(String dadoAlt, int code, ViewHolder holder) {
         String email = null;
         String nome = null;
         final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
         switch (code) {
-            case 1: nome = dadoAlt; email = sp.getString("email", ""); break;
-            case 2: email = dadoAlt; nome = sp.getString("nome", ""); break;
+            case 1:
+                nome = dadoAlt;
+                email = sp.getString("email", "");
+                holder.editInfoToolbar.setSubtitle(nome);
+                break;
+            case 2:
+                email = dadoAlt;
+                nome = sp.getString("nome", "");
+                break;
         }
 
         String pront = sp.getString("prontuario", "");
@@ -190,13 +199,7 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
         Usuario user = new Usuario(pk, nome, pront, email);
         String xml = XMLParser.objectToXML(user, Usuario.class);
         Log.i(TAG, "XML do usuário: " + xml);
-        task.execute(xml);
-
-        /*ISSO N DA CERTO CARA, ARRANJA UM IF, SWTICH OU QUALQUER OUTRA BIROSCA PRA RESOLVER ISSO.
-
-        holder.editInfoToolbar.setSubtitle(dadoAlt);
-
-        */
+        //task.execute(xml);
     }
 
 
