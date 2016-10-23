@@ -71,7 +71,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
             } else {
                 mProgress.setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
-                ((TextView) rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.erro_text_view).setVisibility(View.VISIBLE);
             }
         }
     }

@@ -1,5 +1,7 @@
 package br.org.arymax.katana.utility;
 
+import android.util.Log;
+
 import com.thoughtworks.xstream.XStream;
 
 import java.util.ArrayList;
@@ -7,6 +9,8 @@ import java.util.List;
 
 import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.ArrayRespostas;
+import br.org.arymax.katana.model.Pergunta;
+import br.org.arymax.katana.model.Resposta;
 
 
 /**
@@ -17,6 +21,7 @@ import br.org.arymax.katana.model.ArrayRespostas;
 public class XMLParser {
 
     private static XStream stream;
+    private static final String TAG = "XMLParser.java";
 
     /**
      * Deserializa um XML em um objeto
@@ -64,24 +69,33 @@ public class XMLParser {
      * Converte um XML em uma lista de objetos;
      *
      * @param XML XML a ser convertido
-     * @param arrayClass classe do array
+     * @param listHolder classe do array
      * @param listObjectClass classe do objeto da lista
      * @return lista de objetos
      */
-    public static <T, A> List xmlToListObject(String XML, Class<A> arrayClass, Class<T> listObjectClass){
+    public static <T, A> List xmlToListObject(String XML, Class<A> listHolder, Class<T> listObjectClass){
         stream = getStream();
-        List<T> objectList = new ArrayList<>();
-        stream.processAnnotations(arrayClass);
+        List<T> objectList = null;
+        stream.processAnnotations(listHolder);
         stream.processAnnotations(listObjectClass);
-        if(arrayClass == ArrayPerguntas.class){
-            ArrayPerguntas perguntas = (ArrayPerguntas) stream.fromXML(XML);
-            for(int i=0; i< perguntas.getPerguntas().size(); i++){
-                objectList.add((T) perguntas.getPerguntas().get(i));
-            }
-        } else if(arrayClass == ArrayRespostas.class){
-            ArrayRespostas respostas = (ArrayRespostas) stream.fromXML(XML);
-            for(int i=0; i< respostas.getRespostas().size(); i++){
-                objectList.add((T) respostas.getRespostas().get(i));
+        if(!XML.equals("")){
+            objectList = new ArrayList<>();
+            if(listHolder == ArrayPerguntas.class){
+                Log.d(TAG, "ArrayPerguntas.class");
+                ArrayPerguntas perguntas = (ArrayPerguntas) stream.fromXML(XML);
+                if(perguntas.getPerguntas() != null){
+                    for(Pergunta pergunta : perguntas.getPerguntas()){
+                        objectList.add((T) pergunta);
+                    }
+                }
+            } else if(listHolder == ArrayRespostas.class){
+                Log.d(TAG, "ArrayRespostas.class");
+                ArrayRespostas respostas = (ArrayRespostas) stream.fromXML(XML);
+                if(respostas.getRespostas() != null){
+                    for(Resposta resposta : respostas.getRespostas()){
+                        objectList.add((T) resposta);
+                    }
+                }
             }
         }
         return objectList;

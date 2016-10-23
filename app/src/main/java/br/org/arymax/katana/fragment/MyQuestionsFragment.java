@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.adapter.MyQuestionsRecyclerViewAdapter;
+import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.MyQuestionsGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
@@ -80,7 +80,7 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
 
         mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        MyQuestionsRecyclerViewAdapter adapter = new MyQuestionsRecyclerViewAdapter(mPerguntasList);
+        QuestionsRecyclerViewAdapter adapter = new QuestionsRecyclerViewAdapter(mPerguntasList);
         adapter.setListener(this);
         mRecyclerView.setAdapter(adapter);
 

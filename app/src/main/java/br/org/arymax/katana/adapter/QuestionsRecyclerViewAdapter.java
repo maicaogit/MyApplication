@@ -22,11 +22,12 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
     private List<Pergunta> mPerguntasList;
     private RecyclerViewOnItemClickListener listener;
+    private Context context;
 
     public QuestionsRecyclerViewAdapter(List<Pergunta> mPerguntasList) {
         this.mPerguntasList = mPerguntasList;
     }
-    private Context context;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();

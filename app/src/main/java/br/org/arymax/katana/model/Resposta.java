@@ -15,18 +15,7 @@ public class Resposta {
     private long pkResposta;
     private String resposta;
     private Date data;
-    @XStreamImplicit(itemFieldName = "usuario")
     private Usuario usuario;
-
-    public Pergunta getPergunta() {
-        return pergunta;
-    }
-
-    public void setPergunta(Pergunta pergunta) {
-        this.pergunta = pergunta;
-    }
-
-    @XStreamImplicit(itemFieldName = "pergunta")
     private Pergunta pergunta;
     private boolean melhorResposta;
 
@@ -156,5 +145,13 @@ public class Resposta {
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Pergunta getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
     }
 }
