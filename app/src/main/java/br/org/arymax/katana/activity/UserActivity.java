@@ -1,5 +1,6 @@
 package br.org.arymax.katana.activity;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import java.util.concurrent.ExecutionException;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.broadcastreceiver.NotificationReceiver;
 import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
 import br.org.arymax.katana.fragment.MyQuestionsFragment;
@@ -52,7 +54,8 @@ public class UserActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.action_home);
-
+        Intent intent= new Intent(this, NotificationReceiver.class);
+        startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, 0, 0);
