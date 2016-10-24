@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/white"
@@ -18,6 +18,37 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_organizar_lista_visitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorAccentLight"
+        android:src="@drawable/ic_fb_visitas"
+        android:elevation="6dp"
+        android:layout_marginRight="@dimen/fab_margin_right"
+        android:layout_marginBottom="180dp"
+        android:layout_gravity="bottom|end"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/colorPrimary"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_organizar_lista_data"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorAccentLight"
+        android:src="@mipmap/ic_fab_data"
+        android:elevation="6dp"
+        android:layout_marginRight="@dimen/fab_margin_right"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="bottom|end"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/colorPrimary"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_organizar_lista"
         android:visibility="gone"
@@ -26,8 +57,11 @@
         app:fabSize="normal"
         app:rippleColor="@color/colorAccentLight"
         android:src="@drawable/ic_list"
-        android:layout_margin="16dp"
-        android:layout_gravity="right|bottom" />
+        android:elevation="6dp"
+        android:layout_marginRight="@dimen/fab_margin_right"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        app:pressedTranslationZ="12dp"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -47,4 +81,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +38,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     private RecyclerView mRecyclerView;
     private List<Pergunta> mPerguntasList;
     private List<Resposta> mAnswerList;
-    private FloatingActionButton mFabReorganizeList;
+    private FloatingActionButton mFabReorganizeList, mFabReorganizeListData, mFabReorganizeListVisit;
     private ProgressBar mProgress;
     private SwipeRefreshLayout mSwipe;
     private TextView mErrorMessageTextView;
+    private Animation fab_close, fab_open, fab_clockWise, fab_antiClockWise;
+    private boolean isOpen = false;
 
     public static final String HOME_FRAGMENT_TAG = "homeFragment";
 
@@ -79,6 +83,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.questions_ReyclerView);
         mFabReorganizeList = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista);
+        mFabReorganizeListData = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista_data);
+        mFabReorganizeListVisit = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista_visitas);
+        fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
+        fab_clockWise= AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
+        fab_antiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
         mFabReorganizeList.setVisibility(View.GONE);
         mErrorMessageTextView = (TextView) rootView.findViewById(R.id.erro_text_view);
 
@@ -102,10 +112,56 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         });
 
         mFabReorganizeList.show();
-        mFabReorganizeList.setOnClickListener(new View.OnClickListener() {
+        mFabReorganizeList.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                if(isOpen)
+                {
+
+                    mFabReorganizeListData.startAnimation(fab_close);
+                    mFabReorganizeListVisit.startAnimation(fab_close);
+                    mFabReorganizeList.startAnimation(fab_antiClockWise);
+
+                    mFabReorganizeListData.setClickable(false);
+                    mFabReorganizeListVisit.setClickable(false);
+
+                    isOpen = false;
+                }
+
+                else
+                {
+
+                    mFabReorganizeListData.startAnimation(fab_open);
+                    mFabReorganizeListVisit.startAnimation(fab_open);
+                    mFabReorganizeList.startAnimation(fab_clockWise);
+                    mFabReorganizeListData.show();
+                    mFabReorganizeListVisit.show();
+                    mFabReorganizeListData.setClickable(true);
+                    mFabReorganizeListVisit.setClickable(true);
+
+                    isOpen = true;
+                }
                 Toast.makeText(getActivity(), "VOCÊ CLICOU NA BOLINHA AMARELA", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mFabReorganizeListData.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getActivity(), "VOCÊ CLICOU NOS BANGUE DE DATA", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mFabReorganizeListVisit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getActivity(), "VOCÊ CLICOU NOS BANGUE DE VISITA", Toast.LENGTH_SHORT).show();
             }
         });
 
