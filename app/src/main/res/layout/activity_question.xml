@@ -130,6 +130,7 @@
             android:id="@+id/text_answer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:hint="@string/answer_hint"
             android:textColorHint="@color/secondaryText"
             android:layout_weight="1"

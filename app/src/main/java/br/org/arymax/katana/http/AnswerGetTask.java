@@ -25,6 +25,7 @@ public class AnswerGetTask extends AsyncTask<Long, Void, String> {
     private ProgressDialog mProgress;
     private HomeFragment mCallerFragment;
     private Intent mOpenQuestionActivity;
+    private long pkPergunta;
 
     private static final String TAG = "AnswerGetTask.java";
 
@@ -49,7 +50,7 @@ public class AnswerGetTask extends AsyncTask<Long, Void, String> {
 
     @Override
     protected String doInBackground(Long... params) {
-        long pkPergunta = params[0];
+        pkPergunta = params[0];
         String xmlAnswers = "";
         try {
             xmlAnswers = ServerCalls.callGet(
@@ -68,8 +69,10 @@ public class AnswerGetTask extends AsyncTask<Long, Void, String> {
         Log.d(TAG, "Result: " + result);
         if(!result.equals("")){
             mOpenQuestionActivity.putExtra("respostas", result);
-            mContext.startActivity(mOpenQuestionActivity);
-            mProgress.dismiss();
+            OpenQuestionTask task = new OpenQuestionTask(mContext, mProgress, mOpenQuestionActivity);
+            task.execute(pkPergunta);
+            //mContext.startActivity(mOpenQuestionActivity);
+
         }
     }
 }

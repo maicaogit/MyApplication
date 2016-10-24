@@ -24,7 +24,7 @@ public class AnswerPostTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         mProgress = new ProgressDialog(mContext);
-        mProgress.setMessage(mContext.getResources().getString(R.string.loading));
+        mProgress.setMessage(mContext.getResources().getString(R.string.sending_resp));
         mProgress.setCancelable(false);
         mProgress.show();
     }
@@ -51,6 +51,9 @@ public class AnswerPostTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         Log.d(TAG, "Resposta do server: " + s);
+        if(ServerCalls.Status.OK == ServerCalls.Status.fromString(s)){
+
+        }
         mProgress.dismiss();
     }
 

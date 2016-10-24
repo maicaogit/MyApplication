@@ -41,7 +41,8 @@
             <string name="action_flag">Denunciar</string>
             <string name="no_answers">Nenhuma resposta para essa pergunta</string>
             <string name="answer_hint">Adicionar resposta</string>
-            <string name="said">disse:</string>
+            <string name="said">respondeu:</string>
+            <string name="sending_resp">Enviando resposta...</string>
         <!--Fim QuestionActivity-->
 
     <!--Fim das Strings de Activities-->

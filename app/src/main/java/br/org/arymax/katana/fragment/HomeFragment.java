@@ -33,7 +33,7 @@ import br.org.arymax.katana.model.Resposta;
 /**
  * Criado por Marco em 16/10/2016.
  */
-public class HomeFragment extends Fragment implements RecyclerViewOnItemClickListener {
+public class HomeFragment extends Fragment implements RecyclerViewOnItemClickListener, View.OnClickListener {
 
     private View rootView;
     private RecyclerView mRecyclerView;
@@ -88,10 +88,10 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mFabReorganizeList = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista);
         mFabReorganizeListData = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista_data);
         mFabReorganizeListVisit = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista_visitas);
-        fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
-        fab_clockWise= AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
-        fab_antiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
+        fab_open = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getActivity(), R.anim.fab_close);
+        fab_clockWise= AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_clockwise);
+        fab_antiClockWise = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_anticlockwise);
         mFabReorganizeList.setVisibility(View.GONE);
         mErrorMessageTextView = (TextView) rootView.findViewById(R.id.erro_text_view);
 
@@ -114,23 +114,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             }
         });
 
-        mFabReorganizeList.show();
-        mFabReorganizeList.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if(isOpen)
-                {
-                    closeFab();
-                }
-
-                else
-                {
-                    openFab();
-                }
-            }
-        });
+        mFabReorganizeList.setOnClickListener(this);
 
         mFabReorganizeListData.setOnClickListener(new View.OnClickListener()
         {
@@ -140,6 +124,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
                 mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
+                mFabReorganizeList.hide();
                 mFabReorganizeListData.setVisibility(View.GONE);
                 mFabReorganizeListVisit.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
@@ -174,10 +159,15 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0){
-                    mFabReorganizeList.hide();
-                } else
-                    mFabReorganizeList.show();
+                if(!isOpen){
+                    if(dy > 0){
+                        mFabReorganizeList.setClickable(false);
+                        mFabReorganizeList.hide();
+                    } else {
+                        mFabReorganizeList.show();
+                        mFabReorganizeList.setClickable(true);
+                    }
+                }
             }
         });
     }
@@ -187,11 +177,20 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         //Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
         long id = mPerguntasList.get(position).getPkPergunta();
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
-        intent.putExtra("titulo", mPerguntasList.get(position).getTitulo());
-        intent.putExtra("pergunta", mPerguntasList.get(position).getTexto());
-        intent.putExtra("pkPergunta", mPerguntasList.get(position).getPkPergunta());
         AnswerGetTask task = new AnswerGetTask(getActivity(), this, intent);
         task.execute(id);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(isOpen) {
+            closeFab();
+        }
+
+        else {
+            openFab();
+        }
     }
 
     public void openFab()
