@@ -1,34 +1,29 @@
 package br.org.arymax.katana.http;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import java.util.List;
+import android.support.v7.app.NotificationCompat;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.broadcastreceiver.NotificationReceiver;
 import br.org.arymax.katana.fragment.HomeFragment;
-import br.org.arymax.katana.model.ArrayPerguntas;
-import br.org.arymax.katana.model.Pergunta;
-import br.org.arymax.katana.utility.XMLParser;
+import br.org.arymax.katana.utility.Constants;
 
 /**
  * Criado por Marco em 24/10/2016.
  */
 public class UserNotificationGetTask extends AsyncTask<Long, Void, String> {
     private Context mContext;
-    private ProgressBar mProgress;
-    private HomeFragment mCallerFragment;
-    private View rootView;
-    private String ordenacao = "";
+    private NotificationReceiver mNotificationReceiver;
     private static final String TAG = "UserNotificationGetTask.java";
 
-    public UserNotificationGetTask(Context context) {
+    public UserNotificationGetTask(Context context, NotificationReceiver notifcationReceiver) {
         mContext = context;
-
+        mNotificationReceiver=notifcationReceiver;
     }
     @Override
     protected String doInBackground(Long... params) {
@@ -52,18 +47,20 @@ public class UserNotificationGetTask extends AsyncTask<Long, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d(TAG, "onPostExecute");
-        if(result.equals("")){
-            List<Pergunta> listPerguntas = XMLParser.xmlToListObject(result, ArrayPerguntas.class, Pergunta.class);
-            if(listPerguntas != null){
-                mCallerFragment.setPerguntasList(listPerguntas);
-                mCallerFragment.setViews(rootView);
-                mProgress.setVisibility(View.GONE);
-            } else {
-                mProgress.setVisibility(View.GONE);
-                ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
-                rootView.findViewById(R.id.erro_text_view).setVisibility(View.VISIBLE);
-            }
-        }
-    }
+        if(result.equals("true")){
+            mNotificationReceiver.setEstado(true);
+            NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            Intent intent = new Intent(mContext, HomeFragment.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, (int) mContext.getSharedPreferences(Constants.PREFERENCES,0).getLong("pk",-1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
+            builder.setTicker("Alguém respondeu a sua pergunta");
+            builder.setContentTitle("Você possui alguma pergunta não visualizada");
+            builder.setContentText("Toque para mais informações");
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setContentIntent(pendingIntent);
+            Notification n = builder.build();
+            n.vibrate = new long[]{150, 300, 150, 600};
+            nm.notify(R.mipmap.ic_launcher, n);}
+        else
+            mNotificationReceiver.setEstado(false);}
 }
