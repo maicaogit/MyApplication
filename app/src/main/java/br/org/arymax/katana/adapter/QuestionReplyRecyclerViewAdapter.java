@@ -28,7 +28,7 @@ import br.org.arymax.katana.model.Resposta;
 
 public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<QuestionReplyRecyclerViewAdapter.ViewHolder> {
 
-    public List<Resposta> mRespostasList;
+    private List<Resposta> mRespostasList;
     private Context context;
     private RecyclerViewOnItemClickListener mOnItemClickListener;
     private RecyclerViewOnLongClickListener mOnLongClickListener;

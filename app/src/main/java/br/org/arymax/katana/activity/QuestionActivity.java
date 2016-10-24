@@ -104,7 +104,6 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
         mAdapter.setOnLongClickListener(this);
         mRecyclerViewAnswers.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewAnswers.setAdapter(mAdapter);
-
     }
 
     @Override
