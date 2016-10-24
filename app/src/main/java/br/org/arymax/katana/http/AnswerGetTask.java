@@ -67,8 +67,7 @@ public class AnswerGetTask extends AsyncTask<Long, Void, String> {
     protected void onPostExecute(String result) {
         Log.d(TAG, "Result: " + result);
         if(!result.equals("")){
-            List<Resposta> respostaList = XMLParser.xmlToListObject(result, ArrayRespostas.class, Resposta.class);
-            mOpenQuestionActivity.putExtra("respostas", (Serializable) respostaList);
+            mOpenQuestionActivity.putExtra("respostas", result);
             mContext.startActivity(mOpenQuestionActivity);
             mProgress.dismiss();
         }

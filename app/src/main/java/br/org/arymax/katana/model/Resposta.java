@@ -147,6 +147,7 @@ public class Resposta {
         this.usuario = usuario;
     }
 
+
     public Pergunta getPergunta() {
         return pergunta;
     }

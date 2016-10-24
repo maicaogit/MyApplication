@@ -3,6 +3,7 @@ package br.org.arymax.katana.activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import br.org.arymax.katana.R;
 import br.org.arymax.katana.adapter.QuestionReplyRecyclerViewAdapter;
 import br.org.arymax.katana.http.AnswerPostTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnLongClickListener;
+import br.org.arymax.katana.model.ArrayRespostas;
 import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.model.Resposta;
 import br.org.arymax.katana.model.Usuario;
@@ -82,12 +84,16 @@ View.OnClickListener{
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            mAnswerList = (List<Resposta>) bundle.getSerializable("respostas");
+            String XML = bundle.getString("respostas");
+            mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
             if(mAnswerList.size() > 0){
                 Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
                 mNoAnswersMessage.setVisibility(View.GONE);
+                Log.d(TAG, "Resposta: " + mAnswerList.get(1).getResposta());
+                Log.d(TAG, "Size: " + mAnswerList.size());
                 mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
                 mAdapter.setOnLongClickListener(this);
+                mRecyclerViewAnswers.setLayoutManager(new LinearLayoutManager(this));
                 mRecyclerViewAnswers.setAdapter(mAdapter);
             } else {
                 mAnswerList = new ArrayList<>();
@@ -134,8 +140,12 @@ View.OnClickListener{
                     Resposta resposta = new Resposta();
                     resposta.setResposta(mAnswerArea.getText().toString());
                     mAnswerArea.setText("");
-                    resposta.setUsuario(new Usuario(getSharedPreferences(Constants.PREFERENCES, 0).getLong("pk", -1)));
+                    resposta.setUsuario(new Usuario(
+                            getSharedPreferences(Constants.PREFERENCES, 0).getLong("pk", -1),
+                            getSharedPreferences(Constants.PREFERENCES, 0).getString("nome", "")));
                     resposta.setPergunta(new Pergunta(pkPergunta));
+                    mAnswerList.add(resposta);
+                    mAdapter.notifyItemInserted(mAnswerList.size());
                     String xmlResposta = XMLParser.objectToXML(resposta, Resposta.class);
                     Log.d(TAG, "XML da resposta: " + xmlResposta);
                     task.execute(xmlResposta);

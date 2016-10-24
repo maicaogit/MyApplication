@@ -38,12 +38,13 @@ public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<Quest
 
     @Override
     public void onBindViewHolder(QuestionReplyRecyclerViewAdapter.ViewHolder holder, int position) {
+        holder.userName
+                .setText(mRespostasList.get(position).getUsuario().getNome() + " " + context.getResources().getString(R.string.said));
         holder.textResposta.setText(mRespostasList.get(position).getResposta());
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mRespostasList.size();
     }
 
@@ -58,12 +59,14 @@ public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<Quest
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener,
     View.OnClickListener{
 
+        private TextView userName;
         private TextView textResposta;
         private ImageView avatar;
         public ViewHolder(View itemView) {
             super(itemView);
-            textResposta = (TextView) itemView.findViewById(R.id.txt_resposta);
-            avatar = (ImageView) itemView.findViewById(R.id.imageView);
+            userName = (TextView) itemView.findViewById(R.id.tv_username);
+            textResposta = (TextView) itemView.findViewById(R.id.tv_resposta);
+            avatar = (ImageView) itemView.findViewById(R.id.img_user);
             itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
         }
