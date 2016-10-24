@@ -103,6 +103,10 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_home_fragment);
         mRecyclerView.setVisibility(View.VISIBLE);
 
+        if(mAnswerList == null){
+            mErrorMessageTextView.setVisibility(View.VISIBLE);
+        }
+
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
