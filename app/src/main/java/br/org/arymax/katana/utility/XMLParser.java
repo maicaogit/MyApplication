@@ -3,6 +3,7 @@ package br.org.arymax.katana.utility;
 import android.util.Log;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.extended.ISO8601DateConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ public class XMLParser {
     public static <T, A> List xmlToListObject(String XML, Class<A> listHolder, Class<T> listObjectClass){
         stream = getStream();
         List<T> objectList = new ArrayList<>();
+        stream.registerConverter(new ISO8601DateConverter());
         stream.processAnnotations(listHolder);
         stream.processAnnotations(listObjectClass);
         if(!XML.equals("")){
