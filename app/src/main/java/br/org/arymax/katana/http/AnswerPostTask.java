@@ -51,9 +51,6 @@ public class AnswerPostTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         Log.d(TAG, "Resposta do server: " + s);
-        if(ServerCalls.Status.OK == ServerCalls.Status.fromString(s)){
-
-        }
         mProgress.dismiss();
     }
 

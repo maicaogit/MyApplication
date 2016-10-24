@@ -177,6 +177,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         //Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
         long id = mPerguntasList.get(position).getPkPergunta();
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
+        intent.putExtra("pk", id);
         AnswerGetTask task = new AnswerGetTask(getActivity(), this, intent);
         task.execute(id);
 

@@ -97,7 +97,7 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
             String texto = bundle.getString("pergunta");
             mTitle.setText(title);
             mText.setText(texto);
-            pkPergunta = bundle.getLong("pkPergunta");
+            pkPergunta = bundle.getLong("pk");
         }
 
         mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
