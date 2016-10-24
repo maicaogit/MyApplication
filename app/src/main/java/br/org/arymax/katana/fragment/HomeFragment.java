@@ -2,6 +2,7 @@ package br.org.arymax.katana.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     private TextView mErrorMessageTextView;
     private Animation fab_close, fab_open, fab_clockWise, fab_antiClockWise;
     private boolean isOpen = false;
+    private String tipo;
 
     public static final String HOME_FRAGMENT_TAG = "homeFragment";
 
@@ -64,14 +66,15 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mProgress = (ProgressBar) rootView.findViewById(R.id.fragment_home_progress_bar);
-
-        callTask();
+        tipo = "data";
+        callTask(tipo);
         return rootView;
     }
 
-    public void callTask() {
+    public void callTask(String tipo)
+    {
         QuestionGetTask task = new QuestionGetTask(rootView, getActivity(), this, mProgress);
-        task.execute("data");
+        task.execute(tipo);
     }
 
     public void setPerguntasList(List perguntasList){
@@ -106,7 +109,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                 mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
-                callTask();
+                callTask(tipo);
                 mSwipe.setRefreshing(false);
             }
         });
@@ -136,14 +139,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                     mFabReorganizeListData.startAnimation(fab_open);
                     mFabReorganizeListVisit.startAnimation(fab_open);
                     mFabReorganizeList.startAnimation(fab_clockWise);
-                    mFabReorganizeListData.show();
-                    mFabReorganizeListVisit.show();
+
                     mFabReorganizeListData.setClickable(true);
                     mFabReorganizeListVisit.setClickable(true);
 
                     isOpen = true;
                 }
-                Toast.makeText(getActivity(), "VOCÊ CLICOU NA BOLINHA AMARELA", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -152,7 +153,14 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(), "VOCÊ CLICOU NOS BANGUE DE DATA", Toast.LENGTH_SHORT).show();
+
+                mErrorMessageTextView.setVisibility(View.GONE);
+                mFabReorganizeList.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+                tipo = "data";
+                callTask(tipo);
+
+
             }
         });
 
@@ -161,7 +169,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(), "VOCÊ CLICOU NOS BANGUE DE VISITA", Toast.LENGTH_SHORT).show();
+                mErrorMessageTextView.setVisibility(View.GONE);
+                mFabReorganizeList.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+                tipo = "visitas";
+                callTask(tipo);
+
             }
         });
 

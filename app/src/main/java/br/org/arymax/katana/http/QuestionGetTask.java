@@ -83,7 +83,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
                 .setAction(R.string.try_again, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       mCallerFragment.callTask();
+                       mCallerFragment.callTask(ordenacao);
                     }
                 });
         View view = snackbar.getView();
