@@ -31,7 +31,7 @@ import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
 
 public class QuestionActivity extends AppCompatActivity implements RecyclerViewOnLongClickListener,
-View.OnClickListener{
+        View.OnClickListener{
 
     private List<Resposta> mAnswerList;
     private TextView mTitle;
@@ -89,12 +89,7 @@ View.OnClickListener{
             if(mAnswerList.size() > 0){
                 //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
                 mNoAnswersMessage.setVisibility(View.GONE);
-                Log.d(TAG, "Resposta: " + mAnswerList.get(1).getResposta());
                 Log.d(TAG, "Size: " + mAnswerList.size());
-                mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
-                mAdapter.setOnLongClickListener(this);
-                mRecyclerViewAnswers.setLayoutManager(new LinearLayoutManager(this));
-                mRecyclerViewAnswers.setAdapter(mAdapter);
             } else {
                 mAnswerList = new ArrayList<>();
             }
@@ -104,6 +99,11 @@ View.OnClickListener{
             mText.setText(texto);
             pkPergunta = bundle.getLong("pkPergunta");
         }
+
+        mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
+        mAdapter.setOnLongClickListener(this);
+        mRecyclerViewAnswers.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewAnswers.setAdapter(mAdapter);
 
     }
 
@@ -134,6 +134,8 @@ View.OnClickListener{
 
             case R.id.iv_send:
                 if(!mAnswerArea.getText().toString().equals("")){
+                    InputMethodManager imn = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imn.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     mAnswerArea.clearFocus();
                     mAnswerPanel.setVisibility(View.GONE);
                     AnswerPostTask task = new AnswerPostTask(this);
@@ -144,11 +146,13 @@ View.OnClickListener{
                             getSharedPreferences(Constants.PREFERENCES, 0).getLong("pk", -1),
                             getSharedPreferences(Constants.PREFERENCES, 0).getString("nome", "")));
                     resposta.setPergunta(new Pergunta(pkPergunta));
-                    mAnswerList.add(resposta);
-                    mAdapter.notifyItemInserted(mAnswerList.size());
+                    resposta.setData(new Date());
+                    mAnswerList.add(0, resposta);
+                    mAdapter.notifyItemInserted(0);
                     String xmlResposta = XMLParser.objectToXML(resposta, Resposta.class);
                     Log.d(TAG, "XML da resposta: " + xmlResposta);
                     task.execute(xmlResposta);
+                    mNoAnswersMessage.setVisibility(View.GONE);
                 }
                 break;
         }

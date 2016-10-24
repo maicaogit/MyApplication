@@ -8,6 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
+
+import java.util.Date;
 import java.util.List;
 
 import br.org.arymax.katana.R;
@@ -41,6 +48,26 @@ public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<Quest
         holder.userName
                 .setText(mRespostasList.get(position).getUsuario().getNome() + " " + context.getResources().getString(R.string.said));
         holder.textResposta.setText(mRespostasList.get(position).getResposta());
+        Date date = mRespostasList.get(position).getData();
+        DateTime dataResposta = new DateTime(date);
+        DateTime dataAtual = new DateTime();
+        Days days = Days.daysBetween(dataResposta, dataAtual);
+        if(days.getDays() < 1){
+            Hours hours = Hours.hoursBetween(dataResposta, dataAtual);
+            if(hours.getHours() < 1){
+                Minutes minutes = Minutes.minutesBetween(dataResposta, dataAtual);
+                if(minutes.getMinutes() < 1){
+                    Seconds seconds = Seconds.secondsBetween(dataResposta, dataAtual);
+                    holder.data.setText(seconds.getSeconds() + "s");
+                } else {
+                    holder.data.setText(minutes.getMinutes() + "m");
+                }
+            } else {
+                holder.data.setText(hours.getHours() + "h");
+            }
+        } else {
+            holder.data.setText(days.getDays() + "d");
+        }
     }
 
     @Override
@@ -57,15 +84,17 @@ public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<Quest
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener,
-    View.OnClickListener{
+            View.OnClickListener{
 
         private TextView userName;
         private TextView textResposta;
+        private TextView data;
         private ImageView avatar;
         public ViewHolder(View itemView) {
             super(itemView);
             userName = (TextView) itemView.findViewById(R.id.tv_username);
             textResposta = (TextView) itemView.findViewById(R.id.tv_resposta);
+            data = (TextView) itemView.findViewById(R.id.tv_data);
             avatar = (ImageView) itemView.findViewById(R.id.img_user);
             itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
