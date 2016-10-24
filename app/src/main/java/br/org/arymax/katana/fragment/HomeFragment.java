@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.QuestionActivity;
+import br.org.arymax.katana.activity.SearchActivity;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.AnswerGetTask;
 import br.org.arymax.katana.http.QuestionGetTask;
@@ -58,7 +60,6 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -68,7 +69,18 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mProgress = (ProgressBar) rootView.findViewById(R.id.fragment_home_progress_bar);
         tipo = "data";
         callTask(tipo);
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_search){
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
     public void callTask(String tipo)
@@ -102,10 +114,6 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
         mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_home_fragment);
         mRecyclerView.setVisibility(View.VISIBLE);
-
-        if(mAnswerList == null){
-            mErrorMessageTextView.setVisibility(View.VISIBLE);
-        }
 
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

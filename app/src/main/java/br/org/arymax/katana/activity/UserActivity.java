@@ -129,6 +129,8 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(true);
             getSupportActionBar().setTitle(R.string.action_home);
 
 
@@ -148,7 +150,8 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(false);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(true);
-
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(false);
 
             Fragment mqFragment = fragmentManager.findFragmentByTag(MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -166,8 +169,9 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(false);
             getSupportActionBar().setTitle(R.string.action_my_profile);
-
 
             Fragment usiFragment = fragmentManager.findFragmentByTag(UserInfoFragment.USER_INFO_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -185,6 +189,8 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(true);
             getSupportActionBar().setTitle(R.string.action_my_answers);
 
 
@@ -197,6 +203,8 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(true);
             getSupportActionBar().setTitle(R.string.action_my_questions);
 
 
@@ -215,6 +223,8 @@ public class UserActivity extends AppCompatActivity
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
             send.setVisible(false);
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            search.setVisible(false);
 
         } else if(id == R.id.nav_logout){
             SharedPreferences preferences = getSharedPreferences(Constants.PREFERENCES, 0);

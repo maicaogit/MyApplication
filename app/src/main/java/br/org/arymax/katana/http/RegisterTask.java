@@ -64,6 +64,7 @@ public class RegisterTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         ServerCalls.Status status = ServerCalls.Status.fromString(result);
+        Log.d(TAG, "Resposta do server: " + result);
         if(status == ServerCalls.Status.OK){
             mProgress.dismiss();
             mMaterialDialog = new MaterialDialog(mContext)
