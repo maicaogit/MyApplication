@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
     public void setPerguntasList(List perguntasList){
         mPerguntasList = perguntasList;
-        Log.d(TAG, "Primeiro item da lista: " + mPerguntasList.get(0).getTitulo());
+        //Log.d(TAG, "Primeiro item da lista: " + mPerguntasList.get(0).getTitulo());
     }
 
     public void setViews(View rootView) {
@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         long id = mPerguntasList.get(position).getPkPergunta();
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
         intent.putExtra("pk", id);
-        AnswerGetTask task = new AnswerGetTask(getActivity(), this, intent);
+        AnswerGetTask task = new AnswerGetTask(getActivity(), intent);
         task.execute(id);
 
     }

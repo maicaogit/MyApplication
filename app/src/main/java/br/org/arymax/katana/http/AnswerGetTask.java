@@ -23,14 +23,12 @@ public class AnswerGetTask extends AsyncTask<Long, Void, String> {
 
     private Context mContext;
     private ProgressDialog mProgress;
-    private HomeFragment mCallerFragment;
     private Intent mOpenQuestionActivity;
     private long pkPergunta;
 
     private static final String TAG = "AnswerGetTask.java";
 
-    public AnswerGetTask(Context context, HomeFragment fragment, Intent intent){
-        mCallerFragment = fragment;
+    public AnswerGetTask(Context context, Intent intent){
         mContext = context;
         mOpenQuestionActivity = intent;
     }

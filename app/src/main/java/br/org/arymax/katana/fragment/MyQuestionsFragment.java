@@ -1,6 +1,7 @@
 package br.org.arymax.katana.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
+import br.org.arymax.katana.http.AnswerGetTask;
 import br.org.arymax.katana.http.MyQuestionsGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
@@ -106,6 +109,10 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
+        long id = mPerguntasList.get(position).getPkPergunta();
+        Intent intent = new Intent(getActivity(), QuestionActivity.class);
+        intent.putExtra("pk", id);
+        AnswerGetTask task = new AnswerGetTask(getActivity(), intent);
+        task.execute(id);
     }
 }
