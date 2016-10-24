@@ -122,28 +122,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             {
                 if(isOpen)
                 {
-
-                    mFabReorganizeListData.startAnimation(fab_close);
-                    mFabReorganizeListVisit.startAnimation(fab_close);
-                    mFabReorganizeList.startAnimation(fab_antiClockWise);
-
-                    mFabReorganizeListData.setClickable(false);
-                    mFabReorganizeListVisit.setClickable(false);
-
-                    isOpen = false;
+                    closeFab();
                 }
 
                 else
                 {
-
-                    mFabReorganizeListData.startAnimation(fab_open);
-                    mFabReorganizeListVisit.startAnimation(fab_open);
-                    mFabReorganizeList.startAnimation(fab_clockWise);
-
-                    mFabReorganizeListData.setClickable(true);
-                    mFabReorganizeListVisit.setClickable(true);
-
-                    isOpen = true;
+                    openFab();
                 }
             }
         });
@@ -156,9 +140,13 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
                 mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
+                mFabReorganizeListData.setVisibility(View.GONE);
+                mFabReorganizeListVisit.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 tipo = "data";
                 callTask(tipo);
+
+                closeFab();
 
 
             }
@@ -171,9 +159,14 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             {
                 mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
+
                 mRecyclerView.setVisibility(View.GONE);
                 tipo = "visitas";
                 callTask(tipo);
+
+                closeFab();
+
+
 
             }
         });
@@ -199,5 +192,29 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         intent.putExtra("pkPergunta", mPerguntasList.get(position).getPkPergunta());
         AnswerGetTask task = new AnswerGetTask(getActivity(), this, intent);
         task.execute(id);
+    }
+
+    public void openFab()
+    {
+        mFabReorganizeListData.startAnimation(fab_open);
+        mFabReorganizeListVisit.startAnimation(fab_open);
+        mFabReorganizeList.startAnimation(fab_clockWise);
+
+        mFabReorganizeListData.setClickable(true);
+        mFabReorganizeListVisit.setClickable(true);
+
+        isOpen = true;
+    }
+
+    public void closeFab()
+    {
+        mFabReorganizeListData.startAnimation(fab_close);
+        mFabReorganizeListVisit.startAnimation(fab_close);
+        mFabReorganizeList.startAnimation(fab_antiClockWise);
+
+        mFabReorganizeListData.setClickable(false);
+        mFabReorganizeListVisit.setClickable(false);
+
+        isOpen = false;
     }
 }

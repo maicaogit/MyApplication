@@ -54,8 +54,8 @@ public class UserActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.action_home);
-        Intent intent= new Intent(this, NotificationReceiver.class);
-        startActivity(intent);
+        //Intent intent= new Intent(this, NotificationReceiver.class);
+        //startActivity(intent);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, 0, 0);
