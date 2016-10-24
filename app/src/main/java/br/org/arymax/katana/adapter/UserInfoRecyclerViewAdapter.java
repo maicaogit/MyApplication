@@ -190,16 +190,17 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
             case 2:
                 email = dadoAlt;
                 nome = sp.getString("nome", "");
+                holder.editInfoToolbar.setSubtitle(email);
                 break;
         }
 
         String pront = sp.getString("prontuario", "");
         long pk = sp.getLong("pk", 0);
-        ChangeUserInfoTask task = new ChangeUserInfoTask(context, code);
+        ChangeUserInfoTask task = new ChangeUserInfoTask(context, code, dadoAlt);
         Usuario user = new Usuario(pk, nome, pront, email);
         String xml = XMLParser.objectToXML(user, Usuario.class);
         Log.i(TAG, "XML do usuário: " + xml);
-        //task.execute(xml);
+        task.execute(xml);
     }
 
 

@@ -28,11 +28,13 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
     private Usuario usuario;
     private ServerCalls.Status status;
     private int code;
+    private String dadoAlt;
 
 
-    public ChangeUserInfoTask(Context context, int code){
+    public ChangeUserInfoTask(Context context, int code, String dadoAlt){
         mContext = context;
         this.code = code;
+        this.dadoAlt = dadoAlt;
     }
 
     @Override
@@ -71,9 +73,11 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
             SharedPreferences sp = mContext.getSharedPreferences(Constants.PREFERENCES, 0);
             SharedPreferences.Editor editor = sp.edit();
 
+
+
             switch (code) {
-                case 1: editor.putString("nome", ""); break;
-                case 2: editor.putString("email", ""); break;
+                case 1: editor.putString("nome", dadoAlt); break;
+                case 2: editor.putString("email", dadoAlt); break;
             }
 
             editor.commit();
