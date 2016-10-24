@@ -12,7 +12,8 @@ import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
-import br.org.arymax.katana.model.Pergunta;
+import br.org.arymax.katana.interfaces.RecyclerViewOnLongClickListener;
+import br.org.arymax.katana.model.Resposta;
 
 /**
  * Created by douglas on 16/10/16.
@@ -20,53 +21,66 @@ import br.org.arymax.katana.model.Pergunta;
 
 public class QuestionReplyRecyclerViewAdapter extends RecyclerView.Adapter<QuestionReplyRecyclerViewAdapter.ViewHolder> {
 
-    public List<Pergunta> mPerguntasList;
+    public List<Resposta> mRespostasList;
     private Context context;
-    private RecyclerViewOnItemClickListener listener;
+    private RecyclerViewOnItemClickListener mOnItemClickListener;
+    private RecyclerViewOnLongClickListener mOnLongClickListener;
 
-    public QuestionReplyRecyclerViewAdapter(List<Pergunta> mPerguntasList) {
-        this.mPerguntasList = mPerguntasList;
+    public QuestionReplyRecyclerViewAdapter(List<Resposta> list) {
+        this.mRespostasList = list;
     }
 
     @Override
     public QuestionReplyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
-        return new QuestionReplyRecyclerViewAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_questions_recycler_child, parent, false));
+        return new QuestionReplyRecyclerViewAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.answers_recycler_child, parent, false));
     }
 
     @Override
     public void onBindViewHolder(QuestionReplyRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.txtTitulo.setText(mPerguntasList.get(position).getTitulo());
-        holder.txtPergunta.setText(mPerguntasList.get(position).getTexto());
+        holder.textResposta.setText(mRespostasList.get(position).getResposta());
     }
 
     @Override
     public int getItemCount()
     {
-        return mPerguntasList.size();
+        return mRespostasList.size();
     }
 
-    public void setListener(RecyclerViewOnItemClickListener l){
-        listener = l;
+    public void setOnItemClickListener(RecyclerViewOnItemClickListener l){
+        mOnItemClickListener = l;
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public void setOnLongClickListener(RecyclerViewOnLongClickListener l){
+        mOnLongClickListener = l;
+    }
 
-        TextView txtTitulo;
-        TextView txtPergunta;
-        ImageView avatar;
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener,
+    View.OnClickListener{
+
+        private TextView textResposta;
+        private ImageView avatar;
         public ViewHolder(View itemView) {
             super(itemView);
-            txtTitulo = (TextView) itemView.findViewById(R.id.txtTitulo);
-            txtPergunta = (TextView) itemView.findViewById(R.id.txtPergunta);
+            textResposta = (TextView) itemView.findViewById(R.id.txt_resposta);
             avatar = (ImageView) itemView.findViewById(R.id.imageView);
+            itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            if(mOnLongClickListener != null){
+                mOnLongClickListener.onLongClick(v, getLayoutPosition());
+            }
+            return false;
         }
 
         @Override
         public void onClick(View v) {
-            if(listener != null){
-                listener.onItemClick(v, getLayoutPosition());
+            if(mOnItemClickListener != null){
+                mOnItemClickListener.onItemClick(v, getLayoutPosition());
             }
         }
     }

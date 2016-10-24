@@ -32,7 +32,7 @@ public class XMLParser {
      */
     public static <T> T XMLToObject(String XML, Class<T> type){
         stream = getStream();
-        T obj = null;
+        T obj;
         stream.processAnnotations(type);
         obj = (T) stream.fromXML(XML);
         return obj;
@@ -47,7 +47,7 @@ public class XMLParser {
      */
     public static String objectToXML(Object obj, Class type){
         stream = getStream();
-        String XML = "";
+        String XML;
         stream.processAnnotations(type);
         XML = stream.toXML(obj);
         return XML;
@@ -75,11 +75,10 @@ public class XMLParser {
      */
     public static <T, A> List xmlToListObject(String XML, Class<A> listHolder, Class<T> listObjectClass){
         stream = getStream();
-        List<T> objectList = null;
+        List<T> objectList = new ArrayList<>();
         stream.processAnnotations(listHolder);
         stream.processAnnotations(listObjectClass);
         if(!XML.equals("")){
-            objectList = new ArrayList<>();
             if(listHolder == ArrayPerguntas.class){
                 Log.d(TAG, "ArrayPerguntas.class");
                 ArrayPerguntas perguntas = (ArrayPerguntas) stream.fromXML(XML);

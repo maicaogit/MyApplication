@@ -22,7 +22,7 @@ public class ArrayPerguntas {
     /**
      * Retorna a lista de perguntas
      *
-     * @return
+     * @return lista de perguntas
      */
     public List<Pergunta> getPerguntas(){
         return perguntas;

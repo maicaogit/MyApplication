@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,6 +18,7 @@
 
             <android.support.v7.widget.CardView
                 app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorPrimary"
                 android:id="@+id/cv_question_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="4dp"
@@ -38,6 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_title"
+                        android:textColor="@color/colorTextIcons"
                         android:textSize="24sp"
                         android:text="Título"/>
 
@@ -45,6 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:textColor="@color/colorTextIcons"
                         android:text="Texto da pergunta, a qual o usuário cadastro muito, mas muito tempo atras"
                         android:id="@+id/tv_text"/>
 
@@ -60,7 +64,7 @@
                             android:layout_marginTop="16dp"
                             android:id="@+id/btn_flag"
                             android:text="@string/action_flag"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorTextIcons"
                             android:background="?attr/selectableItemBackground" />
 
                         <Button
@@ -69,7 +73,7 @@
                             android:layout_marginTop="16dp"
                             android:id="@+id/btn_reply"
                             android:text="@string/action_reply"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorTextIcons"
                             android:background="?attr/selectableItemBackground"/>
 
                     </LinearLayout>
@@ -79,16 +83,75 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.RecyclerView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/rv_respostas"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rv_respostas">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_answers"
+                    android:textAlignment="center"
+                    android:visibility="visible"
+                    android:textSize="24sp"
+                    android:id="@+id/tv_no_answers"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reveal_view"
+        android:background="@android:color/black"
+        android:visibility="gone"
+        android:alpha="0.9"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorTextIcons"
+        android:id="@+id/answer_panel"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/navheader" />
+
+        <EditText
+            android:id="@+id/text_answer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/answer_hint"
+            android:textColorHint="@color/secondaryText"
+            android:layout_weight="1"
+            android:imeOptions="actionNone"
+            android:layout_marginEnd="8dp" />
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_send"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:tint="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</FrameLayout>
