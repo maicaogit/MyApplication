@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Item na posição: " + position, Toast.LENGTH_SHORT).show();
         long id = mPerguntasList.get(position).getPkPergunta();
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
         intent.putExtra("titulo", mPerguntasList.get(position).getTitulo());

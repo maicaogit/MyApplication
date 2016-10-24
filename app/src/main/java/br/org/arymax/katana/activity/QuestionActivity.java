@@ -87,7 +87,7 @@ View.OnClickListener{
             String XML = bundle.getString("respostas");
             mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
             if(mAnswerList.size() > 0){
-                Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
                 mNoAnswersMessage.setVisibility(View.GONE);
                 Log.d(TAG, "Resposta: " + mAnswerList.get(1).getResposta());
                 Log.d(TAG, "Size: " + mAnswerList.size());
