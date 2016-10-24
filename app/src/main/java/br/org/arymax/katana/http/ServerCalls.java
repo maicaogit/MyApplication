@@ -90,16 +90,29 @@ public class ServerCalls {
              * Path para retornar as respostas de uma pergunta
              */
             protected static final String GET_ANSWERS_PATH = "/resposta/todasRespostas/";
-
-        //DELETE
-            /**
-             *
-             */
+        /**
+        * Path que retorna o atributo de notificação das perguntas de um usuario
+         *
+        */
+        protected static final String GET_NOTIFICATION = "/pergunta/perguntasNotifcadas/";
+    /**
+    * Path que retorna o atributo de notificação das perguntas de um usuario
+    *
+            */
+    protected static final String GET_USER_NOTIFICATION = "/usuario/isNotifcadas/";
+    //DELETE
+    /**
+     *
+     */
 
         //PUT
             /**
-             *
+             *Path que altera o campo de notificação de um usuario
              */
+            protected  static final String SET_USER_NOTIFICATION="/usuario/setNotificado/";
+        /**
+        *Path que altera o campo de notificação de uma pergunta
+        */
             protected static final String SET_NOTIFICATION = "/pergunta/setNotificado/";
 
 
@@ -149,6 +162,7 @@ public class ServerCalls {
          * Constante para o content-type TEXT/XML
          */
         protected static final String TEXT_XML = "TEXT/XML";
+
 
 
     private static final String TAG = "ServerCalls.java";
