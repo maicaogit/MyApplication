@@ -67,7 +67,6 @@ public class ServerCalls {
             protected static final String GET_USER_PATH = "/usuario/login/";
 
 
-
             /**
              * Path para retornar a lista de perguntas
              */
@@ -83,7 +82,7 @@ public class ServerCalls {
         /**
          * Path para retornar uma pergunta
                  */
-                protected static final String GET_QUESTION_PATH = "/pergunta/abrir/";
+            protected static final String GET_QUESTION_PATH = "/pergunta/abrir/";
 
 
 
@@ -97,6 +96,11 @@ public class ServerCalls {
              *
              */
 
+        //PUT
+            /**
+             *
+             */
+            protected static final String SET_NOTIFICATION = "/pergunta/setNotificado/";
 
 
 

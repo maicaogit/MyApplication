@@ -127,6 +127,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         Intent intent = new Intent(getActivity(), QuestionActivity.class);
         intent.putExtra("titulo", mPerguntasList.get(position).getTitulo());
         intent.putExtra("pergunta", mPerguntasList.get(position).getTexto());
+        intent.putExtra("pkPergunta", mPerguntasList.get(position).getPkPergunta());
         AnswerGetTask task = new AnswerGetTask(getActivity(), this, intent);
         task.execute(id);
     }

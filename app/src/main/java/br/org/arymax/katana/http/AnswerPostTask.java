@@ -3,6 +3,7 @@ package br.org.arymax.katana.http;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import br.org.arymax.katana.R;
 
@@ -13,6 +14,8 @@ public class AnswerPostTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
     private ProgressDialog mProgress;
+
+    private static final String TAG = "AnswerPostTask.java";
 
     public AnswerPostTask(Context context){
         mContext = context;
@@ -47,6 +50,7 @@ public class AnswerPostTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
+        Log.d(TAG, "Resposta do server: " + s);
         mProgress.dismiss();
     }
 

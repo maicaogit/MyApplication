@@ -24,6 +24,10 @@ public class Pergunta {
     public Pergunta() {
     }
 
+    public Pergunta(long pkPergunta){
+        this.pkPergunta = pkPergunta;
+    }
+
     /**
      * Construtor Pergunta.
      *
