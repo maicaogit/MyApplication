@@ -1,6 +1,7 @@
 package br.org.arymax.katana.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import java.util.Date;
 
 import br.org.arymax.katana.R;
+import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.activity.UserActivity;
 import br.org.arymax.katana.http.QuestionPostTask;
 import br.org.arymax.katana.model.Pergunta;
@@ -34,6 +36,7 @@ public class MakeQuestionFragment extends Fragment {
     private EditText mQuestionTitle;
     private EditText mQuestionContent;
     private SwitchCompat mAnonymousMode;
+    private Intent mIntent;
     private boolean anonymousMode = false;
 
     private static final String TAG = "MakeQuestionFragment";
@@ -81,7 +84,8 @@ public class MakeQuestionFragment extends Fragment {
                     Pergunta pergunta = new Pergunta(title, content, anonymousMode, pk);
                     String XML = XMLParser.objectToXML(pergunta, Pergunta.class);
                     Log.d(TAG, "XML da pergunta: " + XML);
-                    QuestionPostTask task = new QuestionPostTask(getActivity(), rootView);
+                    Intent intent = new Intent(getActivity(), UserActivity.class);
+                    QuestionPostTask task = new QuestionPostTask(getActivity(), rootView, intent);
                     task.execute(XML);
                     return true;
                 } else {
