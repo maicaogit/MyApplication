@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.org.arymax.katana.model.ArrayPerguntas;
 import br.org.arymax.katana.model.Pergunta;
+import br.org.arymax.katana.model.Rest;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
 
@@ -79,7 +80,7 @@ public class NotificationService extends Service {
                 );
                 notificado = Boolean.valueOf(aux);
                 Log.d(TAG, "isNotificado: " + notificado);
-                if(!notificado){
+                if(notificado){
                     String result = "";
                     try{
                         result = ServerCalls.callGet(ServerCalls.SERVER_URL + "funcoes" + ServerCalls.GET_NOTIFICATED_QUESTIONS_PATH + userId,
@@ -95,7 +96,39 @@ public class NotificationService extends Service {
                         intent.putExtra("titulo", notificatedQuestions.get(0).getTitulo());
                         intent.putExtra("pergunta", notificatedQuestions.get(0).getTexto());
                         intent.putExtra("pk", notificatedQuestions.get(0).getPkPergunta());
+                        String xmlAnswers = ServerCalls.callGet(
+                                ServerCalls.SERVER_URL + "funcoes" + ServerCalls.GET_ANSWERS_PATH + notificatedQuestions.get(0).getPkPergunta(),
+                                ServerCalls.GET,
+                                ServerCalls.TEXT_XML
+                        );
+                        intent.putExtra("respostas", xmlAnswers);
                         sendBroadcast(intent);
+                        for(Pergunta pergunta : notificatedQuestions){
+                            long perguntaId = pergunta.getPkPergunta();
+                            try {
+                                Rest restPergunta = new Rest(
+                                        ServerCalls.SERVER_URL,
+                                        null,
+                                        ServerCalls.SET_QUESTION_NOTIFICATED + perguntaId,
+                                        ServerCalls.PUT,
+                                        null,
+                                        ServerCalls.TEXT_PLAIN
+                                );
+                                String responseQuestion = ServerCalls.callGet(restPergunta);
+                            } catch (Exception exception){
+                                exception.printStackTrace();
+                            }
+                        }
+                        try {
+                            Rest restUsuario = new Rest();
+                            restUsuario.setHost(ServerCalls.SERVER_URL);
+                            restUsuario.setMethod(ServerCalls.PUT);
+                            restUsuario.setPath(ServerCalls.SET_USER_NOTIFICATED + userId);
+                            restUsuario.setAccept(ServerCalls.TEXT_PLAIN);
+                            String responseUser = ServerCalls.callGet(restUsuario);
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
                     }
                 }
                 stopSelf(startId);

@@ -80,7 +80,7 @@ public class XMLParser {
         stream.registerConverter(new ISO8601DateConverter());
         stream.processAnnotations(listHolder);
         stream.processAnnotations(listObjectClass);
-        if(!XML.equals("")){
+        if(XML != null){
             if(listHolder == ArrayPerguntas.class){
                 Log.d(TAG, "ArrayPerguntas.class");
                 ArrayPerguntas perguntas = (ArrayPerguntas) stream.fromXML(XML);
