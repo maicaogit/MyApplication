@@ -1,14 +1,7 @@
 package br.org.arymax.katana.activity;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,18 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.concurrent.ExecutionException;
-
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.broadcastreceiver.NotificationReceiver;
 import br.org.arymax.katana.fragment.HomeFragment;
 import br.org.arymax.katana.fragment.MakeQuestionFragment;
 import br.org.arymax.katana.fragment.MyQuestionsFragment;
 import br.org.arymax.katana.fragment.UserInfoFragment;
-import br.org.arymax.katana.http.QuestionGetTask;
 import br.org.arymax.katana.utility.Constants;
-
-import static java.lang.System.out;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,16 +33,19 @@ public class UserActivity extends AppCompatActivity
     private NavigationView mNavigation;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = new Intent(Constants.ACTION_START_NOTIFICATION_SERVICE);
+        sendBroadcast(intent);
+
+
 
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.action_home);
-        //Intent intent= new Intent(this, NotificationReceiver.class);
-        //startActivity(intent);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, 0, 0);
@@ -143,8 +133,7 @@ public class UserActivity extends AppCompatActivity
             }
             fragmentTransaction.commit();
 
-        } else if (id == R.id.nav_make_question)
-        {
+        } else if (id == R.id.nav_make_question) {
             getSupportActionBar().setTitle(R.string.action_make_question);
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(false);
@@ -163,8 +152,7 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        else if (id == R.id.nav_my_profile)
-        {
+        else if (id == R.id.nav_my_profile) {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
@@ -183,8 +171,7 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
 
-        else if (id == R.id.nav_my_answers)
-        {
+        else if (id == R.id.nav_my_answers) {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);
@@ -197,8 +184,7 @@ public class UserActivity extends AppCompatActivity
         }
 
 
-        else if (id == R.id.nav_my_questions)
-        {
+        else if (id == R.id.nav_my_questions) {
             MenuItem settings = mMenu.findItem(R.id.action_settings);
             settings.setVisible(true);
             MenuItem send = mMenu.findItem(R.id.action_enviar);

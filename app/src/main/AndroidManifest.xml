@@ -3,17 +3,39 @@
     package="br.org.arymax.katana">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
+
+        <receiver android:name=".broadcastreceiver.NotificationReceiver">
+            <intent-filter>
+                <action android:name="br.org.arymax.katana.intent.ACTION_NOTIFICATE_USER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
         <receiver
-            android:name=".broadcastreceiver.NotificationReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:name=".broadcastreceiver.StartServiceReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="br.org.arymax.katana.intent.ACTION_START_NOTIFICATION_SERVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".http.NotificationService"
+            android:exported="false"
+            android:enabled="true" />
 
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
@@ -22,18 +44,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/AppTheme.Dark" />
+
         <activity
             android:name=".activity.UserActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".activity.QuestionActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.SearchActivity"></activity>
+
+        <activity android:name=".activity.SearchActivity" />
     </application>
 
 </manifest>

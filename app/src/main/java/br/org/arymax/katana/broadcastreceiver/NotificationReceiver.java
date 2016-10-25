@@ -1,14 +1,16 @@
 package br.org.arymax.katana.broadcastreceiver;
 
-import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.NotificationCompat;
 
-import java.util.Calendar;
-
-import br.org.arymax.katana.http.UserNotificationGetTask;
+import br.org.arymax.katana.R;
+//import br.org.arymax.katana.activity.QuestionActivity;
+import br.org.arymax.katana.activity.SearchActivity;
 import br.org.arymax.katana.utility.Constants;
 
 /**
@@ -19,25 +21,22 @@ public class NotificationReceiver extends BroadcastReceiver  {
     private Boolean estado;
     @Override
     public void onReceive(Context context, Intent intent){
-        callTask(context);
-        Calendar c= Calendar.getInstance();
-        c.add(Calendar.MINUTE,5);
-        Intent i= new Intent(context,NotificationReceiver.class);
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,(int)context.getSharedPreferences(Constants.PREFERENCES,0).getLong("pk",-1),i,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmeManager= (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmeManager.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pendingIntent);
-    }
-
-    public Boolean getEstado() {
-        return estado;
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent1 = new Intent(context, SearchActivity.class);
+        intent1.putExtras(intent.getExtras());
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) context.getSharedPreferences(Constants.PREFERENCES,0).getLong("pk",-1), intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setTicker("Você tem preguntas respondidas não vizualizadas");
+        builder.setContentTitle("Você possui alguma pergunta não visualizada");
+        builder.setContentText("Toque para mais informações");
+        builder.setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.drawable.logo);
+        Notification n = builder.build();
+        n.vibrate = new long[]{150, 300, 150, 600};
+        nm.notify(R.drawable.logo, n);
     }
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
-    }
-    public void callTask(Context context) {
-
-        UserNotificationGetTask task = new UserNotificationGetTask(context,this);
-        task.execute(context.getSharedPreferences(Constants.PREFERENCES,0).getLong("pk",-1));
     }
 }
