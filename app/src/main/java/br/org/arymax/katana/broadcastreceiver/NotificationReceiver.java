@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.NotificationCompat;
 
 import br.org.arymax.katana.R;
@@ -32,8 +33,9 @@ public class NotificationReceiver extends BroadcastReceiver  {
         builder.setContentText("Toque para mais informações");
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.drawable.logo);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo));
         Notification n = builder.build();
-        n.vibrate = new long[]{150, 300, 150, 600};
+        n.vibrate = new long[]{150, 300, 150, 300};
         nm.notify(R.drawable.logo, n);
     }
 

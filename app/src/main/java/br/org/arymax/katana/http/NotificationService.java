@@ -69,6 +69,7 @@ public class NotificationService extends Service {
             this.startId = startId;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void run(){
             String aux;
