@@ -53,9 +53,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
     private static final String TAG = "HomeFragment.java";
 
-    public HomeFragment() {
-
-    }
+    public HomeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -70,6 +68,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         tipo = "data";
         callTask(tipo);
         setHasOptionsMenu(true);
+
         return rootView;
     }
 
@@ -144,8 +143,6 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                 callTask(tipo);
 
                 closeFab();
-
-
             }
         });
 

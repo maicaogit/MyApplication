@@ -36,6 +36,7 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
     private List<Resposta> mAnswerList;
     private TextView mTitle;
     private TextView mText;
+    private TextView mAnonimo;
     private TextView mNoAnswersMessage;
     private RecyclerView mRecyclerViewAnswers;
     private QuestionReplyRecyclerViewAdapter mAdapter;
@@ -64,6 +65,7 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
         mRevealView = findViewById(R.id.reveal_view);
         mAnswerPanel = (LinearLayout) findViewById(R.id.answer_panel);
         mSend = (ImageView) findViewById(R.id.iv_send);
+        mAnonimo = (TextView) findViewById(R.id.tv_anonimo);
 
         mAnswerPanel.setVisibility(View.GONE);
 
@@ -86,18 +88,31 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
         if(bundle != null){
             String XML = bundle.getString("respostas");
             mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
-            if(mAnswerList.size() > 0){
+            if(mAnswerList.size() > 0)
+            {
                 //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
                 mNoAnswersMessage.setVisibility(View.GONE);
                 Log.d(TAG, "Size: " + mAnswerList.size());
-            } else {
+            } else
+            {
                 mAnswerList = new ArrayList<>();
             }
             String title = bundle.getString("titulo");
             String texto = bundle.getString("pergunta");
+            String autor = bundle.getString("autor");
+            boolean anonimo = bundle.getBoolean("anonimo");
+            if(anonimo)
+            {
+                mAnonimo.setText(R.string.anonimus);
+            }
+            else
+            {
+                mAnonimo.setText(autor);
+            }
             mTitle.setText(title);
             mText.setText(texto);
             pkPergunta = bundle.getLong("pk");
+
         }
 
         mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
