@@ -98,7 +98,7 @@ public class MakeQuestionFragment extends Fragment {
         return rootView;
     }
 
-//
+///
 
     private boolean areFieldsFilled(){
         String title = mQuestionTitle.getText().toString();
