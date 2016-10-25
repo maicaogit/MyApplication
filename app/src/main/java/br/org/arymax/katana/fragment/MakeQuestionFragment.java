@@ -86,7 +86,7 @@ public class MakeQuestionFragment extends Fragment {
                     Log.d(TAG, "XML da pergunta: " + XML);
                     Intent intent = new Intent(getActivity(), UserActivity.class);
                     QuestionPostTask task = new QuestionPostTask(getActivity(), rootView, intent);
-                    task.execute(XML);//
+                    task.execute(XML);///
                     return true;
                 } else {
                     Snackbar.make(rootView, "Preencha os campos", Snackbar.LENGTH_LONG).show();
