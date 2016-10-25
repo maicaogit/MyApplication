@@ -31,6 +31,7 @@ public class UserActivity extends AppCompatActivity
     private FragmentManager fragmentManager = getSupportFragmentManager();
     public static Menu mMenu;
     private NavigationView mNavigation;
+    protected static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +231,15 @@ public class UserActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        active = false;
+    }
 }

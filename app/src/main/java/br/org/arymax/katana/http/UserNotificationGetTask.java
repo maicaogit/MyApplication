@@ -30,7 +30,7 @@ public class UserNotificationGetTask extends AsyncTask<Long, Void, String> {
         Long param = params[0];
         String result = "";
         try{
-            result = ServerCalls.callGet(ServerCalls.SERVER_URL + "funcoes" + ServerCalls.SET_USER_NOTIFICATION+ params,
+            result = ServerCalls.callGet(ServerCalls.SERVER_URL + "funcoes" + ServerCalls.SET_USER_NOTIFICATED + params,
                     ServerCalls.GET,
                     ServerCalls.TEXT_XML
             );

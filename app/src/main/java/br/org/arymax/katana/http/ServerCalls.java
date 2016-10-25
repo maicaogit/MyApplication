@@ -98,7 +98,7 @@ public class ServerCalls {
      * Path que retorna o atributo de notificação das perguntas de um usuario
      *
      */
-    public static final String GET_NOTIFICATED_QUESTIONS_PATH = "/pergunta/perguntasNotifcadas/";
+    public static final String GET_NOTIFICATED_QUESTIONS_PATH = "/pergunta/perguntasNotificadas/";
 
 
     /**
@@ -117,11 +117,11 @@ public class ServerCalls {
     /**
      *Path que altera o campo de notificação de um usuario
      */
-    public  static final String SET_USER_NOTIFICATION="/usuario/setNotificado/";
+    public  static final String SET_USER_NOTIFICATED = "/usuario/setNotificado/";
     /**
      *Path que altera o campo de notificação de uma pergunta
      */
-    public static final String SET_NOTIFICATION = "/pergunta/setNotificado/";
+    public static final String SET_QUESTION_NOTIFICATED = "/pergunta/setNotificado/";
 
 
 

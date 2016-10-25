@@ -1,6 +1,8 @@
 package br.org.arymax.katana.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -178,7 +180,13 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
             mAnswerArea.clearFocus();
             mAnswerPanel.setVisibility(View.GONE);
         } else {
-            super.onBackPressed();
+            if(UserActivity.active){
+                super.onBackPressed();
+            } else {
+                Intent intent = new Intent(this, UserActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 }
