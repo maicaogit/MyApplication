@@ -1,11 +1,8 @@
 package br.org.arymax.katana.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -17,17 +14,14 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import java.util.Date;
+import com.rey.material.widget.SnackBar;
 
 import br.org.arymax.katana.R;
-import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.activity.UserActivity;
 import br.org.arymax.katana.http.QuestionPostTask;
 import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
-
-import static java.lang.System.out;
 
 
 public class MakeQuestionFragment extends Fragment {
@@ -36,7 +30,6 @@ public class MakeQuestionFragment extends Fragment {
     private EditText mQuestionTitle;
     private EditText mQuestionContent;
     private SwitchCompat mAnonymousMode;
-    private Intent mIntent;
     private boolean anonymousMode = false;
 
     private static final String TAG = "MakeQuestionFragment";
@@ -68,6 +61,8 @@ public class MakeQuestionFragment extends Fragment {
             }
         });
 
+        final ViewGroup root = (ViewGroup) rootView.findViewById(R.id.make_question_root);
+
         Menu menu = UserActivity.mMenu;
 
         MenuItem ok = menu.findItem(R.id.action_enviar);
@@ -80,25 +75,36 @@ public class MakeQuestionFragment extends Fragment {
                     long pk = preferences.getLong("pk", -1);
                     String title = mQuestionTitle.getText().toString();
                     String content = mQuestionContent.getText().toString();
-                    out.print(""+anonymousMode);
                     Pergunta pergunta = new Pergunta(title, content, anonymousMode, pk);
                     String XML = XMLParser.objectToXML(pergunta, Pergunta.class);
                     Log.d(TAG, "XML da pergunta: " + XML);
                     Intent intent = new Intent(getActivity(), UserActivity.class);
-                    QuestionPostTask task = new QuestionPostTask(getActivity(), rootView, intent);
+                    QuestionPostTask task = new QuestionPostTask(getActivity(), root, intent);
                     task.execute(XML);///
                     return true;
                 } else {
-                    Snackbar.make(rootView, "Preencha os campos", Snackbar.LENGTH_LONG).show();
+                   SnackBar snackBar = SnackBar.make(getContext())
+                            .text("Preencha os campos")
+                            .singleLine(true)
+                            .actionText("Fechar")
+                            .duration(3000)
+                            .actionClickListener(new SnackBar.OnActionClickListener() {
+                                @Override
+                                public void onActionClick(SnackBar sb, int actionId) {
+                                    sb.dismiss();
+                                }
+                            });
+
+                    snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+                    snackBar.actionTextColor(getActivity().getResources().getColor(R.color.colorAccent));
+                    snackBar.show(root);
                     return false;
                 }
             }
         });
-
+        setRetainInstance(true);
         return rootView;
     }
-
-///
 
     private boolean areFieldsFilled(){
         String title = mQuestionTitle.getText().toString();

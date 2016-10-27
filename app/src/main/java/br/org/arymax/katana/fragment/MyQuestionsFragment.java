@@ -66,9 +66,14 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
         } else {
             SerializableListHolder holder = (SerializableListHolder) savedInstanceState.getSerializable(SerializableListHolder.KEY);
             mPerguntasList = holder.getList();
-            mProgress.setVisibility(View.GONE);
-            setViews(rootView);
+            if(mPerguntasList == null || mPerguntasList.size() == 0) {
+                callTask();
+            } else {
+                mProgress.setVisibility(View.GONE);
+                setViews(rootView);
+            }
         }
+        setRetainInstance(true);
         return rootView;
     }
 

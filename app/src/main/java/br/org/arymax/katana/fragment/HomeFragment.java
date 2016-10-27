@@ -22,6 +22,7 @@ import java.util.List;
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.activity.SearchActivity;
+import br.org.arymax.katana.activity.UserActivity;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.AnswerGetTask;
 import br.org.arymax.katana.http.QuestionGetTask;
@@ -71,11 +72,15 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         } else {
             SerializableListHolder holder = (SerializableListHolder) savedInstanceState.getSerializable(SerializableListHolder.KEY);
             mPerguntasList = holder.getList();
-            mProgress.setVisibility(View.GONE);
-            setViews(rootView);
+            if(mPerguntasList == null || mPerguntasList.size() == 0) {
+                callTask(tipo);
+            } else {
+                mProgress.setVisibility(View.GONE);
+                setViews(rootView);
+            }
         }
         setHasOptionsMenu(true);
-
+        setRetainInstance(true);
         return rootView;
     }
 

@@ -1,78 +1,86 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/make_question_root"
     android:background="@android:color/white"
-    android:orientation="vertical"
     tools:context="br.org.arymax.katana.fragment.MakeQuestionFragment">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:layout_gravity="center_horizontal|top">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_text_titulo"
+                    android:inputType="textCapSentences"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/colorDivider"
+                    android:textColor="@color/primaryText"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:hint="@string/title_hint"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:ems="10"
+                    android:textColor="@color/primaryText"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/string_pergunta"
+                    android:textColorHint="@color/colorDivider"
+                    android:id="@+id/text_pergunta"
+                    android:layout_marginTop="24dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:layout_gravity="center_horizontal|top">
+            android:background="@android:color/white"
+            android:elevation="16dp"
+            android:padding="12dp"
+            android:layout_gravity="bottom">
 
-            <EditText
-                android:layout_width="match_parent"
+            <android.support.v7.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:id="@+id/modo_anonimo"
                 android:layout_height="wrap_content"
-                android:id="@+id/edit_text_titulo"
-                android:inputType="textCapSentences"
-                android:background="@android:color/transparent"
-                android:textColorHint="@color/colorDivider"
-                android:textColor="@color/primaryText"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:hint="@string/title_hint"/>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="false" />
 
-            <EditText
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine|textCapSentences"
-                android:ems="10"
-                android:textColor="@color/primaryText"
-                android:background="@android:color/transparent"
-                android:hint="@string/string_pergunta"
-                android:textColorHint="@color/colorDivider"
-                android:id="@+id/text_pergunta"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="3dp"
+                android:text="Modo Anônimo"
+                android:layout_alignParentStart="true"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="16dp"
-        android:padding="12dp"
-        android:layout_gravity="bottom">
-
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:id="@+id/modo_anonimo"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="Modo Anônimo"
-            android:layout_alignParentStart="true"/>
-
-    </RelativeLayout>
-
-
-</LinearLayout>
+</FrameLayout>

@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+
+import com.rey.material.widget.SnackBar;
 
 import br.org.arymax.katana.R;
 
@@ -20,12 +23,12 @@ public class QuestionPostTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
     private ProgressDialog mProgress;
-    private View mRootView;
+    private ViewGroup mRootView;
     private Intent mIntent;
 
     private static final String TAG = "QuestionPostTask.java";
 
-    public QuestionPostTask(Context context, View rootView, Intent mIntent){
+    public QuestionPostTask(Context context, ViewGroup rootView, Intent mIntent){
         mRootView = rootView;
         mContext = context;
         this.mIntent = mIntent;
@@ -71,11 +74,25 @@ public class QuestionPostTask extends AsyncTask<String, Void, String> {
             text.setText("");
             text1.setText("");
             switchCompat.setChecked(false);
-            Snackbar.make(mRootView, R.string.snackbar_message_ok, Snackbar.LENGTH_LONG).show();
-            mContext.startActivity(mIntent);
+            SnackBar snackBar = SnackBar.make(mContext)
+                    .text(R.string.snackbar_message_ok)
+                    .singleLine(true)
+                    .duration(3000);
+
+            snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+            snackBar.actionTextColor(mContext.getResources().getColor(R.color.colorAccent));
+            snackBar.show(mRootView);
+            //mContext.startActivity(mIntent);
             mProgress.dismiss();
         } else {
-            Snackbar.make(mRootView, R.string.snackbar_message_error, Snackbar.LENGTH_LONG).show();
+            SnackBar snackBar = SnackBar.make(mContext)
+                    .text(R.string.snackbar_message_error)
+                    .singleLine(true)
+                    .duration(3000);
+
+            snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+            snackBar.actionTextColor(mContext.getResources().getColor(R.color.colorAccent));
+            snackBar.show(mRootView);
             mProgress.dismiss();
         }
     }

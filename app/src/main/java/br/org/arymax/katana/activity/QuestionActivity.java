@@ -94,23 +94,21 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
             mAnswerList = holder.getList();
             mNoAnswersMessage.setVisibility(View.GONE);
 
-        } else {
-            if(bundle != null){
-                String XML = bundle.getString("respostas");
-                mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
-                if(mAnswerList.size() > 0){
-                    //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
-                    mNoAnswersMessage.setVisibility(View.GONE);
-                    Log.d(TAG, "Size: " + mAnswerList.size());
-                } else {
-                    mAnswerList = new ArrayList<>();
-                }
-                String title = bundle.getString("titulo");
-                String texto = bundle.getString("pergunta");
-                mTitle.setText(title);
-                mText.setText(texto);
-                pkPergunta = bundle.getLong("pk");
+        } else if(bundle != null){
+            String XML = bundle.getString("respostas");
+            mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
+            if(mAnswerList.size() > 0){
+                //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
+                mNoAnswersMessage.setVisibility(View.GONE);
+                Log.d(TAG, "Size: " + mAnswerList.size());
+            } else {
+                mAnswerList = new ArrayList<>();
             }
+            String title = bundle.getString("titulo");
+            String texto = bundle.getString("pergunta");
+            mTitle.setText(title);
+            mText.setText(texto);
+            pkPergunta = bundle.getLong("pk");
         }
 
         mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);

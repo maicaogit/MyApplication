@@ -3,6 +3,7 @@ package br.org.arymax.katana.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,6 +33,7 @@ public class UserActivity extends AppCompatActivity
     public static Menu mMenu;
     private NavigationView mNavigation;
     protected static boolean active = false;
+    private Fragment lastFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +66,16 @@ public class UserActivity extends AppCompatActivity
         ((TextView) headerView.findViewById(R.id.txtNavUser)).setText(nome);
         ((TextView) headerView.findViewById(R.id.textView)).setText(prontuario);
 
-        Fragment home = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT_TAG);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(home == null){
-            fragmentTransaction.add(R.id.content_user, new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
-        } else {
-            fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
+        if(savedInstanceState == null){
+            Fragment home = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT_TAG);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if(home == null){
+                fragmentTransaction.add(R.id.content_user, new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
+            } else {
+                fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
+            }
+            fragmentTransaction.commit();
         }
-        fragmentTransaction.commit();
 
         active = true;
     }
@@ -130,9 +134,10 @@ public class UserActivity extends AppCompatActivity
             Fragment home = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(home == null){
-                fragmentTransaction.add(R.id.content_user, new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
+                fragmentTransaction.add(R.id.content_user, lastFragment = new HomeFragment(), HomeFragment.HOME_FRAGMENT_TAG);
             } else {
                 fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
+                lastFragment = home;
             }
             fragmentTransaction.commit();
 
@@ -148,9 +153,10 @@ public class UserActivity extends AppCompatActivity
             Fragment mqFragment = fragmentManager.findFragmentByTag(MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(mqFragment == null){
-                fragmentTransaction.add(R.id.content_user, new MakeQuestionFragment(), MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
+                fragmentTransaction.add(R.id.content_user, lastFragment = new MakeQuestionFragment(), MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
             } else {
                 fragmentTransaction.replace(R.id.content_user, mqFragment, MakeQuestionFragment.MAKE_QUESTION_FRAGMENT_TAG);
+                lastFragment = mqFragment;
             }
             fragmentTransaction.commit();
         }
@@ -167,9 +173,10 @@ public class UserActivity extends AppCompatActivity
             Fragment usiFragment = fragmentManager.findFragmentByTag(UserInfoFragment.USER_INFO_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(usiFragment == null){
-                fragmentTransaction.add(R.id.content_user, new UserInfoFragment(), UserInfoFragment.USER_INFO_FRAGMENT_TAG);
+                fragmentTransaction.add(R.id.content_user, lastFragment = new UserInfoFragment(), UserInfoFragment.USER_INFO_FRAGMENT_TAG);
             } else {
                 fragmentTransaction.replace(R.id.content_user, usiFragment, UserInfoFragment.USER_INFO_FRAGMENT_TAG);
+                lastFragment = usiFragment;
             }
             fragmentTransaction.commit();
         }
@@ -182,8 +189,6 @@ public class UserActivity extends AppCompatActivity
             MenuItem search = mMenu.findItem(R.id.action_search);
             search.setVisible(true);
             getSupportActionBar().setTitle(R.string.action_my_answers);
-
-
         }
 
 
@@ -200,7 +205,7 @@ public class UserActivity extends AppCompatActivity
             Fragment mqFragment = fragmentManager.findFragmentByTag(MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(mqFragment == null){
-                fragmentTransaction.add(R.id.content_user, new MyQuestionsFragment(), MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
+                fragmentTransaction.add(R.id.content_user, lastFragment = new MyQuestionsFragment(), MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
             } else {
                 fragmentTransaction.replace(R.id.content_user, mqFragment, MyQuestionsFragment.My_QUESTIONS_FRAGMENT_TAG);
             }
