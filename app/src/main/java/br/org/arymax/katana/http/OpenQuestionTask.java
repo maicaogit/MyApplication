@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+
+import com.rey.material.widget.SnackBar;
 
 import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.model.Resposta;
@@ -50,5 +53,19 @@ public class OpenQuestionTask extends AsyncTask<Long, Void, String> {
         mIntent.putExtra("pk_autor", pergunta.getUsuario().getPkUsuario());
         mContext.startActivity(mIntent);
         mProgress.dismiss();
+    }
+
+    @Override
+    protected void onCancelled() {
+        SnackBar.make(mContext)
+                .actionText("Fechar")
+                .actionClickListener(new SnackBar.OnActionClickListener() {
+                    @Override
+                    public void onActionClick(SnackBar sb, int actionId) {
+                        sb.dismiss();
+                    }
+                })
+                .text("Erro ao abrir pergunta")
+                .show((AppCompatActivity) mContext);
     }
 }

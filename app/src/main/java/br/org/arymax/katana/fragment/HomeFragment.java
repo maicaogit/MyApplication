@@ -2,24 +2,21 @@ package br.org.arymax.katana.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.Serializable;
+import com.rey.material.widget.ProgressView;
+
 import java.util.List;
 
 import br.org.arymax.katana.R;
@@ -30,7 +27,7 @@ import br.org.arymax.katana.http.AnswerGetTask;
 import br.org.arymax.katana.http.QuestionGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
-import br.org.arymax.katana.model.Resposta;
+import br.org.arymax.katana.utility.SerializableListHolder;
 
 /**
  * Criado por Marco em 16/10/2016.
@@ -40,9 +37,9 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     private View rootView;
     private RecyclerView mRecyclerView;
     private List<Pergunta> mPerguntasList;
-    private List<Resposta> mAnswerList;
     private FloatingActionButton mFabReorganizeList, mFabReorganizeListData, mFabReorganizeListVisit;
-    private ProgressBar mProgress;
+    //private ProgressBar mProgress;
+    private ProgressView mProgress;
     private SwipeRefreshLayout mSwipe;
     private TextView mErrorMessageTextView;
     private Animation fab_close, fab_open, fab_clockWise, fab_antiClockWise;
@@ -63,12 +60,22 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        mProgress = (ProgressBar) rootView.findViewById(R.id.fragment_home_progress_bar);
+        mProgress = (ProgressView) rootView.findViewById(R.id.progress_home);
+        //mProgress.setBackgroundColor(getActivity().getResources().getColor(R.color.colorAccent));
+        mProgress.setVisibility(View.VISIBLE);
         tipo = "data";
-        callTask(tipo);
+        if(savedInstanceState == null){
+            callTask(tipo);
+        } else {
+            SerializableListHolder holder = (SerializableListHolder) savedInstanceState.getSerializable(SerializableListHolder.KEY);
+            mPerguntasList = holder.getList();
+            mProgress.setVisibility(View.GONE);
+            setViews(rootView);
+        }
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -83,9 +90,8 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         return true;
     }
 
-    public void callTask(String tipo)
-    {
-        QuestionGetTask task = new QuestionGetTask(rootView, getActivity(), this, mProgress);
+    public void callTask(String tipo) {
+        QuestionGetTask task = new QuestionGetTask((ViewGroup) rootView.findViewById(R.id.rootView), getActivity(), this, mProgress);
         task.execute(tipo);
     }
 
@@ -119,10 +125,10 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             @Override
             public void onRefresh() {
                 mErrorMessageTextView.setVisibility(View.GONE);
-                mFabReorganizeList.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.GONE);
+                //mFabReorganizeList.setVisibility(View.GONE);
+                //mRecyclerView.setVisibility(View.GONE);
                 callTask(tipo);
-                mSwipe.setRefreshing(false);
+                mSwipe.setRefreshing(true);
             }
         });
 
@@ -206,8 +212,15 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         }
     }
 
-    public void openFab()
-    {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SerializableListHolder holder = new SerializableListHolder(mPerguntasList);
+        outState.putSerializable(SerializableListHolder.KEY, holder);
+    }
+
+    private void openFab() {
         mFabReorganizeListData.startAnimation(fab_open);
         mFabReorganizeListVisit.startAnimation(fab_open);
         mFabReorganizeList.startAnimation(fab_clockWise);
@@ -218,8 +231,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         isOpen = true;
     }
 
-    public void closeFab()
-    {
+    private void closeFab() {
         mFabReorganizeListData.startAnimation(fab_close);
         mFabReorganizeListVisit.startAnimation(fab_close);
         mFabReorganizeList.startAnimation(fab_antiClockWise);

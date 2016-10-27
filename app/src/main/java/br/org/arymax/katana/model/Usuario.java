@@ -2,13 +2,15 @@ package br.org.arymax.katana.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import java.io.Serializable;
+
 /**
  * Classe modelo do usuário.
  *
  * @author Lorhan Sohaky
  */
 @XStreamAlias("usuario")
-public class Usuario {
+public class Usuario implements Serializable {
 
     private long pkUsuario;
     private String nome;

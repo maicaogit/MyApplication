@@ -3,10 +3,16 @@ package br.org.arymax.katana.http;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.rey.material.widget.ProgressView;
+import com.rey.material.widget.SnackBar;
 
 import java.util.List;
 
@@ -22,14 +28,14 @@ import br.org.arymax.katana.utility.XMLParser;
 public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     private Context mContext;
-    private ProgressBar mProgress;
+    private ProgressView mProgress;
     private HomeFragment mCallerFragment;
-    private View rootView;
+    private ViewGroup rootView;
     private String ordenacao = "";
 
     private static final String TAG = "QuestionGetTask.java";
 
-    public QuestionGetTask(View rootView, Context context, HomeFragment callerFragment, ProgressBar p) {
+    public QuestionGetTask(ViewGroup rootView, Context context, HomeFragment callerFragment, ProgressView p) {
         mContext = context;
         mCallerFragment = callerFragment;
         this.rootView = rootView;
@@ -38,7 +44,7 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        mProgress.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -68,6 +74,8 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
                 mCallerFragment.setPerguntasList(listPerguntas);
                 mCallerFragment.setViews(rootView);
                 mProgress.setVisibility(View.GONE);
+                ((SwipeRefreshLayout)(((AppCompatActivity) mContext)
+                        .findViewById(R.id.swipe_refresh_home_fragment))).setRefreshing(false);
             } else {
                 mProgress.setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
@@ -78,17 +86,21 @@ public class QuestionGetTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onCancelled() {
-        Snackbar snackbar = Snackbar.make(rootView, R.string.questions_error, Snackbar.LENGTH_INDEFINITE)
-
-                .setAction(R.string.try_again, new View.OnClickListener() {
+        Log.d(TAG, "onCancelled()");
+        SnackBar snackBar = SnackBar.make(mContext).text(R.string.questions_error)
+                .actionText(R.string.try_again)
+                .actionId(R.string.try_again)
+                .actionClickListener(new SnackBar.OnActionClickListener() {
                     @Override
-                    public void onClick(View v) {
-                       mCallerFragment.callTask(ordenacao);
+                    public void onActionClick(SnackBar sb, int actionId) {
+                        if(actionId == R.string.try_again){
+                            mCallerFragment.callTask(ordenacao);
+                        }
                     }
                 });
-        View view = snackbar.getView();
-        TextView message = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        message.setMaxLines(1);
-        snackbar.show();
+
+        snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+        snackBar.actionTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        snackBar.show(rootView);
     }
 }

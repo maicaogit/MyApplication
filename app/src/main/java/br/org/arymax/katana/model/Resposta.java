@@ -3,6 +3,7 @@ package br.org.arymax.katana.model;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  * @author Lorhan Sohaky
  */
 @XStreamAlias("resposta")
-public class Resposta {
+public class Resposta implements Serializable {
 
     private long pkResposta;
     private String resposta;

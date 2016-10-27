@@ -72,6 +72,8 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user, home, HomeFragment.HOME_FRAGMENT_TAG);
         }
         fragmentTransaction.commit();
+
+        active = true;
     }
 
     @Override
@@ -229,17 +231,5 @@ public class UserActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        active = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        active = false;
     }
 }

@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.rey.material.widget.ProgressView;
 
 import java.util.List;
 
@@ -26,6 +26,7 @@ import br.org.arymax.katana.http.MyQuestionsGetTask;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
 import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.utility.Constants;
+import br.org.arymax.katana.utility.SerializableListHolder;
 
 
 public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemClickListener {
@@ -36,7 +37,7 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
     private List<Pergunta> mPerguntasList;
     private Context context;
     private SwipeRefreshLayout mSwipe;
-    private ProgressBar mProgress;
+    private ProgressView mProgress;
     private TextView mErrorMessageTextView;
 
     public static final String My_QUESTIONS_FRAGMENT_TAG = "mqFragment";
@@ -58,17 +59,23 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
                              Bundle savedInstanceState){
         context = container.getContext();
         rootView = inflater.inflate(R.layout.fragment_my_questions, container, false);
-        mProgress = (ProgressBar) rootView.findViewById(R.id.fragment_my_questions_progress_bar);
+        mProgress = (ProgressView) rootView.findViewById(R.id.my_questions_progress);
         mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.my_questions_swipe_refresh);
-
-        callTask();
+        if(savedInstanceState == null){
+            callTask();
+        } else {
+            SerializableListHolder holder = (SerializableListHolder) savedInstanceState.getSerializable(SerializableListHolder.KEY);
+            mPerguntasList = holder.getList();
+            mProgress.setVisibility(View.GONE);
+            setViews(rootView);
+        }
         return rootView;
     }
 
     public void callTask() {
         SharedPreferences preferences = context.getSharedPreferences(Constants.PREFERENCES,0);
         long id = preferences.getLong("pk", 0);
-        MyQuestionsGetTask task = new MyQuestionsGetTask(rootView, getActivity(), this, mProgress);
+        MyQuestionsGetTask task = new MyQuestionsGetTask((ViewGroup) rootView.findViewById(R.id.rootView), getActivity(), this, mProgress);
         task.execute(id);
     }
 
@@ -91,9 +98,9 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
             @Override
             public void onRefresh() {
                 mErrorMessageTextView.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.GONE);
+                //mRecyclerView.setVisibility(View.GONE);
                 callTask();
-                mSwipe.setRefreshing(false);
+                mSwipe.setRefreshing(true);
             }
         });
 
@@ -114,5 +121,13 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
         intent.putExtra("pk", id);
         AnswerGetTask task = new AnswerGetTask(getActivity(), intent);
         task.execute(id);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SerializableListHolder holder = new SerializableListHolder(mPerguntasList);
+        outState.putSerializable(SerializableListHolder.KEY, holder);
     }
 }

@@ -56,4 +56,7 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="AppTheme.Material.CircularProgress" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/colorAccent</item>
+    </style>
 </resources>

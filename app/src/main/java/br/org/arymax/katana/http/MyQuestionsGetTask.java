@@ -3,11 +3,15 @@ package br.org.arymax.katana.http;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rey.material.widget.ProgressView;
+import com.rey.material.widget.SnackBar;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.extended.ISO8601DateConverter;
 
@@ -25,13 +29,13 @@ import br.org.arymax.katana.model.Pergunta;
 public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
 
     private Context mContext;
-    private ProgressBar mProgress;
+    private ProgressView mProgress;
     private MyQuestionsFragment mCallerFragment;
-    private View rootView;
+    private ViewGroup rootView;
 
     private static final String TAG = "MyQuestionsTask.java";
 
-    public MyQuestionsGetTask(View rootView, Context context, MyQuestionsFragment callerFragment, ProgressBar p) {
+    public MyQuestionsGetTask(ViewGroup rootView, Context context, MyQuestionsFragment callerFragment, ProgressView p) {
         mContext = context;
         this.rootView = rootView;
         mCallerFragment = callerFragment;
@@ -40,7 +44,7 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        mProgress.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -76,28 +80,33 @@ public class MyQuestionsGetTask extends AsyncTask<Long, Void, String> {
                 mCallerFragment.setPerguntasList(listPergunta);
                 mCallerFragment.setViews(rootView);
                 mProgress.setVisibility(View.GONE);
+                ((SwipeRefreshLayout)(((AppCompatActivity) mContext)
+                        .findViewById(R.id.my_questions_swipe_refresh))).setRefreshing(false);
             } else {
                 mProgress.setVisibility(View.GONE);
                 ((TextView) rootView.findViewById(R.id.erro_text_view)).setText(R.string.no_questions);
-                ((TextView) rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
+                (rootView.findViewById(R.id.erro_text_view)).setVisibility(View.VISIBLE);
             }
         }
     }
 
     @Override
     protected void onCancelled() {
-        Snackbar snackbar = Snackbar.make(rootView, R.string.questions_error, Snackbar.LENGTH_INDEFINITE)
-
-                .setAction(R.string.try_again, new View.OnClickListener() {
+        Log.d(TAG, "onCancelled()");
+        SnackBar snackBar = SnackBar.make(mContext).text(R.string.questions_error)
+                .actionText(R.string.try_again)
+                .actionId(R.string.try_again)
+                .actionClickListener(new SnackBar.OnActionClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        mCallerFragment.callTask();
+                    public void onActionClick(SnackBar sb, int actionId) {
+                        if(actionId == R.string.try_again){
+                            mCallerFragment.callTask();
+                        }
                     }
                 });
-        View view = snackbar.getView();
-        TextView message = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        message.setMaxLines(1);
-        snackbar.show();
+        snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+        snackBar.actionTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        snackBar.show(rootView);
     }
 }
 

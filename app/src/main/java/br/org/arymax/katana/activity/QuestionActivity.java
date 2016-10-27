@@ -3,6 +3,7 @@ package br.org.arymax.katana.activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import br.org.arymax.katana.model.Pergunta;
 import br.org.arymax.katana.model.Resposta;
 import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.Constants;
+import br.org.arymax.katana.utility.SerializableListHolder;
 import br.org.arymax.katana.utility.XMLParser;
 
 public class QuestionActivity extends AppCompatActivity implements RecyclerViewOnLongClickListener,
@@ -85,21 +87,30 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
         });
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            String XML = bundle.getString("respostas");
-            mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
-            if(mAnswerList.size() > 0){
-                //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
-                mNoAnswersMessage.setVisibility(View.GONE);
-                Log.d(TAG, "Size: " + mAnswerList.size());
-            } else {
-                mAnswerList = new ArrayList<>();
+        if(savedInstanceState != null){
+            SerializableListHolder holder = (SerializableListHolder) savedInstanceState
+                    .getSerializable(SerializableListHolder.KEY);
+
+            mAnswerList = holder.getList();
+            mNoAnswersMessage.setVisibility(View.GONE);
+
+        } else {
+            if(bundle != null){
+                String XML = bundle.getString("respostas");
+                mAnswerList = XMLParser.xmlToListObject(XML, ArrayRespostas.class, Resposta.class);
+                if(mAnswerList.size() > 0){
+                    //Toast.makeText(this, "IGÃO CARAIO", Toast.LENGTH_LONG).show();
+                    mNoAnswersMessage.setVisibility(View.GONE);
+                    Log.d(TAG, "Size: " + mAnswerList.size());
+                } else {
+                    mAnswerList = new ArrayList<>();
+                }
+                String title = bundle.getString("titulo");
+                String texto = bundle.getString("pergunta");
+                mTitle.setText(title);
+                mText.setText(texto);
+                pkPergunta = bundle.getLong("pk");
             }
-            String title = bundle.getString("titulo");
-            String texto = bundle.getString("pergunta");
-            mTitle.setText(title);
-            mText.setText(texto);
-            pkPergunta = bundle.getLong("pk");
         }
 
         mAdapter = new QuestionReplyRecyclerViewAdapter(mAnswerList);
@@ -173,5 +184,13 @@ public class QuestionActivity extends AppCompatActivity implements RecyclerViewO
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        SerializableListHolder holder = new SerializableListHolder(mAnswerList);
+        outState.putSerializable(SerializableListHolder.KEY, holder);
     }
 }
