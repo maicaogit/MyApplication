@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.interfaces.RecyclerViewOnItemClickListener;
+import br.org.arymax.katana.interfaces.RecyclerViewOnLoadMoreListener;
 import br.org.arymax.katana.model.Pergunta;
 
 /**
@@ -21,8 +22,11 @@ import br.org.arymax.katana.model.Pergunta;
 public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<QuestionsRecyclerViewAdapter.ViewHolder> {
 
     private List<Pergunta> mPerguntasList;
-    private RecyclerViewOnItemClickListener listener;
+    private RecyclerViewOnItemClickListener mOnItemClickListener;
+    private RecyclerViewOnLoadMoreListener mOnLoadMoreClickListener;
     private Context context;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
     public QuestionsRecyclerViewAdapter(List<Pergunta> mPerguntasList) {
         this.mPerguntasList = mPerguntasList;
@@ -31,7 +35,8 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.context = parent.getContext();
-        return new QuestionsRecyclerViewAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.questions_recycler_child, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.questions_recycler_child, parent, false);
+        return new QuestionsRecyclerViewAdapter.ViewHolder(view);
     }
 
     @Override
@@ -46,8 +51,17 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
         return mPerguntasList.size();
     }
 
-    public void setListener(RecyclerViewOnItemClickListener l){
-        listener = l;
+    public void setOnItemClickListener(RecyclerViewOnItemClickListener l){
+        mOnItemClickListener = l;
+    }
+
+    public void setOnLoadMoreClickListener(RecyclerViewOnLoadMoreListener l){
+        mOnLoadMoreClickListener = l;
+    }
+
+    public void addListItem(Pergunta p, int position){
+        mPerguntasList.add(p);
+        notifyItemInserted(position);
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -67,8 +81,8 @@ public class QuestionsRecyclerViewAdapter extends RecyclerView.Adapter<Questions
 
         @Override
         public void onClick(View v) {
-            if(listener != null){
-                listener.onItemClick(v, getLayoutPosition());
+            if(mOnItemClickListener != null){
+                mOnItemClickListener.onItemClick(v, getLayoutPosition());
             }
         }
     }

@@ -96,7 +96,7 @@ public class MyQuestionsFragment extends Fragment implements RecyclerViewOnItemC
         mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         QuestionsRecyclerViewAdapter adapter = new QuestionsRecyclerViewAdapter(mPerguntasList);
-        adapter.setListener(this);
+        adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
 
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

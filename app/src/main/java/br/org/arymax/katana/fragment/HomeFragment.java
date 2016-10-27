@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,6 @@ import java.util.List;
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.activity.SearchActivity;
-import br.org.arymax.katana.activity.UserActivity;
 import br.org.arymax.katana.adapter.QuestionsRecyclerViewAdapter;
 import br.org.arymax.katana.http.AnswerGetTask;
 import br.org.arymax.katana.http.QuestionGetTask;
@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
     private Animation fab_close, fab_open, fab_clockWise, fab_antiClockWise;
     private boolean isOpen = false;
     private String tipo;
+    private Integer initialId = 0;
 
     public static final String HOME_FRAGMENT_TAG = "homeFragment";
 
@@ -68,12 +69,12 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         mProgress.setVisibility(View.VISIBLE);
         tipo = "data";
         if(savedInstanceState == null){
-            callTask(tipo);
+            callTask(tipo, initialId);
         } else {
             SerializableListHolder holder = (SerializableListHolder) savedInstanceState.getSerializable(SerializableListHolder.KEY);
             mPerguntasList = holder.getList();
             if(mPerguntasList == null || mPerguntasList.size() == 0) {
-                callTask(tipo);
+                callTask(tipo, initialId);
             } else {
                 mProgress.setVisibility(View.GONE);
                 setViews(rootView);
@@ -94,9 +95,9 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         return true;
     }
 
-    public void callTask(String tipo) {
+    public void callTask(String tipo, Integer initialId) {
         QuestionGetTask task = new QuestionGetTask((ViewGroup) rootView.findViewById(R.id.rootView), getActivity(), this, mProgress);
-        task.execute(tipo);
+        task.execute(tipo, initialId);
     }
 
     public void setPerguntasList(List perguntasList){
@@ -104,7 +105,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
         //Log.d(TAG, "Primeiro item da lista: " + mPerguntasList.get(0).getTitulo());
     }
 
-    public void setViews(View rootView) {
+    public void setViews(final View rootView) {
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.questions_ReyclerView);
         mFabReorganizeList = (FloatingActionButton) rootView.findViewById(R.id.fab_organizar_lista);
@@ -119,8 +120,10 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         QuestionsRecyclerViewAdapter adapter = new QuestionsRecyclerViewAdapter(mPerguntasList);
-        adapter.setListener(this);
+        adapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(adapter);
+
+
 
         mSwipe = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_home_fragment);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -131,7 +134,7 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                 mErrorMessageTextView.setVisibility(View.GONE);
                 //mFabReorganizeList.setVisibility(View.GONE);
                 //mRecyclerView.setVisibility(View.GONE);
-                callTask(tipo);
+                callTask(tipo, initialId);
                 mSwipe.setRefreshing(true);
             }
         });
@@ -150,8 +153,10 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                 mFabReorganizeListData.setVisibility(View.GONE);
                 mFabReorganizeListVisit.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
+                mProgress.setVisibility(View.VISIBLE);
                 tipo = "data";
-                callTask(tipo);
+                initialId = 0;
+                callTask(tipo, initialId);
 
                 closeFab();
             }
@@ -164,10 +169,11 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             {
                 mErrorMessageTextView.setVisibility(View.GONE);
                 mFabReorganizeList.setVisibility(View.GONE);
-
+                mProgress.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
                 tipo = "visitas";
-                callTask(tipo);
+                initialId = 0;
+                callTask(tipo, initialId);
 
                 closeFab();
 
@@ -187,6 +193,19 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
                         mFabReorganizeList.show();
                         mFabReorganizeList.setClickable(true);
                     }
+                }
+
+                LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                if(mPerguntasList.size() == llm.findLastCompletelyVisibleItemPosition() + 1){
+                    initialId += 10;
+                    QuestionGetTask task = new QuestionGetTask(
+                            (ViewGroup) rootView.findViewById(R.id.rootView),
+                            mPerguntasList.size(),
+                            initialId,
+                            (QuestionsRecyclerViewAdapter) mRecyclerView.getAdapter()
+                    );
+                    task.execute(tipo, initialId);
+                    Log.d(TAG, "Initial ID agora: " + initialId);
                 }
             }
         });
@@ -229,7 +248,6 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
 
         mFabReorganizeListData.setClickable(true);
         mFabReorganizeListVisit.setClickable(true);
-
         isOpen = true;
     }
 
