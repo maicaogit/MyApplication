@@ -43,6 +43,7 @@
     <string name="answer_hint">Adicionar resposta</string>
     <string name="said">respondeu:</string>
     <string name="sending_resp">Enviando resposta...</string>
+    <string name="anonimus">Anônimo</string>
     <!--Fim QuestionActivity-->
 
     <!--Fim das Strings de Activities-->

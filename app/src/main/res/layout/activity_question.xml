@@ -43,8 +43,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:textColor="@color/colorTextIcons"
+                        android:text="Autor da Pergunta"
+                        android:id="@+id/tv_text"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/colorTextIcons"
                         android:text="Texto da pergunta, a qual o usuário cadastro muito, mas muito tempo atras"
-                        android:id="@+id/tv_text"/>
+                        android:id="@+id/tv_anonimo"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"

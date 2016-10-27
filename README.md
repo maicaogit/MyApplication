@@ -1,3 +1,32 @@
 # MyApplication
 
-Essa Aplicação é muito loka. Quem n gostou enfia o dedo no cu e cheira
+POSTEI E SAI CORRENDO
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+PAU NO CU DE QUEM TA LENDO
