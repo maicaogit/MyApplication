@@ -132,8 +132,9 @@ public class HomeFragment extends Fragment implements RecyclerViewOnItemClickLis
             @Override
             public void onRefresh() {
                 mErrorMessageTextView.setVisibility(View.GONE);
-                //mFabReorganizeList.setVisibility(View.GONE);
+                mFabReorganizeList.setVisibility(View.GONE);
                 //mRecyclerView.setVisibility(View.GONE);
+                initialId = 0;
                 callTask(tipo, initialId);
                 mSwipe.setRefreshing(true);
             }
