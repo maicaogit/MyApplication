@@ -15,7 +15,6 @@ public class Validacao {
      */
     public static String getMod11(String num) {
         out.println("antes num: "+num);
-        num.toLowerCase();
         out.println("Agora num: "+num);
         //variáveis de instancia
 
@@ -68,7 +67,7 @@ public class Validacao {
      */
     public static boolean isProntuarioValido(String num, String prontuario){
         String digitoVerificador = getMod11(prontuario);
-        if(digitoVerificador.equals(num))
+        if(digitoVerificador.equals(num.toLowerCase()))
             return true;
         else
             return false;
