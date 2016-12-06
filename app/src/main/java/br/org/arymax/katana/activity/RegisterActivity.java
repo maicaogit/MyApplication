@@ -74,7 +74,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Log.d(TAG, "XML do usuário: " + xml);
                         task.execute(xml);
                     }
-                } else {
+                }
+                else {
                     String errorMessage = getResources().getString(R.string.preencher_campos);
                     if(mEditTextEmail.getText().toString().equals("")){
                         mEditTextEmail.setError(errorMessage);
