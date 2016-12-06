@@ -26,7 +26,6 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
     private ProgressDialog mProgress;
     private static final String TAG = "ChangeUserInfoTask.java";
     private Usuario usuario;
-    private ServerCalls.Status status;
     private int code;
     private String dadoAlt;
 
@@ -43,7 +42,7 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
         mProgress = new ProgressDialog(mContext);
         mProgress.setMessage(message);
         mProgress.setCancelable(false);
-        mProgress.show();
+        //mProgress.show();
     }
 
     @Override
@@ -60,8 +59,7 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
                     ServerCalls.TEXT_XML,
                     ServerCalls.TEXT_PLAIN
             );
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e(TAG, "Exceção lançada", e);
         }
         return result;
@@ -81,7 +79,7 @@ public class ChangeUserInfoTask extends AsyncTask<String, Void, String> {
             }
 
             editor.commit();
-            mProgress.dismiss();
+            //mProgress.dismiss();
         }
     }
 }

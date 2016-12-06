@@ -1,4 +1,4 @@
-package br.org.arymax.katana.broadcastreceiver;
+package br.org.arymax.katana.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,7 +12,6 @@ import android.support.v7.app.NotificationCompat;
 import br.org.arymax.katana.R;
 //import br.org.arymax.katana.activity.QuestionActivity;
 import br.org.arymax.katana.activity.QuestionActivity;
-import br.org.arymax.katana.activity.SearchActivity;
 import br.org.arymax.katana.utility.Constants;
 
 /**

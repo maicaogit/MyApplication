@@ -1,4 +1,4 @@
-package br.org.arymax.katana.broadcastreceiver;
+package br.org.arymax.katana.receiver;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

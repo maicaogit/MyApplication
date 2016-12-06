@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "618116158577",
+    "firebase_url": "https://conecta-ae671.firebaseio.com",
+    "project_id": "conecta-ae671",
+    "storage_bucket": "conecta-ae671.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618116158577:android:a7cc853f5ad5423e",
+        "android_client_info": {
+          "package_name": "br.org.arymax.katana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618116158577-uob1dd6nv8vuo24s8qpt8vibr57u1nip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.org.arymax.katana",
+            "certificate_hash": "B5437A628AF7AAF95CD7F7B2FBDBC07B665963D2"
+          }
+        },
+        {
+          "client_id": "618116158577-9unvpt5pgol1bil60fqsk14udm1cd7sj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8HvloLOjCMOooJ88ueswUrSaiH190qR0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618116158577-9unvpt5pgol1bil60fqsk14udm1cd7sj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

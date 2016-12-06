@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <permission android:name="br.org.arymax.katana.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="br.org.arymax.katana.permission.C2D_MESSAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -12,7 +16,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
 
-        <receiver android:name=".broadcastreceiver.NotificationReceiver">
+        <service android:name=".gcm.service.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".gcm.service.InstanceIdService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.NotificationReceiver">
             <intent-filter>
                 <action android:name="br.org.arymax.katana.intent.ACTION_NOTIFICATE_USER" />
 
@@ -21,7 +46,7 @@
         </receiver>
 
         <receiver
-            android:name=".broadcastreceiver.StartServiceReceiver">
+            android:name=".receiver.StartServiceReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

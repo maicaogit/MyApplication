@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * Classe para manipulação de imagens
+ *
  * Criado por Marco em 21/08/2016.
  */
 public class ImageEncrypt {

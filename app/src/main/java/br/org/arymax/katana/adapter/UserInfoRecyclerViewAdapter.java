@@ -180,17 +180,20 @@ public class UserInfoRecyclerViewAdapter extends RecyclerView.Adapter<UserInfoRe
     public void callTask(String dadoAlt, int code, ViewHolder holder) {
         String email = null;
         String nome = null;
-        final SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
+        SharedPreferences sp = context.getSharedPreferences(Constants.PREFERENCES, 0);
+        SharedPreferences.Editor editor = sp.edit();
         switch (code) {
             case 1:
                 nome = dadoAlt;
                 email = sp.getString("email", "");
                 holder.editInfoToolbar.setSubtitle(nome);
+                editor.putString("nome", dadoAlt);
                 break;
             case 2:
                 email = dadoAlt;
                 nome = sp.getString("nome", "");
                 holder.editInfoToolbar.setSubtitle(email);
+                editor.putString("email", dadoAlt);
                 break;
         }
 

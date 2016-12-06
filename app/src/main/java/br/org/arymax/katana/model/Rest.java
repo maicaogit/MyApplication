@@ -1,12 +1,12 @@
 package br.org.arymax.katana.model;
 
 import br.org.arymax.katana.http.ServerCalls;
+import br.org.arymax.katana.http.ServerCalls.Status;
 
 /**
  * Criado por Marco em 25/10/2016.
  */
 public class Rest {
-
 
     private String method;
     private String contentType;
@@ -80,5 +80,13 @@ public class Rest {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public static String callGet(Rest rest) throws Exception {
+        return ServerCalls.callGet(rest);
+    }
+
+    public static Status callSet(Rest rest) throws Exception {
+        return Status.fromString(ServerCalls.callSet(rest));
     }
 }

@@ -25,7 +25,7 @@ public class ServerCalls {
     /**
      * URL do server
      */
-    public static final String SERVER_URL = "http://pdscidadeajuda.ddns.net:8080/ServidorConecta/";
+    public static final String SERVER_URL = "http://pdscidadeajuda.ddns.net:8084/ServidorConecta/";
 
 
     //POST

@@ -5,18 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.rey.material.widget.SnackBar;
 
 import br.org.arymax.katana.R;
 import br.org.arymax.katana.activity.UserActivity;
 import br.org.arymax.katana.model.Usuario;
 import br.org.arymax.katana.utility.Constants;
 import br.org.arymax.katana.utility.XMLParser;
-
-import static java.lang.System.out;
 
 /**
  * Criado por Marco em 14/10/2016.
@@ -63,7 +63,13 @@ public class UserLoginTask extends AsyncTask<String, Void, String> {
         Log.d(TAG, "XML do usuário: " + result);
         if(result.equals("")){
             View rootView = ((AppCompatActivity) mContext).findViewById(R.id.activity_login_root);
-            Snackbar.make(rootView, R.string.login_fail, Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(rootView, R.string.login_fail, Snackbar.LENGTH_LONG).show();
+            SnackBar snackBar = SnackBar.make(mContext)
+                    .text(R.string.login_fail)
+                    .duration(3000);
+            snackBar.applyStyle(com.rey.material.R.style.Material_Widget_SnackBar_Mobile);
+            snackBar.show((ViewGroup) rootView);
+
             mProgress.dismiss();
         } else {
             Usuario usuario = XMLParser.XMLToObject(result, Usuario.class);
